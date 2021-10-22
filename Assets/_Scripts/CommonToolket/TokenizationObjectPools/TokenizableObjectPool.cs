@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CommonToolket.TokenizationObjectPool_
+namespace CommonToolket.TokenizationObjectPool
 {
     public abstract class TokenizableObjectPool<Type, Token, Container> : MonoBehaviour
         where Type : Object
@@ -34,12 +34,16 @@ namespace CommonToolket.TokenizationObjectPool_
             }
         }
 
-        public virtual Container EnableTokenObject(Token token)
+        public Container EnableTokenObject(Token token)
         {
             Container container = idleContainers.Dequeue();
             activeContainer.Add(container);
 
-            return container.EnableObject(token);
+            container.EnableObject(token);
+
+            OnContainerEnable(container);
+
+            return container;
         }
         protected virtual void FrameUpdate(float deltaTime)
         {
@@ -55,6 +59,8 @@ namespace CommonToolket.TokenizationObjectPool_
                 }
             }
         }
+
+        protected virtual void OnContainerEnable(Container container) { }
     }
 
 }

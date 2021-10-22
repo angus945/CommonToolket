@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CommonToolket.TokenizationObjectPool_;
+using CommonToolket.TokenizationObjectPool;
 
 namespace Exampleuse
 {
@@ -9,7 +9,11 @@ namespace Exampleuse
     public class SoundEffectToken : TokenizableObjectToken<AudioClip, SoundEffectToken, SoundEffectContainer>
     {
 
+        [SerializeField] AudioClip _objectReference = null;
+        [SerializeField] float _lifeTime = 1;
 
+        public override AudioClip objectReference { get => _objectReference; }
+        public override float lifeTime { get => _lifeTime; }
     }
 
 }

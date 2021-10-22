@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CommonToolket.TokenizationObjectPool_;
+using CommonToolket.TokenizationObjectPool;
 
 namespace Exampleuse
 {

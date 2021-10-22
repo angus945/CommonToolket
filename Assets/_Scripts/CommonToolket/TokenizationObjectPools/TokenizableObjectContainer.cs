@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace CommonToolket.TokenizationObjectPool_
+namespace CommonToolket.TokenizationObjectPool
 {
-    public abstract class TokenizableObjectContainer<Type, Token, Container> : MonoBehaviour 
-        where Type : Object 
+    public abstract class TokenizableObjectContainer<Type, Token, Container> : MonoBehaviour
+        where Type : Object
         where Token : TokenizableObjectToken<Type, Token, Container>
         where Container : TokenizableObjectContainer<Type, Token, Container>
     {
@@ -13,23 +13,33 @@ namespace CommonToolket.TokenizationObjectPool_
 
         protected Transform containerTrans;
 
-        public virtual void Initialize()
+        public void Initialize()
         {
             containerTrans = GetComponent<Transform>();
+
+            OnContainerInit();
         }
-        public virtual void ResetContainer(Transform parent)
+        public void ResetContainer(Transform parent)
         {
             containerTrans.parent = parent;
+
+            OnContainerReset();
         }
-        public virtual Container EnableObject(Token token)
+        public Container EnableObject(Token token)
         {
             if (token == null) return null;
 
             this.token = token;
             lifeTime = token.lifeTime;
 
+            OnContainerEnable(token);
+
             return (Container)this;
         }
+
+        protected virtual void OnContainerInit() { }
+        protected virtual void OnContainerReset() { }
+        protected virtual void OnContainerEnable(Token token) { }
 
         /// <summary>
         /// Return true as lifetime end
@@ -40,8 +50,6 @@ namespace CommonToolket.TokenizationObjectPool_
 
             return lifeTime < 0;
         }
-
-
     }
 
 }

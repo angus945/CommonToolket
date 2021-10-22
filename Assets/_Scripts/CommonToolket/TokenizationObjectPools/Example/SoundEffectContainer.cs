@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CommonToolket.TokenizationObjectPool_;
+using CommonToolket.TokenizationObjectPool;
 
 namespace Exampleuse
 {
@@ -9,17 +9,13 @@ namespace Exampleuse
     {
         AudioSource audioSource = null;
 
-        public override void Initialize()
+        protected override void OnContainerInit()
         {
             audioSource = GetComponent<AudioSource>();
-
-            base.Initialize();
         }
-        public override SoundEffectContainer EnableObject(SoundEffectToken token)
+        protected override void OnContainerEnable(SoundEffectToken token)
         {
             audioSource.clip = token.objectReference;
-
-            return base.EnableObject(token);
         }
     }
 
