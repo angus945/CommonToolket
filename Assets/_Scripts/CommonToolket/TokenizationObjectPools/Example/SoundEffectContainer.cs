@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using CommonToolket.TokenizationObjectPool;
 
-namespace Exampleuse
+namespace Example
 {
     public class SoundEffectContainer : TokenizableObjectContainer<AudioClip, SoundEffectToken, SoundEffectContainer>
     {
         AudioSource audioSource = null;
 
-        protected override void OnContainerInit()
+        protected override void OnContainerInitialed()
         {
             audioSource = GetComponent<AudioSource>();
         }
-        protected override void OnContainerEnable(SoundEffectToken token)
+        protected override void OnContainerEnabled(ReferenceData<AudioClip> reference)
         {
-            audioSource.clip = token.objectReference;
+            audioSource.clip = reference.reference;
         }
+
     }
 
 }

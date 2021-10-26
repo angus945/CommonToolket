@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using CommonToolket.TokenizationObjectPool;
 
-namespace Exampleuse
+namespace Example
 {
     [CreateAssetMenu(fileName = "SoundEffectToken", menuName = "ObjectToken/SoundToken")]
     public class SoundEffectToken : TokenizableObjectToken<AudioClip, SoundEffectToken, SoundEffectContainer>
     {
 
         [SerializeField] AudioClip _objectReference = null;
-        [SerializeField] float _lifeTime = 1;
 
-        public override AudioClip objectReference { get => _objectReference; }
-        public override float lifeTime { get => _lifeTime; }
+        protected override ReferenceData<AudioClip> objectReference 
+        {
+            get => new ReferenceData<AudioClip>(_objectReference, _objectReference.length); 
+        }
     }
 
 }

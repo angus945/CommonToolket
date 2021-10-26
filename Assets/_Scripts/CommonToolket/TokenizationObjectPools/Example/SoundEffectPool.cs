@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CommonToolket.TokenizationObjectPool;
 
-namespace Exampleuse
+namespace Example
 {
     public class SoundEffectPool : TokenizableObjectPool<AudioClip, SoundEffectToken, SoundEffectContainer>
     {
@@ -16,11 +16,11 @@ namespace Exampleuse
             base.InitialToken(new SoundEffectToken[] { testToken });
             base.InstantiateContainers();
 
-            testToken.EnableObject().transform.parent = null;
+            testToken.TryEnableTokenObject(out _);
         }
         void Update()
         {
-            base.FrameUpdate(Time.deltaTime);
+            base.FrameUpdate(UnityEngine.Time.deltaTime);
         }
     }
 

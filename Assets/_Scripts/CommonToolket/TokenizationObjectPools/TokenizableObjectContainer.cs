@@ -17,29 +17,28 @@ namespace CommonToolket.TokenizationObjectPool
         {
             containerTrans = GetComponent<Transform>();
 
-            OnContainerInit();
+            OnContainerInitialed();
         }
         public void ResetContainer(Transform parent)
         {
             containerTrans.parent = parent;
 
-            OnContainerReset();
+            OnContainerReseted();
         }
-        public Container EnableObject(Token token)
+        public void EnableObject(Token enableToken, ReferenceData<Type> reference)
         {
-            if (token == null) return null;
+            if (enableToken == null) return;
 
-            this.token = token;
-            lifeTime = token.lifeTime;
+            token = enableToken;
 
-            OnContainerEnable(token);
+            lifeTime = reference.lifeTime;
 
-            return (Container)this;
+            OnContainerEnabled(reference);
         }
 
-        protected virtual void OnContainerInit() { }
-        protected virtual void OnContainerReset() { }
-        protected virtual void OnContainerEnable(Token token) { }
+        protected virtual void OnContainerInitialed() { }
+        protected virtual void OnContainerReseted() { }
+        protected virtual void OnContainerEnabled(ReferenceData<Type> reference) { }
 
         /// <summary>
         /// Return true as lifetime end

@@ -11,8 +11,8 @@ namespace CommonToolket.TokenizationObjectPool
 
         [SerializeField] int defaultContainerAmount = 20;
         [SerializeField] Container containerPrefab = null;
-        protected Queue<Container> idleContainers = new Queue<Container>();
-        protected List<Container> activeContainer = new List<Container>();
+        protected Queue<Container> idleContainies = new Queue<Container>();
+        protected List<Container> activeContainies = new List<Container>();
 
         protected void InitialToken(Token[] tokens)
         {
@@ -30,37 +30,43 @@ namespace CommonToolket.TokenizationObjectPool
                 newContainer.Initialize();
                 newContainer.ResetContainer(transform);
 
-                idleContainers.Enqueue(newContainer);
+                idleContainies.Enqueue(newContainer);
             }
         }
 
-        public Container EnableTokenObject(Token token)
+        bool EnableTokenObject(Token token, ReferenceData<Type> reference, out Container container)
         {
-            Container container = idleContainers.Dequeue();
-            activeContainer.Add(container);
+            container = null;
 
-            container.EnableObject(token);
+            if (idleContainies.Count == 0) return false;
 
-            OnContainerEnable(container);
+            container = idleContainies.Dequeue();
+            container.EnableObject(token,  reference);
 
+            activeContainies.Add(container);
+            OnContainerEnabled(container);
             return container;
         }
         protected virtual void FrameUpdate(float deltaTime)
         {
-            for (int i = 0; i < activeContainer.Count; i++)
+            for (int i = 0; i < activeContainies.Count; i++)
             {
-                Container container = activeContainer[i];
+                Container container = activeContainies[i];
                 if (container.FrameUpdate(deltaTime))
                 {
                     container.ResetContainer(transform);
 
-                    idleContainers.Enqueue(container);
-                    activeContainer.RemoveAt(i--);
+                    idleContainies.Enqueue(container);
+                    activeContainies.RemoveAt(i--);
                 }
             }
         }
 
-        protected virtual void OnContainerEnable(Container container) { }
+        /// <summary>
+        /// call after container as enabled
+        /// </summary>
+        /// <param name="container"></param>
+        protected virtual void OnContainerEnabled(Container container) { }
     }
 
 }
