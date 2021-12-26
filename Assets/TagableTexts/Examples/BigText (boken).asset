@@ -10,10 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0072719b01b27e44bb109075cb5d01e4, type: 3}
-  m_Name: BlueTag (token)
+  m_Name: BigText (boken)
   m_EditorClassIdentifier: 
-  tagKeyword: blue
-  inputRule:
-    ruleType: 1
-    customPattern: (.+?)
-  replaceWord: <color="blue"><input></color>
+  tagPatternDefine:
+    tagKeyword: big
+    ruleType: 2
+    customPattern: 
+  tagOutputDefine:
+    replaces:
+    - type: 0
+      word: <size=20>
+    - type: 1
+      word: 
+    - type: 0
+      word: </size>

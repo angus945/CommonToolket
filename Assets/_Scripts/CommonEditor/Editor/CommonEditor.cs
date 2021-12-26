@@ -26,7 +26,7 @@ namespace EditorToolket
 
         public static void DrawLayoutGroup(string header, string layout , Action drawElementHandler)
         {
-            //HelpBox, GroupBox
+            //HelpBox, GroupBox, window
 
             GUILayout.BeginVertical(header, layout);
 
@@ -38,10 +38,15 @@ namespace EditorToolket
             GUILayout.Space(15);
         }
 
-        public static void EnumToolbar<T>(ref T type ) where T : Enum
+        public static void EnumToolbar<T>(ref T type) where T : Enum
         {
             int index = (int)(object)type;
             type = (T)(object)GUILayout.Toolbar(index, System.Enum.GetNames(typeof(T)));
+        }
+
+        public static int GUIEnumPopup<T>(Rect rect, int index) where T : Enum
+        {
+            return (int)(object)EditorGUI.EnumPopup(rect, (T)(object)index);
         }
     }
 

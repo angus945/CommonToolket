@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0072719b01b27e44bb109075cb5d01e4, type: 3}
-  m_Name: BoldTag (boken)
+  m_Name: EventTag (boken)
   m_EditorClassIdentifier: 
-  tagKeyword: b
-  inputRule:
-    ruleType: 1
+  tagPatternDefine:
+    tagKeyword: event
+    ruleType: 0
     customPattern: 
-  replaceWord: <b><input></b>
+  tagOutputDefine:
+    replaces: []

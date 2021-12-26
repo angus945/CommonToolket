@@ -1,8 +1,9 @@
 ﻿using EditorToolket;
+using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace TaggableTexts
+namespace TextTagDefiner
 {
     public class PatternPreviewEditor
     {
@@ -14,10 +15,8 @@ namespace TaggableTexts
         }
 
         static PreviewType previewType;
-        static string previewInputCustom;
+        static string previewInputCustom = "typing everything";
         static TextAsset previewInputText;
-
-        static GUIStyle wrapText { get => new GUIStyle() { wordWrap = true }; }
 
         public static void DrawPatternPreivew(TagPatternToken patternToken)
         {
@@ -27,75 +26,96 @@ namespace TaggableTexts
         {
             if (patternTokens.Length == 0) return;
 
+            string input = GetPreviewInput(patternTokens, out Action inputFieldHandler);
+            string output = ApplyPreviewTexts(input, patternTokens);
+
             CommonEditor.DrawLayoutGroup("PattenToken Preview", "Helpbox", () =>
             {
                 CommonEditor.EnumToolbar<PreviewType>(ref previewType);
 
-                string input = GetPreviewInput(patternTokens);
-                string output = ApplyPreviewTexts(input, patternTokens);
-
-                DrawPreview(output);
+                DrawPreview(input, output, inputFieldHandler);
             });
         }
-        public static string GetPreviewInput(TagPatternToken[] patternTokens)
+        static string GetPreviewInput(TagPatternToken[] patternTokens, out Action inputFieldHandler)
+        {
+            inputFieldHandler = null;
+
+            switch (previewType)
+            {
+                case PreviewType.Auto:
+                    return GenerateAutoInput(patternTokens);
+                    
+                case PreviewType.Custom:
+                    inputFieldHandler = () =>
+                    {
+                        previewInputCustom = EditorGUILayout.TextField(previewInputCustom);
+                    };
+                    return previewInputCustom;
+
+                case PreviewType.TextAsset:
+                    inputFieldHandler = () =>
+                    {
+                        previewInputText = EditorGUILayout.ObjectField(previewInputText, typeof(TextAsset), false) as TextAsset;
+                    };
+                    return (previewInputText != null) ? previewInputText.text : "--";
+            }
+
+            return "";
+        }
+        static string GenerateAutoInput(TagPatternToken[] patternTokens)
         {
             string input = "";
-
-            CommonEditor.DrawLayoutGroup("Preview Input", "GroupBox", () =>
+            for (int i = 0; i < patternTokens.Length; i++)
             {
-                switch (previewType)
+                TagPatternToken patternToken = patternTokens[i];
+                if (patternToken == null || !patternToken.patternDefine.isValidPattern) continue;
+
+                switch (patternToken.patternDefine.type)
                 {
-                    case PreviewType.Auto:
-                        for (int i = 0; i < patternTokens.Length; i++)
-                        {
-                            TagPatternToken patternToken = patternTokens[i];
-                            if(patternToken != null && patternToken.isValidRule)
-                            {
-                                input += $"<{patternToken.keyword} preview input babababa/>";
-                            }
-                        }
+                    case TagPatternDefine.InputRuleType.None:
+                        input += $"<{patternToken.patternDefine.keyword} /> ";
                         break;
 
-                    case PreviewType.Custom:
-                        previewInputCustom = EditorGUILayout.TextField(previewInputCustom);
-                        input = previewInputCustom;
+                    default:
+                        input += $"<{patternToken.patternDefine.keyword} preview input babababa/> ";
                         break;
 
-                    case PreviewType.TextAsset:
-                        previewInputText = EditorGUILayout.ObjectField(previewInputText, typeof(TextAsset), false) as TextAsset;
-                        if (previewInputText != null) input = previewInputText.text;
-                        break;
                 }
-
-                GUILayout.Label(input, wrapText);
-            });
-
+            }
             return input;
         }
-        public static string ApplyPreviewTexts(string input, TagPatternToken[] patternTokens)
+        static string ApplyPreviewTexts(string input, TagPatternToken[] patternTokens)
         {
             for (int i = 0; i < patternTokens.Length; i++)
             {
                 TagPatternToken patternToken = patternTokens[i];
-                if (patternToken != null && patternToken.isValidRule)
+                if (patternToken != null && patternToken.patternDefine.isValidPattern)
                 {
-                    input = patternToken.ApplyToString(input);
+                    input = patternToken.ApplyToText(input);
                 }
             }
 
             return input;
         }
-        public static void DrawPreview(string output)
-        {
-            GUIStyle style = new GUIStyle() { richText = true, wordWrap = true };
 
+        static void DrawPreview(string input, string output, Action inputFieldHandler)
+        {
+            GUIStyle wrap =  new GUIStyle() { richText = false, wordWrap = true }; 
+            GUIStyle rich = new GUIStyle() { richText = true, wordWrap = true };
+
+            CommonEditor.DrawLayoutGroup("Preview Input", "GroupBox", () =>
+            {
+                inputFieldHandler?.Invoke();
+
+                GUILayout.Label(input, wrap);
+            });
             CommonEditor.DrawLayoutGroup("Source Output", "GroupBox", () =>
             {
-                EditorGUILayout.LabelField(output, EditorStyles.wordWrappedLabel);
+                EditorGUILayout.LabelField(output, wrap);
             });
             CommonEditor.DrawLayoutGroup("Rich Output", "GroupBox", () =>
             {
-                EditorGUILayout.LabelField(output, style);
+                EditorGUILayout.LabelField(output, rich);
             });
 
         }

@@ -2,56 +2,35 @@ using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace TaggableTexts
+namespace TextTagDefiner
 {
     [CreateAssetMenu(fileName = "new TagPattern (Token)", menuName = "TagableTexts/PatternToken")]
     public class TagPatternToken : ScriptableObject
     {
+        [SerializeField] TagPatternDefine tagPatternDefine = new TagPatternDefine();
+        [SerializeField] TagOutputDefine tagOutputDefine = new TagOutputDefine();
+        public TagPatternDefine patternDefine { get => tagPatternDefine; }
+        public TagOutputDefine outputDefine { get => tagOutputDefine; }
 
-
-        [SerializeField] string tagKeyword = "typing keyword";
-        [SerializeField] PatternInputRule inputRule = new PatternInputRule();
-        public string keyword { get => tagKeyword; }
-        public string patternRegex { get => $"<{tagKeyword} {inputRule}/>"; }
-        public bool isValidRule
+        public string ApplyToText(string input)
         {
-            get
-            {
-                if (string.IsNullOrEmpty(patternRegex)) return false;
-                if (string.IsNullOrWhiteSpace(patternRegex)) return false;
-
-                try
-                {
-                    Regex.Match("", patternRegex);
-                }
-                catch (ArgumentException)
-                {
-                    return false;
-                }
-
-                return true;
-            }
+            return ApplyToText(input, tagOutputDefine.DefaultReplaceHandler, null);
         }
-
-        [SerializeField] string replaceWord = null;
-        public string ApplyToString(string input)
+        public string ApplyToText(string input, Action<string> inputListener)
+        {
+            return ApplyToText(input, tagOutputDefine.DefaultReplaceHandler, inputListener);
+        }
+        public string ApplyToText(string input, Func<string, string, string> replaceHandler)
+        {
+            return ApplyToText(input, replaceHandler, null);
+        }
+        public string ApplyToText(string input, Func<string, string, string> replaceHandler, Action<string> inputListener)
         {
             if (string.IsNullOrEmpty(input)) return input;
-            if (!isValidRule) return input;
 
-            MatchCollection matchCollection = Regex.Matches(input, patternRegex);
+            if (!tagPatternDefine.PatternMatches(input, out MatchCollection matchCollection)) return input;
 
-            for (int i = 0; i < matchCollection.Count; i++)
-            {
-                string match = matchCollection[i].ToString();
-                string tagInput = match.Replace($"<{tagKeyword} ", "").Replace("/>", "");
-
-                string replace = replaceWord.Replace("<input>", tagInput);
-                input = input.Replace(match, replace);
-            }
-
-            return input;
+            return tagOutputDefine.ApplyOutput(input, matchCollection, tagPatternDefine.PickInput, replaceHandler, inputListener);
         }
     }
-
 }
