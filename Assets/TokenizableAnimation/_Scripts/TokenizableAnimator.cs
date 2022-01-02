@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace TokenizableAnimation
 {
+
     [System.Serializable]
     public class AnimationState
     {
@@ -24,19 +25,25 @@ namespace TokenizableAnimation
         public Sprite sprite { set => setSpriteHandler.Invoke(value); }
     }
 
-    public class AnimationListener
+    [System.Serializable]
+    public class AnimationListeners
     {
-        Dictionary<AnimationEventToken, Action> listeners;
+        Dictionary<AnimationEventListener, Action> listeners;
 
-        public void AddListener(AnimationEventToken token, Action eventHandler)
+        public AnimationListeners()
         {
-            if(listeners.ContainsKey(token))
+            listeners = new Dictionary<AnimationEventListener, Action>();
+        }
+
+        public void AddListener(AnimationEventListener token, Action eventHandler)
+        {
+            if (listeners.ContainsKey(token))
             {
                 listeners[token] += eventHandler;
             }
             else listeners.Add(token, eventHandler);
         }
-        public void RemoveListener(AnimationEventToken token)
+        public void RemoveListener(AnimationEventListener token)
         {
             listeners.Remove(token);
         }
@@ -45,9 +52,11 @@ namespace TokenizableAnimation
             listeners.Clear();
         }
 
-        public void TriggerEvents(AnimationEventToken token)
+        public void TriggerEvents(AnimationEventListener token)
         {
-            if(listeners.ContainsKey(token))
+            if (token == null) return;
+
+            if (listeners.ContainsKey(token))
             {
                 listeners[token]?.Invoke();
             }
@@ -57,7 +66,6 @@ namespace TokenizableAnimation
     [RequireComponent(typeof(SpriteRenderer))]
     public class TokenizableAnimator : MonoBehaviour
     {
-
         //Components
         SpriteRenderer spriteRenderer;
 
@@ -66,40 +74,57 @@ namespace TokenizableAnimation
 
         [Header("Debug")]
         [SerializeField] AnimationToken activeAnimation;
-        [SerializeField] AnimationEventToken eventToken;
+        [SerializeField] AnimationEventListener eventToken;
 
         AnimationState state;
-        AnimationListener listener;
+        AnimationListeners listeners;
 
         void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             state = new AnimationState(SetSprite, () => Time.deltaTime);
-            listener = new AnimationListener();
+            listeners = new AnimationListeners();
         }
         void Start()
         {
-            //debug
-            state.animation = activeAnimation;
-            listener.AddListener(eventToken, () => Debug.Log("Trigged event"));
+            //Debug
+            AddListener(eventToken, () => Debug.Log("Trigged event"));
+            SetAnimation(activeAnimation);
         }
         void Update()
         {
-            //spriteRenderer.sprite = activeAnimation.Update(ref time, Time.deltaTime, 20);
-
-            driver.Update(state, listener);
-        }
-
-        public void AddListener(AnimationEventToken eventToken, Action eventHandler)
-        {
-
+            driver.Update(state, listeners);
         }
 
         void SetSprite(Sprite sprite)
         {
             spriteRenderer.sprite = sprite;
         }
+
+        public void SetAnimation(AnimationToken animation)
+        {
+            state.animation = animation;
+        }
+
+        //Animation Listener
+        public void AddListener(AnimationEventListener listener, Action eventHandler)
+        {
+            listeners.AddListener(listener, eventHandler);
+        }
+        public void RemoveListener(AnimationEventListener listener)
+        {
+            listeners.RemoveListener(listener);
+        }
+        public void TriggerEvent(AnimationEventListener listener)
+        {
+            listeners.TriggerEvents(listener);
+        }
+        public void ClearListener()
+        {
+            listeners.ClearListener();
+        }
+
 
     }
 

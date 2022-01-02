@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d32eb1e7613c84299755c675257c6d, type: 3}
-  m_Name: new AnimatioEvent (Token)
+  m_Name: new AnimationListener (Token)
   m_EditorClassIdentifier: 

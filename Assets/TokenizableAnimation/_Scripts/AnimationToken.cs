@@ -11,23 +11,28 @@ namespace TokenizableAnimation
         動畫事件令牌
         同步切換
 
+        https://youtu.be/nA2IChvy_QU
         https://www.youtube.com/watch?v=5aHhmRiVpZI
     */
 
 
     [CreateAssetMenu(fileName = "new Animation (Token)", menuName = "TokenizableAnimation/Animation")]
-    public class AnimationToken : ScriptableObject
+    public partial class AnimationToken : ScriptableObject
     {
-        [System.Serializable]
-        public struct AnimationFrame
-        {
-            public Sprite sprite;
 
-        }
-
+        [SerializeField] float frameRate = 20;
+        public float fps { get => frameRate; }
 
         [SerializeField] AnimationFrame[] animationFrames = null;
         public AnimationFrame[] frames { get => animationFrames; }
+        public int length { get => animationFrames.Length; }
+
+        public AnimationFrame GetAnimationFrame(float time, out int index)
+        {
+            index = Mathf.FloorToInt(time * frameRate) % length;
+
+            return animationFrames[index];
+        }
     }
 }
 

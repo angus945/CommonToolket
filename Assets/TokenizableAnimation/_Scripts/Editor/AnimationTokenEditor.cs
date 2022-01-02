@@ -1,3 +1,4 @@
+using EditorToolket;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -17,6 +18,24 @@ namespace TokenizableAnimation
         {
             token = target as AnimationToken;
 
+            InitialList();
+        }
+        public override void OnInspectorGUI()
+        {
+            this.DrawScriptLine<AnimationToken>();
+
+            serializedObject.Update();
+
+            SerializedProperty frameRate = serializedObject.FindProperty("frameRate");
+            EditorGUILayout.PropertyField(frameRate);
+
+            frameList.DoLayoutList();
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        void InitialList()
+        {
             SerializedProperty array = serializedObject.FindProperty("animationFrames");
             frameList = new ReorderableList(serializedObject, array, true, true, true, true);
             frameList.drawHeaderCallback += (Rect rect) =>
@@ -28,28 +47,29 @@ namespace TokenizableAnimation
                 rect.y += 1;
 
                 SerializedProperty element = array.GetArrayElementAtIndex(index);
-                SerializedProperty sprite = element.FindPropertyRelative("sprite");
+                SerializedProperty sprite = element.FindPropertyRelative("frameSprite");
+                SerializedProperty listeners = element.FindPropertyRelative("listenerToken");
 
                 int previewSize = 60;
-                Rect fieldRect = new Rect(rect.x, rect.y, rect.width - previewSize - 3, 20);
+                Rect fieldRect = new Rect(rect.x, rect.y, rect.width - previewSize - 5, 20);
                 EditorGUI.PropertyField(fieldRect, sprite);
 
-                Rect previewRect = new Rect(rect.width - previewSize * 0.3f, rect.y , previewSize, previewSize);
-                //EditorGUI.DrawRect(previewRect, Color.blue);
-                DrawTexturePreview(previewRect, (Sprite)sprite.objectReferenceValue);
+                Rect previewRect = new Rect(rect.width - previewSize * 0.3f, rect.y, previewSize, previewSize);
+                CommonEditor.DrawTextureSprite(previewRect, (Sprite)sprite.objectReferenceValue);
+
+                Rect listenerRect = new Rect(fieldRect.x, fieldRect.y + fieldRect.height, fieldRect.width, 20);
+                EditorGUI.PropertyField(listenerRect, listeners);
             };
             frameList.elementHeight = 80;
         }
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
 
-            frameList.DoLayoutList();
-        }
+        float lastTime;
 
         //animation Preview
         //https://forum.unity.com/threads/drawing-a-sprite-in-editor-window.419199/
-        static float previewFPS = 20;
+        float previewTime = 0;
+        bool isPause;
+        int frameIndex;
         public override GUIContent GetPreviewTitle()
         {
             return new GUIContent("Animation Preview");
@@ -66,45 +86,38 @@ namespace TokenizableAnimation
         {
             base.OnPreviewSettings();
 
-            previewFPS = EditorGUILayout.FloatField("previewFPS", previewFPS);
+            if(GUILayout.Button(isPause ? "Play" : "Pause"))
+            {
+                isPause = !isPause;
+            }
+            if(GUILayout.Button("Next Frame"))
+            {
+                frameIndex++;
+            }
         }
         public override void OnInteractivePreviewGUI(Rect rect, GUIStyle background)
         {
-            AnimationToken.AnimationFrame[] frames = token.frames;
+            AnimationFrame[] frames = token.frames;
             if (frames == null || frames.Length == 0) return;
 
-            //TODO serialize proterty
-            int spriteIndex = Mathf.FloorToInt(Time.realtimeSinceStartup * previewFPS) % frames.Length;
-            Sprite sprite = frames[spriteIndex].sprite;
-            DrawTexturePreview(rect, sprite);
+            CommonEditor.EditorTime(ref lastTime, out float delta);
+
+            if(!isPause)
+            {
+                previewTime += delta * token.fps;
+                frameIndex = Mathf.FloorToInt(previewTime);
+
+                if (previewTime >= int.MaxValue) previewTime = 0;
+            }
+
+            frameIndex = frameIndex % frames.Length;
+            Sprite sprite = frames[frameIndex].frameSprite;
+            //TODO listener preview
+
+            CommonEditor.DrawTextureSprite(rect, sprite);
         }
 
         //Draw Preview
-        private void DrawTexturePreview(Rect position, Sprite sprite)
-        {
-            if (sprite == null) return;
-
-            Vector2 fullSize = new Vector2(sprite.texture.width, sprite.texture.height);
-            Vector2 size = new Vector2(sprite.textureRect.width, sprite.textureRect.height);
-
-            Rect coords = sprite.textureRect;
-            coords.x /= fullSize.x;
-            coords.width /= fullSize.x;
-            coords.y /= fullSize.y;
-            coords.height /= fullSize.y;
-
-            Vector2 ratio;
-            ratio.x = position.width / size.x;
-            ratio.y = position.height / size.y;
-            float minRatio = Mathf.Min(ratio.x, ratio.y);
-
-            Vector2 center = position.center;
-            position.width = size.x * minRatio;
-            position.height = size.y * minRatio;
-            position.center = center;
-
-            GUI.DrawTextureWithTexCoords(position, sprite.texture, coords);
-        }
     }
 
 }
