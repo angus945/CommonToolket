@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Systems/SceneLoader/TestSceneA.unity
+    guid: df29071b7ba8c9d4f999475163681a93
+  - enabled: 0
+    path: Assets/Systems/SceneLoader/SceneLoader.unity
+    guid: 8918c6b36235db34da9a364e8c8c8d44
+  - enabled: 0
+    path: Assets/Systems/SceneLoader/TestSceneB.unity
+    guid: f757960908593f54c9731600582b9c4b
+  - enabled: 1
+    path: Assets/Systems/StreamingAssect/StreamAsset.unity
+    guid: 251cab89d7507f04b84b2cec3977a41f
   m_configObjects: {}

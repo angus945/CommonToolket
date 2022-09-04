@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29abebfdc2c972a4a9ebf6a6de5cdfcc, type: 3}
+  m_Name: new Collection
+  m_EditorClassIdentifier: 
+  _excelID: 1JYSKXemhUYgxK7O_SeJeppz25g4bFpqpP_Ld12xpLFQ
+  _writeLocation: StreamingAssets/Localization
+  _sheetNames:
+  - Tips
+  - Steam
+  - Character
+  - UI_Lobby
+  - UI_Equip
+  - UI_Task
