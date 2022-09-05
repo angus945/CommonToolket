@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29abebfdc2c972a4a9ebf6a6de5cdfcc, type: 3}
-  m_Name: new Collection
+  m_Script: {fileID: 11500000, guid: 784f8b7659f8bc8489510bccbc855693, type: 3}
+  m_Name: GASAccessNode
   m_EditorClassIdentifier: 
-  _excelID: 1JYSKXemhUYgxK7O_SeJeppz25g4bFpqpP_Ld12xpLFQ
-  _writeLocation: StreamingAssets/Localization
-  _sheetNames:
+  excelID: 1JYSKXemhUYgxK7O_SeJeppz25g4bFpqpP_Ld12xpLFQ
+  sheetNames:
   - Tips
   - Steam
-  - Character
-  - UI_Lobby
-  - UI_Equip
-  - UI_Task
