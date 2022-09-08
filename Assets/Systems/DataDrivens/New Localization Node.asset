@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee82ebd5b76ee5b41af9944fdbd10681, type: 3}
-  m_Name: New Data Parsing List
+  m_Script: {fileID: 11500000, guid: 4196664207723fb4b86b76352b3fe0d6, type: 3}
+  m_Name: New Localization Node
   m_EditorClassIdentifier: 
-  parsingNodes:
-  - {fileID: 11400000, guid: ed1d7223fdf4e8f498787698e8bf53b3, type: 2}
-  - {fileID: 11400000, guid: 9586560dd80f68644849009fe187a492, type: 2}

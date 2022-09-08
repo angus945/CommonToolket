@@ -3,19 +3,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace DataDriven
+namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu(menuName = "DataDriven/GoogleAppScript/GASAccessToken", fileName = "new AccesToken")]
-    public class GASDataAccessNode : DataParsingNode
+    [CreateAssetMenu(fileName = "New GASAccessNode", menuName = "DataDriven/DataProcess/GASAccess")]
+    public class GASDataAccessNode : TextProcessNode
     {
         public const string postURL = "https://script.google.com/macros/s/AKfycbygvwXyQTff_GmkDAURYHHwfJnks7Nlt717-9GPBIIEq8AxWywHbVYv0ZhaaE9Yt0ZG/exec";
 
         [SerializeField] string excelID = "";
         [SerializeField] string[] sheetNames = null;
 
-        public override IEnumerator ParsingRoutine(ParsingDatas[] input, Action<ParsingDatas[]> onFinishedCallback)
+        public override IEnumerator ParsingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
         {
-            ParsingDatas[] datas = new ParsingDatas[sheetNames.Length];
+            ProcessingData[] datas = new ProcessingData[sheetNames.Length];
 
             for (int i = 0; i < datas.Length; i++)
             {
@@ -34,7 +34,7 @@ namespace DataDriven
                     }
                     else
                     {
-                        datas[i] = new ParsingDatas(sheetNames[i], www.downloadHandler.text, "");
+                        datas[i] = new ProcessingData(sheetNames[i], "", www.downloadHandler.text, "");
 
                         Debug.Log("download complete!");
                     }

@@ -24,6 +24,8 @@ public static class ArrayExtensions
     }
     public static string PrintOut<T>(this IList<T> collection)
     {
+        if (collection == null) return "[]";
+
         string data = "";
         for (int i = 0; i < collection.Count; i++)
         {

@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DataDriven
+namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu]
-    public class DataParsingList : ScriptableObject
+    [CreateAssetMenu(fileName = "New ProcessList", menuName = "DataDriven/DataProcess/ProcessList", order = 0)]
+    public class DataProcessList : ScriptableObject
     {
-        [SerializeField] DataParsingNode[] parsingNodes;
+        [SerializeField] TextProcessNode[] parsingNodes;
 
-        public IEnumerator ParsingRoutine(Action<ParsingDatas[]> onFinishedCallback)
+        public IEnumerator ParsingRoutine(Action<ProcessingData[]> onFinishedCallback)
         {
-            ParsingDatas[] parsingDatas = new ParsingDatas[0];
+            ProcessingData[] parsingDatas = new ProcessingData[0];
 
             for (int i = 0; i < parsingNodes.Length; i++)
             {

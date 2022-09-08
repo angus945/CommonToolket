@@ -5,32 +5,41 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace DataDriven
+namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu]
-    public class FileWrideNode : DataParsingNode
+    [CreateAssetMenu(fileName = "New IONode", menuName = "DataDriven/DataProcess/IO")]
+    public class FileWrideNode : TextProcessNode
     {
         [SerializeField] string writeLocation = "";
         [SerializeField] string fileFormat = "json";
 
-        public override IEnumerator ParsingRoutine(ParsingDatas[] input, Action<ParsingDatas[]> onFinishedCallback)
-        {
-            yield return null;
+        [SerializeField] bool relativelyFlag;
 
+        public override IEnumerator ParsingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        {
             for (int i = 0; i < input.Length; i++)
             {
-                ParsingDatas datas = input[i];
+                ProcessingData datas = input[i];
 
-                //Debug.Log(datas.contentFlags.Length);
+                if(relativelyFlag)
+                {
+                    string folderPath = $"{Application.dataPath}/{writeLocation}/{datas.dataFlag}";
+                    string path = $"{folderPath}/{datas.dataName}.{fileFormat}";
 
-                string path = $"{Application.dataPath}/{writeLocation}/{datas.dataName}.{fileFormat}";
-                File.WriteAllText(path, datas.contents.PrintOut());
-
-                Debug.Log(path);
+                    Directory.CreateDirectory(folderPath);
+                    File.WriteAllText(path, datas.contents.PrintOut());
+                }
+                else
+                {
+                    string path = $"{Application.dataPath}/{writeLocation}/{datas.dataName}.{fileFormat}";
+                    File.WriteAllText(path, datas.contents.PrintOut());
+                }
             }
 
             AssetDatabase.Refresh();
             onFinishedCallback?.Invoke(input);
+
+            yield return null;
         }
     }
 }

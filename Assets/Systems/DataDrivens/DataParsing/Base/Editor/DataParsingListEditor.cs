@@ -4,16 +4,16 @@ using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace DataDriven
+namespace DataDriven.TextProcess
 {
-    [CustomEditor(typeof(DataParsingList))]
+    [CustomEditor(typeof(DataProcessList))]
     public class DataParsingListEditor : Editor
     {
-        DataParsingList parsingList;
+        DataProcessList parsingList;
 
         private void OnEnable()
         {
-            parsingList = (DataParsingList)target;
+            parsingList = (DataProcessList)target;
         }
 
         public override void OnInspectorGUI()
@@ -39,9 +39,9 @@ namespace DataDriven
             }
             //EditorGUI.EndDisabledGroup();
         }
-        void PrintOutDatas(ParsingDatas[] datas)
+        void PrintOutDatas(ProcessingData[] datas)
         {
-            foreach (ParsingDatas item in datas)
+            foreach (ProcessingData item in datas)
             {
                 Debug.Log(item);
             }
