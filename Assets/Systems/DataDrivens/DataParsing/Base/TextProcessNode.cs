@@ -8,6 +8,6 @@ namespace DataDriven.TextProcess
     //[CreateAssetMenu(fileName = "New ProcessNode", menuName = "DataDriven/DataProcess/ProcessNode")]
     public abstract class TextProcessNode : ScriptableObject
     {
-        public abstract IEnumerator ParsingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback);
+        public abstract IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback);
     }
 }

@@ -15,7 +15,7 @@ namespace DataDriven.TextProcess
 
         [SerializeField] bool relativelyFlag;
 
-        public override IEnumerator ParsingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
         {
             for (int i = 0; i < input.Length; i++)
             {

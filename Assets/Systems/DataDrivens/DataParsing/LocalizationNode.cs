@@ -27,7 +27,7 @@ namespace DataDriven.TextProcess
     public class LocalizationNode : TextProcessNode
     {
 
-        public override IEnumerator ParsingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
         {
             List<ProcessingData> outputDatas = new List<ProcessingData>();
 

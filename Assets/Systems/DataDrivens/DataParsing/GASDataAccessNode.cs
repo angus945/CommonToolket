@@ -13,7 +13,7 @@ namespace DataDriven.TextProcess
         [SerializeField] string excelID = "";
         [SerializeField] string[] sheetNames = null;
 
-        public override IEnumerator ParsingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
         {
             ProcessingData[] datas = new ProcessingData[sheetNames.Length];
 
