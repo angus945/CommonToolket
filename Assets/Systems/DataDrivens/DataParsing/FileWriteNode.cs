@@ -7,8 +7,8 @@ using UnityEngine.Networking;
 
 namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu(fileName = "New IONode", menuName = "DataDriven/DataProcess/IO")]
-    public class FileWrideNode : TextProcessNode
+    [CreateAssetMenu(fileName = "New FileWriteNode", menuName = "DataDriven/DataProcess/IO")]
+    public class FileWriteNode : TextProcessNode
     {
         [SerializeField] string writeLocation = "";
         [SerializeField] string fileFormat = "json";
