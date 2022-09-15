@@ -51,6 +51,39 @@ namespace DataDriven
             return $"[{data}]";
         }
 
+        public static string ToJson(string[] contents, bool prittyPrint)
+        {
+            if (contents == null) return "[]";
+
+            string data = "";
+            for (int i = 0; i < contents.Length; i++)
+            {
+                string item = contents[i];
+
+                if (i == 0)
+                {
+                    data += item.ToString();
+                }
+                else if (prittyPrint)
+                {
+                    data += ",\n" + item.ToString();
+                }
+                else data += "," + item.ToString();
+            }
+
+            if(prittyPrint)
+            {
+                data = $"\n{data}";
+                data = data.Replace("\n", "\n\t");
+                data = $"{data}\n";
+            }
+
+            data = $"[{data}]";
+            
+
+            return data;
+        }
+
         static readonly Regex itemMatch = new Regex("\"(.*?)\":\"(.*?)\"");
         public static string[] ParseToItems(string text)
         {

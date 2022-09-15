@@ -13,7 +13,8 @@ namespace DataDriven.TextProcess
         [SerializeField] string writeLocation = "";
         [SerializeField] string fileFormat = "json";
 
-        [SerializeField] bool relativelyFlag;
+        [SerializeField] bool prittyPrint = false;
+        [SerializeField] bool relativelyFlag = false;
 
         public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
         {
@@ -21,19 +22,16 @@ namespace DataDriven.TextProcess
             {
                 ProcessingData datas = input[i];
 
-                if(relativelyFlag)
-                {
-                    string folderPath = $"{Application.dataPath}/{writeLocation}/{datas.dataFlag}";
-                    string path = $"{folderPath}/{datas.dataName}.{fileFormat}";
+                string folderPath = relativelyFlag ? $"{Application.dataPath}/{writeLocation}/{datas.dataFlag}" : $"{Application.dataPath}/{writeLocation}";
+                string path = $"{folderPath}/{datas.dataName}.{fileFormat}";
 
-                    Directory.CreateDirectory(folderPath);
-                    File.WriteAllText(path, datas.contents.PrintOut());
-                }
-                else
-                {
-                    string path = $"{Application.dataPath}/{writeLocation}/{datas.dataName}.{fileFormat}";
-                    File.WriteAllText(path, datas.contents.PrintOut());
-                }
+                Directory.CreateDirectory(folderPath);
+
+                yield return null;
+
+                File.WriteAllText(path, TextAnalize.ToJson(datas.contents, prittyPrint));
+
+                yield return null;
             }
 
             AssetDatabase.Refresh();

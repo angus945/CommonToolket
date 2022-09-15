@@ -7,7 +7,7 @@ using UnityEngine;
 namespace DataDriven.TextProcess
 {
     [CustomEditor(typeof(DataProcessList))]
-    public class DataParsingListEditor : Editor
+    public class DataProcessListEditor : Editor
     {
         DataProcessList parsingList;
 

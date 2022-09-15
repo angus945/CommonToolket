@@ -1,1 +1,30 @@
-[{"key":"Keys:tip00","value":""}, {"key":"Keys:tip01","value":""}, {"key":"Keys:tip02","value":""}, {"key":"Keys:tip03","value":""}, {"key":"Keys:tip04","value":""}, {"key":"Keys:tip05","value":""}, {"key":"Keys:tip06","value":"The upgraded equipment can increase the basic ability even if it is not worn."}]
+[
+	{
+	    "key": "tip00",
+	    "value": ""
+	},
+	{
+	    "key": "tip01",
+	    "value": ""
+	},
+	{
+	    "key": "tip02",
+	    "value": ""
+	},
+	{
+	    "key": "tip03",
+	    "value": ""
+	},
+	{
+	    "key": "tip04",
+	    "value": ""
+	},
+	{
+	    "key": "tip05",
+	    "value": ""
+	},
+	{
+	    "key": "tip06",
+	    "value": "The upgraded equipment can increase the basic ability even if it is not worn."
+	}
+]

@@ -54,19 +54,22 @@ namespace DataDriven.TextProcess
             for (int i = 0; i < contents.Length; i++)
             {
                 string[] item = TextAnalize.ParseToItems(contents[i]);
-                string key = item[0];
+
+                if (item.Length == 0) continue;
+
+                TextAnalize.AnalizeItem(item[0], out _, out string key);
 
                 for (int languageIndex = 1; languageIndex < item.Length; languageIndex++)
                 {
                     TextAnalize.AnalizeItem(item[languageIndex], out string language, out string value);
-                    
+
                     if(!languageTable.ContainsKey(language))
                     {
                         languageTable.Add(language, new List<string>());
                     }
 
                     LocalizationItem localize = new LocalizationItem(key, value);
-                    languageTable[language].Add(JsonUtility.ToJson(localize));
+                    languageTable[language].Add(JsonUtility.ToJson(localize, true));
                 }
             }
 

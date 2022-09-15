@@ -22,7 +22,7 @@ public static class ArrayExtensions
         int index = UnityEngine.Random.Range(0, collection.Count);
         return collection[index];
     }
-    public static string PrintOut<T>(this IList<T> collection)
+    public static string PrintOut<T>(this IList<T> collection, bool pritty = false)
     {
         if (collection == null) return "[]";
 
@@ -31,14 +31,21 @@ public static class ArrayExtensions
         {
             T item = collection[i];
 
-            if(i == 0)
+            if (i == 0)
             {
                 data += item.ToString();
             }
-            else data += ", " + item.ToString();
+            else if(pritty)
+            {
+                data += ",\n" + item.ToString();
+            }
+            else data += "," + item.ToString();
         }
 
-        return $"[{data}]";
+        //new string(data.arr, 4);
+        //data.Replace("\n", "\n    ");
+
+        return pritty ? $"[\n{data}\n]" :  $"[{data}]";
     }
 }
 
