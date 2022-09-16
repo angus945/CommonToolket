@@ -1,7 +1,15 @@
 ﻿namespace DataDriven.TextProcess
 {
+    public enum ProcessingType
+    {
+        Single,
+        Multiple,
+    }
+
     public struct ProcessingData
     {
+        public ProcessingType type;
+
         public string dataName;
         public string dataFlag;
 
@@ -14,6 +22,8 @@
             this.dataFlag = flag;
             this.contents = contents;
             this.contentFlags = contentFlags;
+
+            type = ProcessingType.Multiple;
         }
         public ProcessingData(string name, string flag, string content, string contentFlag) : this()
         {
@@ -21,6 +31,8 @@
             this.dataFlag = flag;
             this.contents = new string[] { content };
             this.contentFlags = new string[] { contentFlag };
+
+            type = ProcessingType.Single;
         }
 
         public override string ToString()

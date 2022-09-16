@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
+#if UNITY_EDITOR
 namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu(fileName = "New FileWriteNode", menuName = "DataDriven/DataProcess/IO")]
+
+    [CreateAssetMenu(fileName = "New FileWriteNode", menuName = TextProcessNode.MENU_BASE + "IO")]
     public class FileWriteNode : TextProcessNode
     {
         [SerializeField] string writeLocation = "";
@@ -16,9 +19,9 @@ namespace DataDriven.TextProcess
         [SerializeField] bool prittyPrint = false;
         [SerializeField] bool relativelyFlag = false;
 
-        public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        public override IEnumerator ProcessingRoutine(List<ProcessingData> input, Action<List<ProcessingData>> onFinishedCallback)
         {
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Count; i++)
             {
                 ProcessingData datas = input[i];
 
@@ -29,7 +32,16 @@ namespace DataDriven.TextProcess
 
                 yield return null;
 
-                File.WriteAllText(path, TextAnalize.ToJson(datas.contents, prittyPrint));
+                switch (datas.type)
+                {
+                    case ProcessingType.Single:
+                        File.WriteAllText(path, datas.contents[0]);
+                        break;
+
+                    case ProcessingType.Multiple:
+                        File.WriteAllText(path, TextAnalize.ToJsonArray(datas.contents, prittyPrint));
+                        break;
+                }
 
                 yield return null;
             }
@@ -41,3 +53,4 @@ namespace DataDriven.TextProcess
         }
     }
 }
+#endif

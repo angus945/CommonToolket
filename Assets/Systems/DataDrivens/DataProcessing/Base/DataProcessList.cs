@@ -12,17 +12,19 @@ namespace DataDriven.TextProcess
 
         public IEnumerator ParsingRoutine(Action<ProcessingData[]> onFinishedCallback)
         {
-            ProcessingData[] parsingDatas = new ProcessingData[0];
+            List<ProcessingData> parsingDatas = new List<ProcessingData>();
 
             for (int i = 0; i < processNodes.Length; i++)
             {
                 yield return processNodes[i].ProcessingRoutine(parsingDatas, (datas) =>
                 {
                     parsingDatas = datas;
+
+                    //Debug.Log(parsingDatas.Count);
                 });
             }
 
-            onFinishedCallback?.Invoke(parsingDatas);
+            onFinishedCallback?.Invoke(parsingDatas.ToArray());
         }
     }
 }

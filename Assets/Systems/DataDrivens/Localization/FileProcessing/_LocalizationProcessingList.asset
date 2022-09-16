@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee82ebd5b76ee5b41af9944fdbd10681, type: 3}
-  m_Name: _Data Parsing List
+  m_Name: _LocalizationProcessingList
   m_EditorClassIdentifier: 
   processNodes:
   - {fileID: 11400000, guid: ed1d7223fdf4e8f498787698e8bf53b3, type: 2}
   - {fileID: 11400000, guid: bcbda066d87ce714e8811f9b4d15fa27, type: 2}
+  - {fileID: 11400000, guid: e03acafd4e2f7cd45bf04584e8ee6860, type: 2}
   - {fileID: 11400000, guid: 9586560dd80f68644849009fe187a492, type: 2}

@@ -51,7 +51,7 @@ namespace DataDriven
             return $"[{data}]";
         }
 
-        public static string ToJson(string[] contents, bool prittyPrint)
+        public static string ToJsonArray(string[] contents, bool prittyPrint)
         {
             if (contents == null) return "[]";
 

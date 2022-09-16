@@ -5,49 +5,34 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace DataDriven.Localization
-{
-    [System.Serializable]
-    class LocalizationItem
-    {
-        public string key;
-        public string value;
-
-        public LocalizationItem(string key, string value)
-        {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
-}
 namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu(fileName = "New LocalizationNode", menuName = "DataDriven/DataProcess/Localization")]
+    [CreateAssetMenu(fileName = "New LocalizationNode", menuName = TextProcessNode.MENU_BASE + "Localization")]
     public class LocalizationNode : TextProcessNode
     {
 
-        public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        public override IEnumerator ProcessingRoutine(List<ProcessingData> input, Action<List<ProcessingData>> onFinishedCallback)
         {
             List<ProcessingData> outputDatas = new List<ProcessingData>();
 
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Count; i++)
             {
                 string[] contents = TextAnalize.ParseToArray(input[i].contents);
 
-                Dictionary<string, List<string>> table = StageB(contents);
+                Dictionary<string, List<string>> table = GetLanguageTable(contents);
                 foreach (KeyValuePair<string, List<string>> item in table)
                 {
-                    outputDatas.Add(new ProcessingData(input[i].dataName, item.Key, item.Value.ToArray(), null));
+                    ProcessingData data = new ProcessingData(input[i].dataName, item.Key, item.Value.ToArray(), null);
+                    outputDatas.Add(data);
                 }
             }
 
-            onFinishedCallback.Invoke(outputDatas.ToArray());
+            onFinishedCallback.Invoke(outputDatas);
 
             yield return null;
         }
 
-        static Dictionary<string, List<string>> StageB(string[] contents)
+        static Dictionary<string, List<string>> GetLanguageTable(string[] contents)
         {
             Dictionary<string, List<string>> languageTable = new Dictionary<string, List<string>>();
 

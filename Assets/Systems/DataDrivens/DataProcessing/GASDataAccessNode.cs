@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace DataDriven.TextProcess
 {
-    [CreateAssetMenu(fileName = "New GASAccessNode", menuName = "DataDriven/DataProcess/GASAccess")]
+    [CreateAssetMenu(fileName = "New GASAccessNode", menuName = TextProcessNode.MENU_BASE + "GASAccess")]
     public class GASDataAccessNode : TextProcessNode
     {
         public const string postURL = "https://script.google.com/macros/s/AKfycbygvwXyQTff_GmkDAURYHHwfJnks7Nlt717-9GPBIIEq8AxWywHbVYv0ZhaaE9Yt0ZG/exec";
@@ -13,11 +14,11 @@ namespace DataDriven.TextProcess
         [SerializeField] string excelID = "";
         [SerializeField] string[] sheetNames = null;
 
-        public override IEnumerator ProcessingRoutine(ProcessingData[] input, Action<ProcessingData[]> onFinishedCallback)
+        public override IEnumerator ProcessingRoutine(List<ProcessingData> input, Action<List<ProcessingData>> onFinishedCallback)
         {
-            ProcessingData[] datas = new ProcessingData[sheetNames.Length];
+            List<ProcessingData> datas = new List<ProcessingData>(input);
 
-            for (int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < sheetNames.Length; i++)
             {
                 WWWForm form = new WWWForm();
                 form.AddField("id", excelID);
@@ -34,7 +35,7 @@ namespace DataDriven.TextProcess
                     }
                     else
                     {
-                        datas[i] = new ProcessingData(sheetNames[i], "", www.downloadHandler.text, "");
+                        datas.Add(new ProcessingData(sheetNames[i], "", www.downloadHandler.text, ""));
 
                         Debug.Log("download complete!");
                     }
