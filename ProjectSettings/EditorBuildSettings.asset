@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Systems/SceneLoader/TestSceneB.unity
     guid: f757960908593f54c9731600582b9c4b
   - enabled: 1
-    path: Assets/Systems/StreamingAssect/StreamAsset.unity
+    path: Assets/Systems/DataDrivens/StreamAsset.unity
     guid: 251cab89d7507f04b84b2cec3977a41f
   m_configObjects: {}

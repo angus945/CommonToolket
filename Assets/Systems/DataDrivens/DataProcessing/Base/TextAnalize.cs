@@ -19,17 +19,20 @@ namespace DataDriven
             return result.ToArray();
         }
 
+        //
         static readonly Regex arrayMatch = new Regex("{(.+?)}");
         public static string[] ParseToArray(params string[] texts)
         {
             return Foreach(texts, (text) =>
             {
+                text = Regex.Replace(text, @"\t|\n|\r", "");
+
                 MatchCollection elements = arrayMatch.Matches(text);
                 string[] array = new string[elements.Count];
 
                 for (int i = 0; i < elements.Count; i++)
                 {
-                    array[i] = elements[i].Result("$1");
+                    array[i] = elements[i].Result("{$1}");
                 }
                 return array;
             });
@@ -82,6 +85,18 @@ namespace DataDriven
             
 
             return data;
+        }
+        public static T[] FromJsonArray<T>(string json)
+        {
+            string[] jsonArray = ParseToArray(json);
+            T[] items = new T[jsonArray.Length];
+
+            for (int i = 0; i < jsonArray.Length; i++)
+            {
+                items[i] = JsonUtility.FromJson<T>(jsonArray[i]);
+            }
+
+            return items;
         }
 
         static readonly Regex itemMatch = new Regex("\"(.*?)\":\"(.*?)\"");
