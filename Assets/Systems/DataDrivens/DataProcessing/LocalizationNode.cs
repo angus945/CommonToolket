@@ -1,15 +1,17 @@
-using DataDriven.Localization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using DataDriven.Localization;
 
 namespace DataDriven.TextProcess
 {
+
     [CreateAssetMenu(fileName = "New LocalizationNode", menuName = TextProcessNode.MENU_BASE + "Localization")]
     public class LocalizationNode : TextProcessNode
     {
+        const string keep_color = "color";
+        const string keep_note = "note";
 
         public override IEnumerator ProcessingRoutine(List<ProcessingData> input, Action<List<ProcessingData>> onFinishedCallback)
         {
@@ -32,28 +34,30 @@ namespace DataDriven.TextProcess
             yield return null;
         }
 
-        static Dictionary<string, List<string>> GetLanguageTable(string[] contents)
+        static Dictionary<string, List<string>> GetLanguageTable(string[] contentRows)
         {
             Dictionary<string, List<string>> languageTable = new Dictionary<string, List<string>>();
 
-            for (int i = 0; i < contents.Length; i++)
+            for (int i = 0; i < contentRows.Length; i++)
             {
-                string[] item = TextAnalize.ParseToItems(contents[i]);
+                string[] rowItems = TextAnalize.ParseToItems(contentRows[i]);
 
-                if (item.Length == 0) continue;
+                if (rowItems.Length == 0) continue;
 
-                TextAnalize.AnalizeItem(item[0], out _, out string key);
+                TextAnalize.AnalizeItem(rowItems[0], out _, out string key);
+                string color = TextAnalize.TakeItem(keep_color, ref rowItems);
+                string note = TextAnalize.TakeItem(keep_note, ref rowItems);
 
-                for (int languageIndex = 1; languageIndex < item.Length; languageIndex++)
+                for (int languageIndex = 1; languageIndex < rowItems.Length; languageIndex++)
                 {
-                    TextAnalize.AnalizeItem(item[languageIndex], out string language, out string value);
+                    TextAnalize.AnalizeItem(rowItems[languageIndex], out string language, out string value);
 
                     if(!languageTable.ContainsKey(language))
                     {
                         languageTable.Add(language, new List<string>());
                     }
 
-                    LocalizationItem localize = new LocalizationItem(key, value);
+                    LocalizationItem localize = new LocalizationItem(key, value, color, note);
                     languageTable[language].Add(JsonUtility.ToJson(localize, true));
                 }
             }

@@ -1,0 +1,50 @@
+[
+	{
+	    "key": "eq_intro_0",
+	    "value": "作战元素",
+	    "color": "#4f802a",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_1",
+	    "value": "电磁状态",
+	    "color": "#EF8631",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_2",
+	    "value": "护盾",
+	    "color": "#0084b0",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_3",
+	    "value": "爆炸伤害",
+	    "color": "#e35d3",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_4",
+	    "value": "加速红利",
+	    "color": "#03966b",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_read0",
+	    "value": "能够被视为道具触发相关技能。",
+	    "color": "",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_read1",
+	    "value": "每层造 3 点伤害持续 5 秒。最多五层",
+	    "color": "",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_read2",
+	    "value": "护盾能够抵挡一次伤害，异常伤害不会让护盾破碎。",
+	    "color": "",
+	    "note": ""
+	}
+]

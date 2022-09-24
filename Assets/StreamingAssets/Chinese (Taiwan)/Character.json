@@ -1,6 +1,8 @@
 [
 	{
 	    "key": "TestName",
-	    "value": "測試名稱"
+	    "value": "測試名稱",
+	    "color": "",
+	    "note": ""
 	}
 ]

@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784f8b7659f8bc8489510bccbc855693, type: 3}
-  m_Name: GASAccessNode
+  m_Script: {fileID: 11500000, guid: 88b109c2b1ddb0846af3ddf583b33bc8, type: 3}
+  m_Name: new FontsNode
   m_EditorClassIdentifier: 
-  excelID: 1JYSKXemhUYgxK7O_SeJeppz25g4bFpqpP_Ld12xpLFQ
-  sheetNames:
-  - Tips
-  - UI_EquipIntro
+  defaultFont:
+    language: 
+    fontName: 
+    fontSize: 
+  fontTables: []

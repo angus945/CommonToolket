@@ -34,9 +34,17 @@ public class Test : MonoBehaviour
         //StreamingItem[] items = StreamingLoader.GetItemsWithType("Localization");
         //Debug.Log(items.PrintOut());
 
-        LocalizationTables.LoadText();
-        string[] texts = LocalizationTables.GetTexts("Chinese (Simplified)", "Tips");
-        Debug.Log(texts.PrintOut());
+        //LocalizationTables.LoadText();
+        //string[] texts = LocalizationTables.GetTexts("Chinese (Simplified)", "Tips");
+        //Debug.Log(texts.PrintOut());
         //GetComponent<Text>().text = Application.dataPath;
+
+        string[] osFonts = Font.GetOSInstalledFontNames();
+        string rndFont = osFonts[Random.Range(0, osFonts.Length)];
+        Font font = Font.CreateDynamicFontFromOSFont("abc", 16);
+
+        text.font = font;
+        text.text = "Hello";
+        //Debug.Log(Font.GetOSInstalledFontNames().PrintOut());
     }
 }

@@ -1,0 +1,50 @@
+[
+	{
+	    "key": "eq_intro_0",
+	    "value": "作戰元素",
+	    "color": "#4f802a",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_1",
+	    "value": "電磁狀態",
+	    "color": "#EF8631",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_2",
+	    "value": "護盾",
+	    "color": "#0084b0",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_3",
+	    "value": "爆炸傷害",
+	    "color": "#e35d3",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_4",
+	    "value": "加速紅利",
+	    "color": "#03966b",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_read0",
+	    "value": "能夠被視為道具觸發相關技能。",
+	    "color": "",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_read1",
+	    "value": "每層造 3 點傷害持續 5 秒。最多五層",
+	    "color": "",
+	    "note": ""
+	},
+	{
+	    "key": "eq_intro_read2",
+	    "value": "護盾能夠抵擋一次傷害，異常傷害不會讓護盾破碎。",
+	    "color": "",
+	    "note": ""
+	}
+]

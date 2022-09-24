@@ -116,6 +116,10 @@ namespace DataDriven
                     content = "(image data)";
                     break;
 
+                case "ttf":
+
+                    break;
+
                 default:
                     break;
             }

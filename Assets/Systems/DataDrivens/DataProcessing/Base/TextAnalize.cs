@@ -86,6 +86,7 @@ namespace DataDriven
 
             return data;
         }
+
         public static T[] FromJsonArray<T>(string json)
         {
             string[] jsonArray = ParseToArray(json);
@@ -110,6 +111,26 @@ namespace DataDriven
                 items[i] = matches[i].Result("$1:$2");
             }
             return items;
+        }
+        public static string TakeItem(string take, ref string[] items)
+        {
+            for (int i = 0; i < items.Length; i++)
+            {
+                string item = items[i];
+                AnalizeItem(item, out string name, out string value);
+
+                if(name == take)
+                {
+                    List<string> temp = new List<string>(items);
+                    temp.RemoveAt(i);
+
+                    items = temp.ToArray();
+
+                    return value;
+                }
+            }
+
+            return "";
         }
         public static void AnalizeItem(string item, out string itemName, out string itemValue)
         {

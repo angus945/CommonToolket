@@ -1,6 +1,8 @@
 [
 	{
 	    "key": "TestName",
-	    "value": "test"
+	    "value": "test",
+	    "color": "",
+	    "note": ""
 	}
 ]

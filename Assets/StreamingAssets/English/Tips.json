@@ -1,30 +1,44 @@
 [
 	{
 	    "key": "tip00",
-	    "value": ""
+	    "value": "",
+	    "color": "",
+	    "note": ""
 	},
 	{
 	    "key": "tip01",
-	    "value": ""
+	    "value": "",
+	    "color": "",
+	    "note": ""
 	},
 	{
 	    "key": "tip02",
-	    "value": ""
+	    "value": "",
+	    "color": "",
+	    "note": ""
 	},
 	{
 	    "key": "tip03",
-	    "value": ""
+	    "value": "",
+	    "color": "",
+	    "note": ""
 	},
 	{
 	    "key": "tip04",
-	    "value": ""
+	    "value": "",
+	    "color": "",
+	    "note": ""
 	},
 	{
 	    "key": "tip05",
-	    "value": ""
+	    "value": "",
+	    "color": "",
+	    "note": ""
 	},
 	{
 	    "key": "tip06",
-	    "value": "The upgraded equipment can increase the basic ability even if it is not worn."
+	    "value": "The upgraded equipment can increase the basic ability even if it is not worn.",
+	    "color": "",
+	    "note": ""
 	}
 ]
