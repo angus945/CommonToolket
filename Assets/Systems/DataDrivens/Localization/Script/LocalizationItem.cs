@@ -27,7 +27,11 @@ namespace DataDriven.Localization
 
         public string GetResult()
         {
-            return $"<color={color}>{value}</color>";
+            if (string.IsNullOrEmpty(color))
+            {
+                return value;
+            }
+            else return $"<color={color}>{value}</color>";
         }
     }
 

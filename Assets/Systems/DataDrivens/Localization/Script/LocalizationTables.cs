@@ -90,12 +90,23 @@ namespace DataDriven.Localization
 
             return localizationTable[language].GetTable(header);
         }
+
+        public static string[] GetTexts(string header)
+        {
+            return GetTexts(activeLanguage, header);
+        }
         public static string[] GetTexts(string language, string header)
         {
             List<LocalizationItem> values = new List<LocalizationItem>(GetTable(language, header).Values);
 
             return values.ConvertAll<string>(n => n.GetResult()).ToArray();
         }
+
+        public static string GetText(string header, string key)
+        {
+            return GetText(activeLanguage, header, key);
+        }
+
         public static string GetText(string language, string header, string key)
         {
             if (GetTable(language, header).TryGetValue(key, out LocalizationItem item))
@@ -126,6 +137,21 @@ namespace DataDriven.Localization
 
             return input;
         }
+
+
+        public static string NextLanguage()
+        {
+            for (int i = 0; i < languages.Length; i++)
+            {
+                if (languages[i] != activeLanguage) continue;
+
+                return languages[(i + 1) % languages.Length];
+            }
+
+            return null;
+        }
     }
+
+
 
 }
