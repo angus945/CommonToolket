@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace DataDriven.Localization
 {
     [System.Serializable]
-    class LocalizationItem
+    public class LocalizationItem
     {
         public string key;
         public string value;
@@ -22,6 +23,11 @@ namespace DataDriven.Localization
         public override string ToString()
         {
             return $"key: {key}, value: {value}";
+        }
+
+        public string GetResult()
+        {
+            return $"<color={color}>{value}</color>";
         }
     }
 

@@ -92,8 +92,10 @@ namespace DataDriven
             string[] jsonArray = ParseToArray(json);
             T[] items = new T[jsonArray.Length];
 
+                //Debug.Log(json);
             for (int i = 0; i < jsonArray.Length; i++)
             {
+                //Debug.Log(jsonArray[i]);
                 items[i] = JsonUtility.FromJson<T>(jsonArray[i]);
             }
 

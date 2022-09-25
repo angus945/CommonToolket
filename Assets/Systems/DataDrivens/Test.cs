@@ -1,4 +1,4 @@
-using DataDriven;
+﻿using DataDriven;
 using DataDriven.Localization;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +14,16 @@ public class Test : MonoBehaviour
 
     void Start()
     {
+        LocalizationTables.LoadText();
+
+        string input = "减少 50 %来自任何地方的<eq_intro_3>。<eq_intro_2><eq_intro_1>";
+        string result = LocalizationTables.ReplaceTag("Chinese (Taiwan)", input, "UI_EquipIntro", out string[] tags);
+
+        Debug.Log(input);
+        Debug.Log(result);
+        Debug.Log(tags.PrintOut());
+
+        text.text = result;
         //text.text = Application.streamingAssetsPath;
         //string path = Application.streamingAssetsPath;
 
@@ -39,12 +49,12 @@ public class Test : MonoBehaviour
         //Debug.Log(texts.PrintOut());
         //GetComponent<Text>().text = Application.dataPath;
 
-        string[] osFonts = Font.GetOSInstalledFontNames();
-        string rndFont = osFonts[Random.Range(0, osFonts.Length)];
-        Font font = Font.CreateDynamicFontFromOSFont("abc", 16);
+        //string[] osFonts = Font.GetOSInstalledFontNames();
+        //string rndFont = osFonts[Random.Range(0, osFonts.Length)];
+        //Font font = Font.CreateDynamicFontFromOSFont("abc", 16);
 
-        text.font = font;
-        text.text = "Hello";
+        //text.font = font;
+        //text.text = "Hello";
         //Debug.Log(Font.GetOSInstalledFontNames().PrintOut());
     }
 }

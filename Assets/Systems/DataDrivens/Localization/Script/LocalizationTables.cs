@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace DataDriven.Localization
@@ -10,11 +9,11 @@ namespace DataDriven.Localization
     public class LocalizationTable
     {
         //Header, Key, Value
-        Dictionary<string, Dictionary<string, string>> table;
+        Dictionary<string, Dictionary<string, LocalizationItem>> table;
 
         public LocalizationTable(StreamingFile[] files)
         {
-            table = new Dictionary<string, Dictionary<string, string>>();
+            table = new Dictionary<string, Dictionary<string, LocalizationItem>>();
 
             for (int i = 0; i < files.Length; i++)
             {
@@ -22,9 +21,9 @@ namespace DataDriven.Localization
                 string content = files[i].ReadString();
                 LocalizationItem[] items = TextAnalize.FromJsonArray<LocalizationItem>(content);
 
-                if(!table.ContainsKey(header))
+                if (!table.ContainsKey(header))
                 {
-                    table.Add(header, new Dictionary<string, string>());
+                    table.Add(header, new Dictionary<string, LocalizationItem>());
                 }
 
                 AddItems(header, items);
@@ -36,11 +35,11 @@ namespace DataDriven.Localization
             {
                 LocalizationItem item = items[i];
 
-                table[header].Add(item.key, item.value);
+                table[header].Add(item.key, item);
             }
         }
 
-        public Dictionary<string, string> GetTable(string header)
+        public Dictionary<string, LocalizationItem> GetTable(string header)
         {
             return table[header];
         }
@@ -82,7 +81,7 @@ namespace DataDriven.Localization
             languages = localizationTable.Keys.ToArray();
         }
 
-        static Dictionary<string, string> GetTable(string language, string header)
+        static Dictionary<string, LocalizationItem> GetTable(string language, string header)
         {
             if (localizationTable == null)
             {
@@ -93,17 +92,40 @@ namespace DataDriven.Localization
         }
         public static string[] GetTexts(string language, string header)
         {
-            return new List<string>(GetTable(language, header).Values).ToArray();
+            List<LocalizationItem> values = new List<LocalizationItem>(GetTable(language, header).Values);
+
+            return values.ConvertAll<string>(n => n.GetResult()).ToArray();
         }
         public static string GetText(string language, string header, string key)
         {
-            if (GetTable(language, header).TryGetValue(key, out string text))
+            if (GetTable(language, header).TryGetValue(key, out LocalizationItem item))
             {
-                return text;
+                return item.GetResult();
             }
             else return $"<misseing content: {key}>";
         }
 
+        public static string ReplaceTag(string language, string input, string header, out string[] tags)
+        {
+            Dictionary<string, LocalizationItem> table = GetTable(language, header);
+            List<string> matchTags = new List<string>();
+
+            input = Regex.Replace(input, "<(.+?)>", (Match m) =>
+            {
+                string key = m.Result("$1");
+                if (table.TryGetValue(key, out LocalizationItem item))
+                {
+                    matchTags.Add(key);
+
+                    return item.GetResult();
+                }
+                else return $"<{key}>";
+            });
+
+            tags = matchTags.ToArray();
+
+            return input;
+        }
     }
 
 }
