@@ -1,37 +1,40 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using UnityEngine;
+using MoonSharp.Interpreter;
 
 namespace DataDriven
 {
     [System.Serializable]
-    public class StreamingFolder
+    public class StreamingDirectory
     {
-        public readonly string folderName;
-        public readonly string folderPath;
+        public readonly string name;
+        public readonly string path;
 
-        public readonly StreamingFolder[] childFolders;
-        public readonly StreamingFile[] childFiles;
+        public readonly StreamingDirectory[] directory;
+        public readonly StreamingFile[] files;
 
-        public StreamingFolder(string path)
+        public StreamingDirectory(string path)
         {
-            this.folderName = path.Split('\\').Last();
-            this.folderPath = path;
+            this.name = path.Split('\\').Last();
+            this.path = path;
 
-            childFolders = LoadFolders(path);
-            childFiles = LoadFiles(path);
+            directory = LoadFolders(path);
+            files = LoadFiles(path);
 
         }
-        StreamingFolder[] LoadFolders(string path)
+        StreamingDirectory[] LoadFolders(string path)
         {
             string[] pathes = Directory.GetDirectories(path);
 
-            StreamingFolder[] folders = new StreamingFolder[pathes.Length];
+            StreamingDirectory[] folders = new StreamingDirectory[pathes.Length];
             for (int i = 0; i < pathes.Length; i++)
             {
                 //Debug.Log(pathes[i]);
 
-                folders[i] = new StreamingFolder(pathes[i]);
+                folders[i] = new StreamingDirectory(pathes[i]);
             }
 
             return folders;
@@ -49,9 +52,30 @@ namespace DataDriven
             return files;
         }
 
+        public StreamingDirectory GetDirectory(string name)
+        {
+            return directory.Where(n => n.name == name).First();
+        }
+        public StreamingFile[] GetFilesWithName(string name)
+        {
+            return files.Where(n => n.name == name).ToArray();
+        }
+        public StreamingFile GetFileWithName(string name)
+        {
+            return files.Where(n => n.name == name).First();
+        }
+        public StreamingFile[] GetFilesWithType(string type)
+        {
+            return files.Where(n => n.name.EndsWith($".{type}")).ToArray();
+        }
+        public StreamingFile GetFileWithType(string type)
+        {
+            return files.Where(n => n.name.EndsWith($".{type}")).First();
+        }
+
         public override string ToString()
         {
-            return $"folder: {folderName}";
+            return $"folder: {name}";
         }
     }
 
@@ -62,17 +86,6 @@ namespace DataDriven
         public readonly string format;
 
         public readonly byte[] data;
-        public string ReadString()
-        {
-            return System.Text.Encoding.UTF8.GetString(this.data);
-        }
-        public Texture2D ReadImage()
-        {
-            Texture2D image = new Texture2D(2, 2);
-            image.LoadImage(data);
-            return image;
-        }
-
         public StreamingFile(string path)
         {
             string[] fileName = path.Split('\\').Last().Split('.');
@@ -100,6 +113,35 @@ namespace DataDriven
 
             //Debug.Log(this);
         }
+
+        public string ReadString()
+        {
+            return System.Text.Encoding.UTF8.GetString(this.data);
+        }
+        public Texture2D ReadImage()
+        {
+            Texture2D image = new Texture2D(2, 2);
+            image.LoadImage(data);
+            return image;
+        }
+        public Script ReadLua()
+        {
+            Script script = new Script();
+            string code = System.Text.Encoding.UTF8.GetString(this.data);
+
+            script.DoString(code);
+
+            return script;
+        }
+        internal XmlDocument ReadXML()
+        {
+            string xml = System.Text.Encoding.UTF8.GetString(this.data);
+            XmlDocument docs = new XmlDocument();
+
+            docs.LoadXml(xml);
+            return docs;
+        }
+
         public override string ToString()
         {
             string content = "";
@@ -126,6 +168,8 @@ namespace DataDriven
 
             return $"name: {name}.{format}, content: {content}";
         }
+
+
     }
 
     [System.Serializable]
@@ -141,15 +185,15 @@ namespace DataDriven
             this.itemType = itemType;
         }
 
-        [System.NonSerialized] public readonly StreamingFolder rootFolder;
+        [System.NonSerialized] public readonly StreamingDirectory root;
 
         public StreamingItem(string rootPath)
         {
-            rootFolder = new StreamingFolder(rootPath);
+            root = new StreamingDirectory(rootPath);
         }
         public override string ToString()
         {
-            return $"name: {itemName}, type: {itemType}, path: {rootFolder.folderPath}";
+            return $"name: {itemName}, type: {itemType}, path: {root.path}";
         }
     }
 }

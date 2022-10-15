@@ -1,60 +1,116 @@
-﻿using DataDriven;
-using DataDriven.Localization;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
+using MoonSharp.Interpreter;
+using DataDriven;
+using DataDriven.Localization;
+using DataDriven.Lua;
+using DataDriven.XML;
+
+[System.Serializable][MoonSharpUserData]
+public class Properity
+{
+    public Vector3 position;
+
+    [field:SerializeField][XmlElement]
+    public float Speed { get; set; }
+}
+
+[System.Serializable]
+public class Behavior
+{
+    [field: SerializeField] [XmlElement]
+    public string Movement { get; set; }
+
+    DynValue updateMethod;
+
+    public void LoadBehavior(Script script)
+    {
+        updateMethod = script.Globals.Get(Movement);
+    }
+    public void Update(Properity properity, float delta)
+    {
+        //Debug.Log(delta);
+        updateMethod.Function.Call(properity, delta);
+    }
+}
+
+[System.Serializable]
+public class Entity
+{
+    [field: SerializeField][XmlElement]
+    public Properity Properity { get; set; }
+
+    [field: SerializeField][XmlElement]
+    public Behavior Behavior { get; set; }
+
+    public void Update(float delta)
+    {
+        Behavior.Update(Properity, delta);
+    }
+}
 
 public class Test : MonoBehaviour
 {
     [SerializeField] Text text;
     [SerializeField] Image image;
+    [SerializeField] string path;
+
+    public Entity[] entities;
 
     void Start()
     {
-        LocalizationTables.LoadText();
+        //XmlDocument xml = new XmlDocument();
+        //XmlDeclaration xmldecl = xml.CreateXmlDeclaration("1.0", "UTF-8", "");
+        //XmlElement root = xml.CreateElement("Data");
+        //XmlElement info = xml.CreateElement("Info");
 
-        string input = "减少 50 %来自任何地方的<eq_intro_3>。<eq_intro_2><eq_intro_1>";
-        string result = LocalizationTables.ReplaceTag("Chinese (Taiwan)", input, "UI_EquipIntro", out string[] tags);
+        //info.SetAttribute("Name", "Angus");
+        //info.SetAttribute("Age", "20");
+        //info.SetAttribute("Phone", "123456");
 
-        Debug.Log(input);
-        Debug.Log(result);
-        Debug.Log(tags.PrintOut());
+        //root.AppendChild(info);
+        //xml.AppendChild(root);
+        //xml.Save($"{Application.streamingAssetsPath}/{path}/TestXML.xml");
 
-        text.text = result;
-        //text.text = Application.streamingAssetsPath;
-        //string path = Application.streamingAssetsPath;
+        UserData.RegisterType<Properity>();
+        LuaInitializer.RegisterCommonType();
+        LuaInitializer.SetLuaLogger();
+
+        StreamingLoader.LoadStreamingItems();
+        StreamingItem[] items = StreamingLoader.GetItemsWithType("Complex");
 
 
-        //string[] folders = Directory.GetDirectories(Application.streamingAssetsPath + "\\English");
-        //string[] folders = Directory.GetFiles(Application.streamingAssetsPath + "\\English");
-        //Debug.Log(folders.PrintOut());
+        StreamingFile entitiesFile = items[0].root.GetFileWithName("Entities");
+        StreamingFile behavioursFile = items[0].root.GetFileWithName("Behaviours");
 
-        //StreamingItem[] contents = StreamingLoader.GetItemsWithType(KeywordDefine.LOCALIZATION);
-        //for (int i = 0; i < contents.Length; i++)
-        //{
-        //    StreamingFolder folder = contents[i].rootFolder;
+        string behCode = behavioursFile.ReadString();
+        Script behaviorScript = LuaInitializer.CreateScript(behCode);
 
-        //    Texture2D tex = folder.childFiles.Where(n => n.format == "jpg").ToArray().First().ReadImage();
-        //    image.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
-        //}
+        XmlDocument entitiesXML = entitiesFile.ReadXML();
 
-        //StreamingItem[] items = StreamingLoader.GetItemsWithType("Localization");
-        //Debug.Log(items.PrintOut());
+        XmlNodeList infos = entitiesXML.GetElementsByTagName("Entities")[0].ChildNodes;
+        this.entities = new Entity[infos.Count];
+        for (int i = 0; i < infos.Count; i++)
+        {
+            Entity entity = XMLConverter.ConvertNode<Entity>(infos[i]);
 
-        //LocalizationTables.LoadText();
-        //string[] texts = LocalizationTables.GetTexts("Chinese (Simplified)", "Tips");
-        //Debug.Log(texts.PrintOut());
-        //GetComponent<Text>().text = Application.dataPath;
-
-        //string[] osFonts = Font.GetOSInstalledFontNames();
-        //string rndFont = osFonts[Random.Range(0, osFonts.Length)];
-        //Font font = Font.CreateDynamicFontFromOSFont("abc", 16);
-
-        //text.font = font;
-        //text.text = "Hello";
-        //Debug.Log(Font.GetOSInstalledFontNames().PrintOut());
+            entity.Behavior.LoadBehavior(behaviorScript);
+            this.entities[i] = entity;// new Entity(infos[i]);
+        }
+        //Debug.Log(xml.ToString());
+    }
+    void Update()
+    {
+        for (int i = 0; i < entities.Length; i++)
+        {
+            entities[i].Update(Time.deltaTime);
+        }
     }
 }

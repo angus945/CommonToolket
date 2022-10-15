@@ -1,0 +1,21 @@
+<Entities>
+
+  <Entity name="Entity A">
+    <Properity>
+      <Speed> 5 </Speed>
+    </Properity>
+    <Behavior>
+      <Movement>MoveUp</Movement>
+    </Behavior>
+  </Entity>
+
+  <Entity name="Entity A">
+    <Properity>
+      <Speed> 10 </Speed>
+    </Properity>
+    <Behavior>
+      <Movement>MoveDown</Movement>
+    </Behavior>
+  </Entity>
+
+</Entities>

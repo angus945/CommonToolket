@@ -6,46 +6,47 @@ using UnityEngine;
 
 namespace DataDriven.Localization
 {
-    public class LocalizationTable
+    public class LocalizationTables
     {
-        //Header, Key, Value
-        Dictionary<string, Dictionary<string, LocalizationItem>> table;
-
-        public LocalizationTable(StreamingFile[] files)
+        class LocalizationTable
         {
-            table = new Dictionary<string, Dictionary<string, LocalizationItem>>();
+            //Header, Key, Value
+            Dictionary<string, Dictionary<string, LocalizationItem>> table;
 
-            for (int i = 0; i < files.Length; i++)
+            public LocalizationTable(StreamingFile[] files)
             {
-                string header = files[i].name;
-                string content = files[i].ReadString();
-                LocalizationItem[] items = TextAnalize.FromJsonArray<LocalizationItem>(content);
+                table = new Dictionary<string, Dictionary<string, LocalizationItem>>();
 
-                if (!table.ContainsKey(header))
+                for (int i = 0; i < files.Length; i++)
                 {
-                    table.Add(header, new Dictionary<string, LocalizationItem>());
+                    string header = files[i].name;
+                    string content = files[i].ReadString();
+                    LocalizationItem[] items = TextAnalize.FromJsonArray<LocalizationItem>(content);
+
+                    if (!table.ContainsKey(header))
+                    {
+                        table.Add(header, new Dictionary<string, LocalizationItem>());
+                    }
+
+                    AddItems(header, items);
                 }
-
-                AddItems(header, items);
             }
-        }
-        void AddItems(string header, LocalizationItem[] items)
-        {
-            for (int i = 0; i < items.Length; i++)
+            void AddItems(string header, LocalizationItem[] items)
             {
-                LocalizationItem item = items[i];
+                for (int i = 0; i < items.Length; i++)
+                {
+                    LocalizationItem item = items[i];
 
-                table[header].Add(item.key, item);
+                    table[header].Add(item.key, item);
+                }
+            }
+
+            public Dictionary<string, LocalizationItem> GetTable(string header)
+            {
+                return table[header];
             }
         }
 
-        public Dictionary<string, LocalizationItem> GetTable(string header)
-        {
-            return table[header];
-        }
-    }
-    public class LocalizationTables : MonoBehaviour
-    {
         static string _activeLanguage;
         public static string activeLanguage
         {
@@ -70,10 +71,10 @@ namespace DataDriven.Localization
 
             for (int i = 0; i < contents.Length; i++)
             {
-                StreamingFolder folder = contents[i].rootFolder;
+                StreamingDirectory folder = contents[i].root;
 
-                string language = folder.folderName;
-                LocalizationTable table = new LocalizationTable(folder.childFiles);
+                string language = folder.name;
+                LocalizationTable table = new LocalizationTable(folder.files);
 
                 localizationTable.Add(language, table);
             }
