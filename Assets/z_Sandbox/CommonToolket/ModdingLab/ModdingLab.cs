@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CommonToolket.TokenizationObjectPool;
 
-public class VisualEffectContainer : TokenizableObjectContainer<ParticleSystem, VisualEffectToken, VisualEffectContainer>
+public class ModdingLab : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

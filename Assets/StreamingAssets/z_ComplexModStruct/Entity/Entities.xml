@@ -1,0 +1,22 @@
+<Entities>
+
+  <Entity name="Entity A">
+    <Properity>
+      <Speed> 5 </Speed>
+      <Tags>
+        <Tag>TagA</Tag>
+        <Tag>TagB</Tag>
+        <Tag>TagC</Tag>
+      </Tags>
+      <Components>
+        <Component>Movement</Component>
+        <Component>Health</Component>
+      </Components>
+    </Properity>
+    <Behavior>
+      <Movement>MoveUp</Movement>
+    </Behavior>
+  </Entity>
+
+
+</Entities>

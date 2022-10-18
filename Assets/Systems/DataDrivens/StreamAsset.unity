@@ -270,7 +270,13 @@ MonoBehaviour:
   text: {fileID: 1934484743}
   image: {fileID: 1859360321}
   path: Lua
-  entities: []
+  entities:
+  - <Properity>k__BackingField:
+      position: {x: 0, y: 0, z: 0}
+      <Speed>k__BackingField: 0
+      <Components>k__BackingField: []
+    <Behavior>k__BackingField:
+      <Movement>k__BackingField: 
 --- !u!1 &1443541956
 GameObject:
   m_ObjectHideFlags: 0

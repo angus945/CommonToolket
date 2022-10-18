@@ -20,6 +20,12 @@ public class Properity
 
     [field:SerializeField][XmlElement]
     public float Speed { get; set; }
+
+    [field:SerializeField][XmlArray("Tags")][XmlArrayItem("Tag")]
+    public string[] Tags { get; set; }
+
+    [field:SerializeField][XmlArray("Components")][XmlArrayItem("Component")]
+    public List<string> Components { get; set; }
 }
 
 [System.Serializable]
@@ -79,9 +85,9 @@ public class Test : MonoBehaviour
         //xml.AppendChild(root);
         //xml.Save($"{Application.streamingAssetsPath}/{path}/TestXML.xml");
 
-        UserData.RegisterType<Properity>();
-        LuaInitializer.RegisterCommonType();
-        LuaInitializer.SetLuaLogger();
+        //UserData.RegisterType<Properity>();
+        //LuaInitializer.Initialize(Debug.Log, typeof(Properity));
+        LuaInitializer.RegisterTypes(typeof(Properity));
 
         StreamingLoader.LoadStreamingItems();
         StreamingItem[] items = StreamingLoader.GetItemsWithType("Complex");
@@ -90,17 +96,20 @@ public class Test : MonoBehaviour
         StreamingFile entitiesFile = items[0].root.GetFileWithName("Entities");
         StreamingFile behavioursFile = items[0].root.GetFileWithName("Behaviours");
 
-        string behCode = behavioursFile.ReadString();
-        Script behaviorScript = LuaInitializer.CreateScript(behCode);
+        Script behaviorScript = behavioursFile.ReadLua();
+        LuaInitializer.IncludeLiberary(behaviorScript);
 
         XmlDocument entitiesXML = entitiesFile.ReadXML();
 
-        XmlNodeList infos = entitiesXML.GetElementsByTagName("Entities")[0].ChildNodes;
+        XmlNodeList infos = entitiesXML.GetFirstElementByTagName("Entities").ChildNodes;
         this.entities = new Entity[infos.Count];
         for (int i = 0; i < infos.Count; i++)
         {
             Entity entity = XMLConverter.ConvertNode<Entity>(infos[i]);
 
+            Debug.Log(entity);
+            Debug.Log(entity.Behavior);
+            Debug.Log(behaviorScript);
             entity.Behavior.LoadBehavior(behaviorScript);
             this.entities[i] = entity;// new Entity(infos[i]);
         }
