@@ -1,0 +1,10 @@
+<SpriteSheets>
+    <SpriteSheet id="testSpriteSheet" source="testSpriteSheet" width="32" height="32">
+    
+        <Animations>
+            <Animation name="moveA" row="0" length="8" duration="0.5"></Animation>
+            <Animation name="moveB" row="1" length="8" duration="0.5"></Animation>
+        </Animations>
+
+    </SpriteSheet>
+</SpriteSheets>

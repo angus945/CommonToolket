@@ -1,22 +1,40 @@
 <Entities>
 
-  <Entity name="Entity A">
-    <Properity>
-      <Speed> 5 </Speed>
-      <Tags>
-        <Tag>TagA</Tag>
-        <Tag>TagB</Tag>
-        <Tag>TagC</Tag>
-      </Tags>
-      <Components>
-        <Component>Movement</Component>
-        <Component>Health</Component>
-      </Components>
-    </Properity>
-    <Behavior>
-      <Movement>MoveUp</Movement>
-    </Behavior>
-  </Entity>
+  <Entity id="Entity_A">
+    <Name> Entity A </Name>
+    <Describe> a basis Entity </Describe>
 
+    <Tags>
+      <Tag>TagA</Tag>
+      <Tag>TagB</Tag>
+      <Tag>TagC</Tag>
+    </Tags>
+
+    <Visual>
+      <SpriteSheet>testSpriteSheet</SpriteSheet>
+      <SpriteSheet>SpriteSheetB</SpriteSheet>
+      <SpriteSheet>SpriteSheetC</SpriteSheet>
+    </Visual>
+
+    <Audio></Audio>
+
+    <Components>
+      <Collision id="col"></Collision>
+      <Rigidbody id="rig"></Rigidbody>
+      <Animation id="anim" spriteSheet="testSpriteSheet"></Animation>
+      <!--<Inventory></Inventory>
+      <HealthSystem></HealthSystem>
+      <Movement></Movement>
+      <Input></Input>-->
+    </Components>
+
+    <Behavior>
+      <EnemyAI></EnemyAI>
+    </Behavior>
+
+    <Listener>
+    </Listener>
+
+  </Entity>
 
 </Entities>
