@@ -1,10 +1,10 @@
 <SpriteSheets>
-    <SpriteSheet id="testSpriteSheet" source="testSpriteSheet" width="32" height="32">
-    
-        <Animations>
-            <Animation name="moveA" row="0" length="8" duration="0.5"></Animation>
-            <Animation name="moveB" row="1" length="8" duration="0.5"></Animation>
-        </Animations>
+  <SpriteSheet id="testSpriteSheet" source="testSpriteSheet" filter="Point" width="32" height="32">
 
-    </SpriteSheet>
+    <Animations default="moveA">
+        <Animation name="moveA" index="11" length="8" loop="true" duration="0.05"></Animation>
+        <Animation name="moveB" index="10" length="8" loop="false" duration="0.5"></Animation>
+    </Animations>
+
+  </SpriteSheet>
 </SpriteSheets>

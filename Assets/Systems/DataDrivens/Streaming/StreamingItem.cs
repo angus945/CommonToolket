@@ -118,10 +118,12 @@ namespace DataDriven
         {
             return System.Text.Encoding.UTF8.GetString(this.data);
         }
-        public Texture2D ReadImage()
+        public Texture2D ReadImage(FilterMode filter)
         {
             Texture2D image = new Texture2D(2, 2);
             image.LoadImage(data);
+            image.filterMode = filter;
+
             return image;
         }
         public Script ReadLua()

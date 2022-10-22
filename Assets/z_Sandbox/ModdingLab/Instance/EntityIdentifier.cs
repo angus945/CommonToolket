@@ -1,4 +1,6 @@
-﻿namespace ModdingLab
+﻿using ModdingLab.Define;
+
+namespace ModdingLab.Define
 {
     [System.Serializable]
     public class EntityIdentifier

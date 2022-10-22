@@ -1,10 +1,11 @@
-using DataDriven;
-using DataDriven.XML;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using UnityEngine;
+using DataDriven;
+using DataDriven.XML;
+using ModdingLab.Define;
 
 namespace ModdingLab
 {
@@ -12,12 +13,17 @@ namespace ModdingLab
     {
         public static Dictionary<string, EntityData> EntityDataTable = new Dictionary<string, EntityData>();
         public static Dictionary<string, SpriteSheet> SpriteSheetTable = new Dictionary<string, SpriteSheet>();
+        public List<EntityData> entities = new List<EntityData>();
+        public List<SpriteSheet> spriteSheets = new List<SpriteSheet>();
 
         public Texture2D tex;
 
         // Start is called before the first frame update
         void Start()
         {
+            entities.Clear();
+            spriteSheets.Clear();
+
             StreamingLoader.LoadStreamingItems();
             StreamingItem item = StreamingLoader.GetItemsWithType("Complex")[0];
 
@@ -31,6 +37,7 @@ namespace ModdingLab
             {
                 EntityData entityData = XMLConverter.ConvertNode<EntityData>(infos[i]);
                 EntityDataTable.Add(entityData.id, entityData);
+                entities.Add(entityData);
             }
 
             //---------
@@ -42,10 +49,11 @@ namespace ModdingLab
             for (int i = 0; i < spriteSheetsList.Count; i++)
             {
                 SpriteSheet spriteSheetData = XMLConverter.ConvertNode<SpriteSheet>(spriteSheetsList[i]);
-                var texture = visualDirectory.GetFileWithName(spriteSheetData.source);
-                spriteSheetData.texture = texture.ReadImage();
+                StreamingFile texture = visualDirectory.GetFileWithName(spriteSheetData.source);
+                spriteSheetData.texture = texture.ReadImage(spriteSheetData.filter);
 
                 SpriteSheetTable.Add(spriteSheetData.id, spriteSheetData);
+                spriteSheets.Add(spriteSheetData);
             }
             //
 

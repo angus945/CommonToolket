@@ -2,17 +2,17 @@
 using System.Xml.Serialization;
 using UnityEngine;
 
-namespace ModdingLab
+namespace ModdingLab.Define.Componentized
 {
     [XmlType]
     [System.Serializable]
-    public class Collision : ComponentData
+    public class Rigidbody : ComponentData
     {
-        public override Type RequireComponentType { get => typeof(BoxCollider2D); }
+        public override Type RequireComponentType { get => typeof(Rigidbody2D); }
 
         public override void InitialComponent(GameEntity entity, Component component)
         {
-            BoxCollider2D collider = component as BoxCollider2D;
+            Rigidbody2D rigidbody = component as Rigidbody2D;
         }
     }
 

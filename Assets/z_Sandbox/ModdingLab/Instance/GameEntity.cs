@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
-using System;
+using ModdingLab.Define;
+using ModdingLab.Define.Componentized;
 
 namespace ModdingLab
 {
@@ -49,7 +51,6 @@ namespace ModdingLab
             if (ModdingLabTest.SpriteSheetTable.TryGetValue(sheedID, out SpriteSheet sheet))
             {
                 spriteSheets.Add(sheedID, sheet);
-                Debug.Log(sheedID);
             }
             else
             {

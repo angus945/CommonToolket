@@ -1,7 +1,8 @@
 using System.Xml;
 using System.Xml.Serialization;
+using ModdingLab.Define.Componentized;
 
-namespace ModdingLab
+namespace ModdingLab.Define
 {
 
     //[System]
@@ -25,6 +26,7 @@ namespace ModdingLab
         [XmlArray("Components")]
         [XmlArrayItem("Collision", typeof(Collision))]
         [XmlArrayItem("Rigidbody", typeof(Rigidbody))]
+        [XmlArrayItem("Rendering", typeof(SpriteSheetRendering))]
         [XmlArrayItem("Animation", typeof(SpriteSheetAnimaton))]
         public ComponentData[] components;
 

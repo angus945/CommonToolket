@@ -21,6 +21,7 @@
     <Components>
       <Collision id="col"></Collision>
       <Rigidbody id="rig"></Rigidbody>
+      <Rendering id="rend" spriteSheet="testSpriteSheet"></Rendering>
       <Animation id="anim" spriteSheet="testSpriteSheet"></Animation>
       <!--<Inventory></Inventory>
       <HealthSystem></HealthSystem>
