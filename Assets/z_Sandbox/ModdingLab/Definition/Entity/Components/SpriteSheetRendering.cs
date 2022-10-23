@@ -5,10 +5,11 @@ using System.Xml.Serialization;
 using UnityEngine;
 using ModdingLab.Instance;
 using ModdingLab.Instance.Componentized;
+using ModdingLab.Instance.Visual;
 
 namespace ModdingLab.Definition.Componentized
 {
-    public class SpriteSheetRendering : ComponentData
+    public class SpriteSheetRendering : ComponentDefine
     {
         public override Type RequireComponentType { get => typeof(SpriteSheetRenderer); }
 
@@ -18,10 +19,10 @@ namespace ModdingLab.Definition.Componentized
         public override void InitialComponent(GameEntity entity, Component component)
         {
             SpriteSheetRenderer renderer = component as SpriteSheetRenderer;
-            SpriteSheetDefine sheet = entity.GetSpriteSheetByID(spriteSheetID);
+            SpriteSheet spriteSheet = entity.GetSpriteSheetByID(spriteSheetID);
 
             renderer.Initial();
-            renderer.SetSpriteSheet(sheet);
+            renderer.SetSpriteSheet(spriteSheet);
         }
     }
 

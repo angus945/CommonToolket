@@ -7,7 +7,7 @@ namespace ModdingLab.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]
-    public class Rigidbody : ComponentData
+    public class Rigidbody : ComponentDefine
     {
         public override Type RequireComponentType { get => typeof(Rigidbody2D); }
 

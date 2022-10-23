@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
-using ModdingLab.Definition;
-using ModdingLab.Definition.Componentized;
+using ModdingLab.Instance.Visual;
 
 namespace ModdingLab.Instance
 {
@@ -11,51 +10,28 @@ namespace ModdingLab.Instance
     [MoonSharpUserData]
     public class GameEntity : MonoBehaviour
     {
-        public static GameEntity CreateEntity(EntityDefine data)
-        {
-            GameObject entityObject = new GameObject(data.name);
+        public EntityIdentifier identifier { get; private set; }
 
-            GameEntity entity = entityObject.AddComponent<GameEntity>();
-            entity.identifier = new EntityIdentifier(data);
-
-            for (int i = 0; i < data.spriteSheets.Length; i++)
-            {
-                string sheetID = data.spriteSheets[i];
-                entity.AddSpriteSheet(sheetID);
-            }
-            for (int i = 0; i < data.components.Length; i++)
-            {
-                ComponentData component = data.components[i];
-                entity.AddComponent(component);
-            }
-
-            return entity;
-        }
-
-        EntityIdentifier identifier;
+        Dictionary<string, Component> components;
+        Dictionary<string, SpriteSheet> spriteSheets;
 
         //
-        Dictionary<string, Component> components = new Dictionary<string, Component>();
-        Dictionary<string, SpriteSheetDefine> spriteSheets = new Dictionary<string, SpriteSheetDefine>();
-
-        //
-        public void AddComponent(ComponentData data)
+        public void Initial(EntityIdentifier identifier)
         {
-            Component component = gameObject.AddComponent(data.RequireComponentType);
-            data.InitialComponent(this, component);
+            this.identifier = identifier;
 
-            components.Add(data.id, component);
+            components = new Dictionary<string, Component>();
+            spriteSheets = new Dictionary<string, SpriteSheet>();
         }
-        public void AddSpriteSheet(string sheedID)
+        public void AddComponent(string id, Component component)
         {
-            if (DefinitionTables.spriteSheetDefineTable.TryGetValue(sheedID, out SpriteSheetDefine sheet))
-            {
-                spriteSheets.Add(sheedID, sheet);
-            }
-            else
-            {
-                Debug.LogWarning($"Undefine SpriteSheet: {sheedID}");
-            }
+            components.Add(id, component);
+        }
+        public void AddSpriteSheet(SpriteSheet sheet)
+        {
+            if (sheet == null) return;
+
+            spriteSheets.Add(sheet.id, sheet);
         }
 
         //
@@ -68,9 +44,9 @@ namespace ModdingLab.Instance
 
             return null;
         }
-        public SpriteSheetDefine GetSpriteSheetByID(string id)
+        public SpriteSheet GetSpriteSheetByID(string id)
         {
-            if (spriteSheets.TryGetValue(id, out SpriteSheetDefine sheet))
+            if (spriteSheets.TryGetValue(id, out SpriteSheet sheet))
             {
                 return sheet;
             }

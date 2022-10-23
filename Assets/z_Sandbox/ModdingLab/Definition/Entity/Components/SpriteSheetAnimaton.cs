@@ -2,13 +2,14 @@ using System;
 using System.Xml.Serialization;
 using UnityEngine;
 using ModdingLab.Instance;
+using ModdingLab.Instance.Visual;
 using ModdingLab.Instance.Componentized;
 
 namespace ModdingLab.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]
-    public class SpriteSheetAnimaton : ComponentData
+    public class SpriteSheetAnimaton : ComponentDefine
     {
         public override Type RequireComponentType { get => typeof(SpriteSheetAnimator); }
 
@@ -18,9 +19,10 @@ namespace ModdingLab.Definition.Componentized
         public override void InitialComponent(GameEntity entity, Component component)
         {
             SpriteSheetAnimator animator = component as SpriteSheetAnimator;
-            SpriteSheetDefine animSpriteSheet = entity.GetSpriteSheetByID(spriteSheetID);
 
-            animator.SetAnimationData(animSpriteSheet.animationDatas);
+            SpriteSheetAnimation[] animations = DefinitionTables.GetSpriteSheetAnimations(spriteSheetID, out string defaultAnim);
+
+            animator.Initial(animations, defaultAnim);
         }
     }
 

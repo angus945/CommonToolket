@@ -28,18 +28,7 @@ namespace ModdingLab.Definition
         [XmlArrayItem("Rigidbody", typeof(Rigidbody))]
         [XmlArrayItem("Rendering", typeof(SpriteSheetRendering))]
         [XmlArrayItem("Animation", typeof(SpriteSheetAnimaton))]
-        public ComponentData[] components;
-
-        public override string ToString()
-        {
-            string comp = "";
-            for (int i = 0; i < components.Length; i++)
-            {
-                comp += components[i].GetType();
-                comp += "\n";
-            }
-            return comp;
-        }
+        public ComponentDefine[] components;
 
         void IDefinition.Initial(StreamingDirectory directory)
         {

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ModdingLab.Definition;
+using ModdingLab.Instance.Visual;
 
 namespace ModdingLab.Instance.Componentized
 {
@@ -49,19 +49,17 @@ namespace ModdingLab.Instance.Componentized
             return mesh;
         }
 
-        SpriteSheetDefine spriteSheet;
-        Vector2 spriteSize { get => spriteSheet.textureSize / new Vector2(spriteSheet.width, spriteSheet.height); }
-        Vector2 spriteUV { get => Vector2.one / spriteSize; }
+        SpriteSheet spriteSheet;
 
-        MeshFilter filter;
-        Renderer renderer;
+        //MeshFilter filter;
+        //Renderer renderer;
 
         Material material;
 
         public void Initial()
         {
-            filter = GetComponent<MeshFilter>();
-            renderer = GetComponent<Renderer>();
+            MeshFilter filter = GetComponent<MeshFilter>();
+            Renderer renderer = GetComponent<Renderer>();
 
             filter.mesh = BuildQuad(1, 1);
 
@@ -69,19 +67,19 @@ namespace ModdingLab.Instance.Componentized
             renderer.material = material;
         }
 
-        public void SetSpriteSheet(SpriteSheetDefine spriteSheet)
+        public void SetSpriteSheet(SpriteSheet spriteSheet)
         {
             this.spriteSheet = spriteSheet;
 
-            material.SetTexture("_MainTex", spriteSheet.texture);
+            material.SetTexture("_MainTex", spriteSheet.sheetTexture);
         }
         public void SetSprite(int index, int frameNumber)
         {
-            Vector2 offset = spriteUV * new Vector2(frameNumber, index);
+            Vector2 scale = spriteSheet.spriteUV;
+            Vector2 offset = scale * new Vector2(frameNumber, index);
 
-            material.SetTextureScale("_MainTex", spriteUV);
+            material.SetTextureScale("_MainTex", scale);
             material.SetTextureOffset("_MainTex", offset);
         }
     }
-
 }

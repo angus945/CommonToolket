@@ -28,13 +28,6 @@ namespace ModdingLab.Definition
 
         [XmlElement("Animation")]
         public AnimationData[] animations;
-
-        public AnimationData this[int index]
-        {
-            get => animations[index];
-            set => animations[index] = value;
-        }
-        public int Length { get => animations.Length; }
     }
 
     [XmlType("SpriteSheet")]

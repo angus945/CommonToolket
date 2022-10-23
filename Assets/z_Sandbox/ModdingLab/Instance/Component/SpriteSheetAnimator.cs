@@ -1,30 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
-using ModdingLab.Definition;
+using ModdingLab.Instance.Visual;
 
 namespace ModdingLab.Instance.Componentized
 {
     public class SpriteSheetAnimator : MonoBehaviour
     {
-        Dictionary<string, AnimationData> animationTable;
+        Dictionary<string, SpriteSheetAnimation> animationTable = new Dictionary<string, SpriteSheetAnimation>();
 
         SpriteSheetRenderer renderer;
 
         //
         float time;
-        AnimationData activeAnimation = null;
+        SpriteSheetAnimation activeAnimation;
 
-        public void SetAnimationData(AnimationDatas animationDatas)
+        public void Initial(SpriteSheetAnimation[] animations, string defaultAnimation)
         {
-            animationTable = new Dictionary<string, AnimationData>();
+            animationTable.Clear();
 
-            for (int i = 0; i < animationDatas.Length; i++)
+            for (int i = 0; i < animations.Length; i++)
             {
-                AnimationData animation = animationDatas[i];
+                SpriteSheetAnimation animation = animations[i];
                 animationTable.Add(animation.name, animation);
             }
 
-            SetAnimation(animationDatas.defaultAnimation);
+            SetAnimation(defaultAnimation);
         }
 
         void Start()
@@ -51,7 +51,7 @@ namespace ModdingLab.Instance.Componentized
 
         public void SetAnimation(string name)
         {
-            if (animationTable.TryGetValue(name, out AnimationData animation))
+            if (animationTable.TryGetValue(name, out SpriteSheetAnimation animation))
             {
                 time = 0;
                 activeAnimation = animation;

@@ -7,7 +7,7 @@ namespace ModdingLab.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]
-    public class Collision : ComponentData
+    public class Collision : ComponentDefine
     {
         public override Type RequireComponentType { get => typeof(BoxCollider2D); }
 
