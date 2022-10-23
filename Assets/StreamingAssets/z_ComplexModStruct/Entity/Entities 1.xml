@@ -1,0 +1,24 @@
+<Entities>
+  
+  <Entity id="Entity_C">
+    <Name> Entity C </Name>
+    <Describe> another basis Entity </Describe>
+
+    <Tags>
+      <Tag>TagC</Tag>
+    </Tags>
+
+    <Visual>
+      <SpriteSheet>testSpriteSheet</SpriteSheet>
+    </Visual>
+
+    <Behavior>
+      <EnemyAI></EnemyAI>
+    </Behavior>
+
+    <Listener>
+    </Listener>
+
+  </Entity>
+
+</Entities>

@@ -2,8 +2,9 @@
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using ModdingLab.Instance;
 
-namespace ModdingLab.Define.Componentized
+namespace ModdingLab.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]

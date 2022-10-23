@@ -1,6 +1,6 @@
-﻿using ModdingLab.Define;
+﻿using ModdingLab.Definition;
 
-namespace ModdingLab.Define
+namespace ModdingLab.Instance
 {
     [System.Serializable]
     public class EntityIdentifier
@@ -10,7 +10,7 @@ namespace ModdingLab.Define
         public string describe;
         public string[] tags;
 
-        public EntityIdentifier(EntityData data)
+        public EntityIdentifier(EntityDefine data)
         {
             id = data.id;
             name = data.name;

@@ -1,16 +1,16 @@
 using System.Xml;
 using System.Xml.Serialization;
-using ModdingLab.Define.Componentized;
+using DataDriven;
+using ModdingLab.Definition.Componentized;
 
-namespace ModdingLab.Define
+namespace ModdingLab.Definition
 {
-
-    //[System]
-
     [XmlType("Entity")]
     [System.Serializable]
-    public class EntityData
+    public class EntityDefine : IDefinition
     {
+        string IDefinition.id { get => id; }
+
         [XmlAttribute] public string id;
         [XmlElement("Name")] public string name;
         [XmlElement("Describe")] public string describe;
@@ -20,10 +20,10 @@ namespace ModdingLab.Define
         public string[] tags;
 
         [XmlArray("Visual")]
-        [XmlArrayItem("SpriteSheet")]
+        [XmlArrayItem("SpriteSheet", IsNullable = false)]
         public string[] spriteSheets;
 
-        [XmlArray("Components")]
+        [XmlArray("Components", IsNullable = false)]
         [XmlArrayItem("Collision", typeof(Collision))]
         [XmlArrayItem("Rigidbody", typeof(Rigidbody))]
         [XmlArrayItem("Rendering", typeof(SpriteSheetRendering))]
@@ -39,6 +39,11 @@ namespace ModdingLab.Define
                 comp += "\n";
             }
             return comp;
+        }
+
+        void IDefinition.Initial(StreamingDirectory directory)
+        {
+
         }
     }
 

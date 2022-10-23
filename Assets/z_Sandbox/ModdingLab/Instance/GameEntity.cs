@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
-using ModdingLab.Define;
-using ModdingLab.Define.Componentized;
+using ModdingLab.Definition;
+using ModdingLab.Definition.Componentized;
 
-namespace ModdingLab
+namespace ModdingLab.Instance
 {
 
     [MoonSharpUserData]
     public class GameEntity : MonoBehaviour
     {
-        public static GameEntity CreateEntity(EntityData data)
+        public static GameEntity CreateEntity(EntityDefine data)
         {
             GameObject entityObject = new GameObject(data.name);
 
@@ -36,7 +36,7 @@ namespace ModdingLab
 
         //
         Dictionary<string, Component> components = new Dictionary<string, Component>();
-        Dictionary<string, SpriteSheet> spriteSheets = new Dictionary<string, SpriteSheet>();
+        Dictionary<string, SpriteSheetDefine> spriteSheets = new Dictionary<string, SpriteSheetDefine>();
 
         //
         public void AddComponent(ComponentData data)
@@ -48,7 +48,7 @@ namespace ModdingLab
         }
         public void AddSpriteSheet(string sheedID)
         {
-            if (ModdingLabTest.SpriteSheetTable.TryGetValue(sheedID, out SpriteSheet sheet))
+            if (DefinitionTables.spriteSheetDefineTable.TryGetValue(sheedID, out SpriteSheetDefine sheet))
             {
                 spriteSheets.Add(sheedID, sheet);
             }
@@ -68,9 +68,9 @@ namespace ModdingLab
 
             return null;
         }
-        public SpriteSheet GetSpriteSheetByID(string id)
+        public SpriteSheetDefine GetSpriteSheetByID(string id)
         {
-            if (spriteSheets.TryGetValue(id, out SpriteSheet sheet))
+            if (spriteSheets.TryGetValue(id, out SpriteSheetDefine sheet))
             {
                 return sheet;
             }

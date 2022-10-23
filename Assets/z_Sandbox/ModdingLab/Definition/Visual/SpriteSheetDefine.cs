@@ -3,8 +3,9 @@ using System.Xml.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataDriven;
 
-namespace ModdingLab
+namespace ModdingLab.Definition
 {
     [XmlType("Animation")]
     [System.Serializable]
@@ -38,8 +39,10 @@ namespace ModdingLab
 
     [XmlType("SpriteSheet")]
     [System.Serializable]
-    public class SpriteSheet
+    public class SpriteSheetDefine : IDefinition
     {
+        string IDefinition.id { get => id; }
+
         [XmlAttribute] public string id;
         [XmlAttribute] public string source;
 
@@ -50,7 +53,13 @@ namespace ModdingLab
 
         [XmlElement("Animations")] public AnimationDatas animationDatas;
 
-        [XmlIgnore] public Texture2D texture;
+        [XmlIgnore] public Texture2D texture { get; private set; }
         public Vector2Int textureSize { get => new Vector2Int(texture.width, texture.height); }
+
+        void IDefinition.Initial(StreamingDirectory directory)
+        {
+            StreamingFile texture = directory.GetFileWithName(source);
+            this.texture = texture.ReadImage(filter);
+        }
     }
 }

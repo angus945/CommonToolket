@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using ModdingLab.Definition;
 
-namespace ModdingLab
+namespace ModdingLab.Instance.Componentized
 {
     public class SpriteSheetAnimator : MonoBehaviour
     {

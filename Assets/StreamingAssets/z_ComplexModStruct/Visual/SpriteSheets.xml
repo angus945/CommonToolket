@@ -1,4 +1,5 @@
 <SpriteSheets>
+  
   <SpriteSheet id="testSpriteSheet" source="testSpriteSheet" filter="Point" width="32" height="32">
 
     <Animations default="moveA">
@@ -7,4 +8,5 @@
     </Animations>
 
   </SpriteSheet>
+
 </SpriteSheets>

@@ -1,5 +1,5 @@
 <Entities>
-
+  
   <Entity id="Entity_A">
     <Name> Entity A </Name>
     <Describe> a basis Entity </Describe>
@@ -28,6 +28,27 @@
       <Movement></Movement>
       <Input></Input>-->
     </Components>
+
+    <Behavior>
+      <EnemyAI></EnemyAI>
+    </Behavior>
+
+    <Listener>
+    </Listener>
+
+  </Entity>
+
+  <Entity id="Entity_B">
+    <Name> Entity B </Name>
+    <Describe> another basis Entity </Describe>
+
+    <Tags>
+      <Tag>TagA</Tag>
+    </Tags>
+
+    <Visual>
+      <SpriteSheet>testSpriteSheet</SpriteSheet>
+    </Visual>
 
     <Behavior>
       <EnemyAI></EnemyAI>

@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ModdingLab.Definition;
 
-namespace ModdingLab
+namespace ModdingLab.Instance.Componentized
 {
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
@@ -48,7 +49,7 @@ namespace ModdingLab
             return mesh;
         }
 
-        SpriteSheet spriteSheet;
+        SpriteSheetDefine spriteSheet;
         Vector2 spriteSize { get => spriteSheet.textureSize / new Vector2(spriteSheet.width, spriteSheet.height); }
         Vector2 spriteUV { get => Vector2.one / spriteSize; }
 
@@ -68,7 +69,7 @@ namespace ModdingLab
             renderer.material = material;
         }
 
-        public void SetSpriteSheet(SpriteSheet spriteSheet)
+        public void SetSpriteSheet(SpriteSheetDefine spriteSheet)
         {
             this.spriteSheet = spriteSheet;
 

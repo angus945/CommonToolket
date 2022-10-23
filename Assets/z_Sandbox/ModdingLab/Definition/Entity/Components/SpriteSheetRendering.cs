@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using ModdingLab.Instance;
+using ModdingLab.Instance.Componentized;
 
-namespace ModdingLab.Define.Componentized
+namespace ModdingLab.Definition.Componentized
 {
     public class SpriteSheetRendering : ComponentData
     {
@@ -16,7 +18,7 @@ namespace ModdingLab.Define.Componentized
         public override void InitialComponent(GameEntity entity, Component component)
         {
             SpriteSheetRenderer renderer = component as SpriteSheetRenderer;
-            SpriteSheet sheet = entity.GetSpriteSheetByID(spriteSheetID);
+            SpriteSheetDefine sheet = entity.GetSpriteSheetByID(spriteSheetID);
 
             renderer.Initial();
             renderer.SetSpriteSheet(sheet);
