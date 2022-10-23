@@ -2,6 +2,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using DataDriven;
 using ModdingLab.Definition.Componentized;
+using ModdingLab.Definition.TypeScript;
 
 namespace ModdingLab.Definition
 {
@@ -23,6 +24,9 @@ namespace ModdingLab.Definition
         [XmlArrayItem("SpriteSheet", IsNullable = false)]
         public string[] spriteSheets;
 
+        [XmlElement("Properties")]
+        public EntityProperties properties;
+
         [XmlArray("Components", IsNullable = false)]
         [XmlArrayItem("Collision", typeof(Collision))]
         [XmlArrayItem("Rigidbody", typeof(Rigidbody))]
@@ -30,10 +34,9 @@ namespace ModdingLab.Definition
         [XmlArrayItem("Animation", typeof(SpriteSheetAnimaton))]
         public ComponentDefine[] components;
 
-        void IDefinition.Initial(StreamingDirectory directory)
-        {
-
-        }
+        [XmlArray("Behavior", IsNullable = false)]
+        [XmlArrayItem("Script", typeof(BehaviorDefine))]
+        public BehaviorDefine[] behaviors;
     }
 
 }

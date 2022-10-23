@@ -6,7 +6,7 @@ using DataDriven.Lua.Library;
 
 namespace DataDriven.Lua
 {
-    // include = {"Math", "Vector"}
+    // include = {"Math", "Vector", "Time"}
     public class LuaInitializer
     {
         static bool isInitialized;
@@ -55,7 +55,7 @@ namespace DataDriven.Lua
         {
             Initialize(UnityEngine.Debug.Log);
 
-            DynValue includes = script.Globals.Get("include");
+            DynValue includes = script.Globals.Get("Include");
             foreach (DynValue libName in includes.Table.Values)
             {
                 if(LuaLibrarys.LibraryTable.TryGetValue(libName.String, out System.Type type))

@@ -8,7 +8,6 @@ namespace ModdingLab.Definition
     public interface IDefinition
     {
         public string id { get; }
-        public void Initial(StreamingDirectory directory);
     }
 
 }

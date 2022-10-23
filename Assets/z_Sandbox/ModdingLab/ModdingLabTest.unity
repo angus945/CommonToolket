@@ -250,9 +250,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1c36d8683c1c46832e716be404e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entities: []
+  entities:
+  - id: 
+    name: 
+    describe: 
+    tags: []
+    spriteSheets: []
+    properties:
+      properityFields: []
+    scripts: []
   spriteSheets: []
-  tex: {fileID: 0}
 --- !u!1 &1432982718
 GameObject:
   m_ObjectHideFlags: 0

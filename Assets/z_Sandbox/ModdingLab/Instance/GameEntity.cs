@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
 using ModdingLab.Instance.Visual;
+using ModdingLab.Instance.Behavior;
 
 namespace ModdingLab.Instance
 {
@@ -12,8 +13,10 @@ namespace ModdingLab.Instance
     {
         public EntityIdentifier identifier { get; private set; }
 
-        Dictionary<string, Component> components;
+        Dictionary<string, float> properties;
         Dictionary<string, SpriteSheet> spriteSheets;
+        Dictionary<string, Component> components;
+        Dictionary<string, LuaBehavior> behaviours;
 
         //
         public void Initial(EntityIdentifier identifier)
@@ -22,10 +25,11 @@ namespace ModdingLab.Instance
 
             components = new Dictionary<string, Component>();
             spriteSheets = new Dictionary<string, SpriteSheet>();
+            properties = new Dictionary<string, float>();
         }
-        public void AddComponent(string id, Component component)
+        public void AddProperity(string name, float value)
         {
-            components.Add(id, component);
+            properties.Add(name, value);
         }
         public void AddSpriteSheet(SpriteSheet sheet)
         {
@@ -33,22 +37,39 @@ namespace ModdingLab.Instance
 
             spriteSheets.Add(sheet.id, sheet);
         }
+        public void AddComponent(string id, Component component)
+        {
+            components.Add(id, component);
+        }
+        public void AddBehavior(string id, LuaBehavior behavior)
+        {
+            behaviours.Add(id, behavior);
+        }
 
         //
-        public Component GetComponentByID(string id)
+        public float GetProperity(string name)
         {
-            if (components.TryGetValue(id, out Component component))
+            if(properties.TryGetValue(name, out float value))
             {
-                return component;
+                return value;
             }
 
-            return null;
+            return 0;
         }
         public SpriteSheet GetSpriteSheetByID(string id)
         {
             if (spriteSheets.TryGetValue(id, out SpriteSheet sheet))
             {
                 return sheet;
+            }
+
+            return null;
+        }
+        public Component GetComponentByID(string id)
+        {
+            if (components.TryGetValue(id, out Component component))
+            {
+                return component;
             }
 
             return null;

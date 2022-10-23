@@ -18,6 +18,12 @@
 
     <Audio></Audio>
 
+    <Properties>
+      <Prop name="Speed">5.5</Prop>
+      <Prop name="Force">10</Prop>
+    </Properties>
+    
+    <!--attach unity component-->
     <Components>
       <Collision id="col"></Collision>
       <Rigidbody id="rig"></Rigidbody>
@@ -29,8 +35,17 @@
       <Input></Input>-->
     </Components>
 
+    <!--attach lua behavior-->
     <Behavior>
-      <EnemyAI></EnemyAI>
+      
+      <Script id="AI" script="enemyAI">
+        <Function function="Update" type="Frame" call="2"></Function>
+      </Script>
+
+      <Script id="Timer" script="timer">
+        <Function function="Update" type="Time" call="5.5"></Function>
+      </Script>
+      
     </Behavior>
 
     <Listener>

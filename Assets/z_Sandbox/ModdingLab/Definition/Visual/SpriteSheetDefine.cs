@@ -46,13 +46,7 @@ namespace ModdingLab.Definition
 
         [XmlElement("Animations")] public AnimationDatas animationDatas;
 
-        [XmlIgnore] public Texture2D texture { get; private set; }
-        public Vector2Int textureSize { get => new Vector2Int(texture.width, texture.height); }
-
-        void IDefinition.Initial(StreamingDirectory directory)
-        {
-            StreamingFile texture = directory.GetFileWithName(source);
-            this.texture = texture.ReadImage(filter);
-        }
+        //[XmlIgnore] public Texture2D texture { get; private set; }
+        //public Vector2Int textureSize { get => new Vector2Int(texture.width, texture.height); }
     }
 }
