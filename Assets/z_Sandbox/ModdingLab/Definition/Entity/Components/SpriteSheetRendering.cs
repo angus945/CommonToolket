@@ -11,6 +11,8 @@ namespace ModdingLab.Definition.Componentized
 {
     public class SpriteSheetRendering : ComponentDefine
     {
+        protected override string defaultID => "Rendering";
+
         public override Type RequireComponentType { get => typeof(SpriteSheetRenderer); }
 
         [XmlAttribute("spriteSheet")]

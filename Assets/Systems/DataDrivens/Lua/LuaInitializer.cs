@@ -18,7 +18,7 @@ namespace DataDriven.Lua
             if (isInitialized) return;
 
             SetLogger(logHandler);
-            RegisterCommonType();
+            RegisterUnityTypes();
             RegisterLiberary();
             RegisterTypes(registerTypes);
 
@@ -30,12 +30,13 @@ namespace DataDriven.Lua
 
             Script.DefaultOptions.DebugPrint = logHandler;
         }
-        static void RegisterCommonType()
+        static void RegisterUnityTypes()
         {
             UserData.RegisterType<UnityEngine.Vector2>();
             UserData.RegisterType<UnityEngine.Vector3>();
 
             UserData.RegisterType<UnityEngine.Transform>();
+            UserData.RegisterType<UnityEngine.Rigidbody2D>();
         }
         static void RegisterLiberary()
         {

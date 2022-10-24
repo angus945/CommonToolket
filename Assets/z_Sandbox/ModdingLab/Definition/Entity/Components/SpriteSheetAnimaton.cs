@@ -11,6 +11,8 @@ namespace ModdingLab.Definition.Componentized
     [System.Serializable]
     public class SpriteSheetAnimaton : ComponentDefine
     {
+        protected override string defaultID => "Animation";
+       
         public override Type RequireComponentType { get => typeof(SpriteSheetAnimator); }
 
         [XmlAttribute("spriteSheet")]

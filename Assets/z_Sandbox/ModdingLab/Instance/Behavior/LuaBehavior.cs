@@ -1,18 +1,8 @@
 using MoonSharp.Interpreter;
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnityEngine;
 
 namespace ModdingLab.Instance.Behavior
 {
-
-    enum UpdateType
-    {
-        Auto = 0,
-        Time = 1,
-        Frame = 2,
-    }
 
     public class LuaFunction
     {
@@ -24,7 +14,7 @@ namespace ModdingLab.Instance.Behavior
 
         Action<float> updateHandler;
 
-        public LuaFunction(string name,  float call, int type)
+        public LuaFunction(string name, float call, int type)
         {
             this.name = name;
             this.call = call;
@@ -36,11 +26,11 @@ namespace ModdingLab.Instance.Behavior
                     break;
 
                 case 1:
-                    updateHandler = Update_Timer;
+                    updateHandler = Update_Counter;
                     break;
 
                 case 2:
-                    updateHandler = Update_Counter;
+                    updateHandler = Update_Timer;
                     break;
             }
         }
@@ -64,7 +54,7 @@ namespace ModdingLab.Instance.Behavior
         {
             timer += delta;
 
-            if(timer >= call)
+            if (timer >= call)
             {
                 function.Function.Call();
                 timer = 0;
@@ -74,7 +64,7 @@ namespace ModdingLab.Instance.Behavior
         {
             timer += 1;
 
-            if(timer >= call)
+            if (timer >= call)
             {
                 function.Function.Call();
                 timer = 0;
@@ -86,23 +76,27 @@ namespace ModdingLab.Instance.Behavior
     {
         bool isActive;
 
-        Script script;
-
+        DynValue reset;
         LuaFunction[] functions;
 
         public LuaBehavior(bool isActive, Script script, LuaFunction[] functions)
         {
             this.isActive = isActive;
-            this.script = script;
             this.functions = functions;
+
+            reset = script.Globals.Get("Reset");
 
             for (int i = 0; i < functions.Length; i++)
             {
                 LuaFunction function = functions[i];
 
                 function.Initial(script);
-
             }
+        }
+
+        public void Reset()
+        {
+            reset.Function.Call();
         }
         public void Update(float delta)
         {

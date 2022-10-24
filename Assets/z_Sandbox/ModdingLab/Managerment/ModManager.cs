@@ -34,6 +34,7 @@ namespace ModdingLab.Management
         {
             optionStorage = StorageTokenLoader.LoadStorageToken<ModOptionStorage>();
 
+            StreamingLoader.LoadStreamingItems();
             DefinitionTables.Initial();
         }
         public static void LoadModFiles()

@@ -25,31 +25,29 @@
     
     <!--attach unity component-->
     <Components>
-      <Collision id="col"></Collision>
-      <Rigidbody id="rig"></Rigidbody>
-      <Rendering id="rend" spriteSheet="testSpriteSheet"></Rendering>
-      <Animation id="anim" spriteSheet="testSpriteSheet"></Animation>
-      <!--<Inventory></Inventory>
-      <HealthSystem></HealthSystem>
-      <Movement></Movement>
-      <Input></Input>-->
+      <Collision></Collision>
+      <Rigidbody></Rigidbody>
+      <Rendering spriteSheet="testSpriteSheet"></Rendering>
+      <Animation spriteSheet="testSpriteSheet"></Animation>
     </Components>
 
     <!--attach lua behavior-->
     <Behavior>
-      
       <Script id="AI" script="EntityAI" active="true">
-        <Function function="Update" type="Frame" call="2"></Function>
+        <Function function="Update" type="Time" call="1"></Function>
       </Script>
-
-      <Script id="Beh" script="Behaviours" active="true">
-        <Function function="Update" type="Time" call="5.5"></Function>
-      </Script>
-      
     </Behavior>
 
-    <Listener>
-    </Listener>
+    <!--register event listener-->
+    <Listeners>
+      
+      <Event name="OnCollide">
+        <Action behavior="AI" function="Alert"></Action>
+        <Action behavior="AI" function="Alert"></Action>
+      </Event>
+      
+      
+    </Listeners>
 
   </Entity>
 

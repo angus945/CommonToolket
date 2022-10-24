@@ -10,7 +10,10 @@ namespace ModdingLab.Definition.Componentized
     [System.Serializable]
     public abstract class ComponentDefine
     {
-        [XmlAttribute] public string id;
+        [XmlAttribute("id")] [SerializeField] string _id;
+
+        public string id { get => string.IsNullOrEmpty(_id) ? defaultID : _id; }
+        protected abstract string defaultID { get; }
 
         public abstract Type RequireComponentType { get; }
         public abstract void InitialComponent(GameEntity entity, Component component);

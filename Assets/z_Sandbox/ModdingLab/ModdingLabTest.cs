@@ -29,6 +29,10 @@ namespace ModdingLab
             {
                 EntityInstantiator.CreateEntity("Entity_A");
             }
+            if (Input.GetKey(KeyCode.F7))
+            {
+                EntityInstantiator.CreateEntity("Entity_A");
+            }
         }
 
         void Initial()
@@ -53,7 +57,9 @@ namespace ModdingLab
             textures.AddRange(DefinitionTables.AccessTextures());
             scripts.AddRange(DefinitionTables.AccessScripts());
 
-
+            //Rigidbody2D r;
+            //r.velocity
+            //r.AddForce()
         }
 
 

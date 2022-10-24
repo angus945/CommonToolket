@@ -17,14 +17,37 @@ namespace ModdingLab.Instance
         Dictionary<string, SpriteSheet> spriteSheets;
         Dictionary<string, Component> components;
         Dictionary<string, LuaBehavior> behaviours;
+        Dictionary<string, List<DynValue>> eventListeners;
 
         //
+        private void Start()
+        {
+            ResetEntity();
+        }
         void Update()
+        {
+            UpdateEntity(Time.deltaTime);
+        }
+
+        public void ResetEntity()
+        {
+            ForeachBehaviors((behavior) =>
+            {
+                behavior.Reset();
+            });
+        }
+        public void UpdateEntity(float delta)
+        {
+            ForeachBehaviors((behavior) =>
+            {
+                behavior.Update(delta);
+            });
+        }
+        void ForeachBehaviors(Action<LuaBehavior> action)
         {
             foreach (var item in behaviours)
             {
-                LuaBehavior behavior = item.Value;
-                behavior.Update(Time.deltaTime);
+                action.Invoke(item.Value);
             }
         }
 

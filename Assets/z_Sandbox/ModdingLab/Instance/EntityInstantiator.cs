@@ -15,9 +15,14 @@ namespace ModdingLab.Instance
 
         public static GameEntity CreateEntity(string entityID)
         {
-            EntityDefine define = DefinitionTables.GetEntityDefine(entityID);
+            Logger.Tick(null);
 
-            return CreateEntity(define);
+            EntityDefine define = DefinitionTables.GetEntityDefine(entityID);
+            GameEntity entity = CreateEntity(define);
+
+            Logger.Tick("Entity Instance");
+
+            return entity;
         }
         static GameEntity CreateEntity(EntityDefine define)
         {
@@ -55,8 +60,8 @@ namespace ModdingLab.Instance
                 string code = DefinitionTables.GetScriptCode(behaviorDefine.scriptName);
                 if (string.IsNullOrEmpty(code)) continue;
 
-                Debug.Log(code);
                 Script script = LuaInitializer.CreateScript(code);
+                script.Globals["Entity"] = entity;
 
                 LuaFunction[] functions = Array.ConvertAll(behaviorDefine.functions, n => new LuaFunction(n.functionName, n.call, (int)n.type));
                 LuaBehavior behavior = new LuaBehavior(behaviorDefine.active, script, functions);

@@ -9,6 +9,8 @@ namespace ModdingLab.Definition.Componentized
     [System.Serializable]
     public class Collision : ComponentDefine
     {
+        protected override string defaultID => "Collision";
+
         public override Type RequireComponentType { get => typeof(BoxCollider2D); }
 
         public override void InitialComponent(GameEntity entity, Component component)

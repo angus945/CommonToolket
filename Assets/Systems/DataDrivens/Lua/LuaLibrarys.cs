@@ -30,18 +30,18 @@ namespace DataDriven.Lua.Library
     [MoonSharpUserData]
     public class Vector
     {
-        public static Vector3 up => Vector3.up;
-        public static Vector3 down => Vector3.down;
-        public static Vector3 right => Vector3.right;
-        public static Vector3 left => Vector3.left;
+        public static Vector2 up => Vector2.up;
+        public static Vector2 down => Vector2.down;
+        public static Vector2 right => Vector2.right;
+        public static Vector2 left => Vector2.left;
 
-        public static Vector3 Direction(Vector3 from, Vector3 to)
+        public static Vector2 Direction(Vector2 from, Vector2 to)
         {
-            return Vector3.Normalize(to - from);
+            return (to - from).normalized;
         }
-        public static float Distance(Vector3 a, Vector3 b)
+        public static float Distance(Vector2 a, Vector2 b)
         {
-            return Vector3.Distance(a, b);
+            return Vector2.Distance(a, b);
         }
     }
 
