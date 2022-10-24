@@ -10,7 +10,7 @@ namespace DataDriven
         public readonly string name;
         public readonly string path;
 
-        public readonly StreamingDirectory[] directory;
+        public readonly StreamingDirectory[] directories;
         public readonly StreamingFile[] files;
 
         public StreamingDirectory(string path)
@@ -20,7 +20,7 @@ namespace DataDriven
             this.name = path.Split('/').Last();
             this.path = path;
 
-            directory = LoadFolders(path);
+            directories = LoadFolders(path);
             files = LoadFiles(path);
 
         }
@@ -51,9 +51,20 @@ namespace DataDriven
             return files;
         }
 
-        public StreamingDirectory GetDirectory(string name)
+        public bool TryGetDirectory(string name, out StreamingDirectory directory)
         {
-            return directory.Where(n => n.name == name).First();
+            var directories = this.directories.Where(n => n.name == name);
+
+            if (directories.Count() != 0)
+            {
+                directory = directories.First();
+                return true;
+            }
+            else
+            {
+                directory = null;
+                return false;
+            }
         }
 
         public StreamingFile[] GetFilesWithName(string name)

@@ -8,6 +8,7 @@ using DataDriven.XML;
 using DataDriven.Lua;
 using ModdingLab.Definition;
 using ModdingLab.Instance;
+using ModdingLab.Management;
 
 namespace ModdingLab
 {
@@ -37,20 +38,27 @@ namespace ModdingLab
             textures.Clear();
             scripts.Clear();
 
+
+            ModManager.Initial();
+            ModManager.LoadModFiles();
+            ModManager.SaveModOptions();
+            ModManager.ParseModFiles();
+            //
+
             //
             LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
 
             //
-            float start = Time.realtimeSinceStartup;
-            StreamingItem[] items = StreamingLoader.GetItemsWithType("Define");
-            float duration = Time.realtimeSinceStartup - start;
-            Debug.Log(duration);
+            //float start = Time.realtimeSinceStartup;
+            //StreamingItem[] items = StreamingLoader.GetItemsWithType("Define");
+            //float duration = Time.realtimeSinceStartup - start;
+            //Debug.Log(duration);
 
 
-            start = Time.realtimeSinceStartup;
-            DefinitionTables.LoadDefinitionDatas(items);
-            duration = Time.realtimeSinceStartup - start;
-            Debug.Log(duration);
+            //start = Time.realtimeSinceStartup;
+            //DefinitionTables.LoadDefinitionDatas(items);
+            //duration = Time.realtimeSinceStartup - start;
+            //Debug.Log(duration);
 
             entities.AddRange(DefinitionTables.AccessEntityDefines());
             spriteSheets.AddRange(DefinitionTables.AccessSpriteSheetDefines());

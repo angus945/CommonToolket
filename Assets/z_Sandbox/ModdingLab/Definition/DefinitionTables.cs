@@ -1,11 +1,11 @@
+using DataDriven;
+using DataDriven.XML;
+using ModdingLab.Instance.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using UnityEngine;
-using DataDriven;
-using DataDriven.XML;
-using ModdingLab.Instance.Visual;
 
 namespace ModdingLab.Definition
 {
@@ -16,18 +16,25 @@ namespace ModdingLab.Definition
         static Dictionary<string, Texture> textureTable;
         static Dictionary<string, string> scriptTable;
 
-        public static void LoadDefinitionDatas(StreamingItem[] defineDatas)
+        public static void Initial()
         {
             entityDefineTable = new Dictionary<string, EntityDefine>();
             spriteSheetDefineTable = new Dictionary<string, SpriteSheetDefine>();
             textureTable = new Dictionary<string, Texture>();
             scriptTable = new Dictionary<string, string>();
-
+        }
+        public static void LoadDefinitionDatas(StreamingItem[] defineDatas)
+        {
             for (int i = 0; i < defineDatas.Length; i++)
             {
                 LoadDefineData(defineDatas[i]);
                 LoadDefineAsset(defineDatas[i]);
             }
+        }
+        public static void LoadDefinitionData(StreamingItem defineData)
+        {
+            LoadDefineData(defineData);
+            LoadDefineAsset(defineData);
         }
         static void LoadDefineData(StreamingItem source)
         {
@@ -41,7 +48,8 @@ namespace ModdingLab.Definition
         }
         static void LoadDefineData<T>(StreamingItem source, string directoryName, string tagName, Dictionary<string, T> defineTable) where T : class, IDefinition
         {
-            StreamingDirectory directory = source.root.GetDirectory(directoryName);
+            if (!source.root.TryGetDirectory(directoryName, out StreamingDirectory directory)) return;
+
             StreamingFile[] files = directory.GetFilesWithFormat("xml");
 
             for (int i = 0; i < files.Length; i++)
@@ -60,7 +68,7 @@ namespace ModdingLab.Definition
         }
         static void LoadDefineAsset<T>(StreamingItem source, string directoryName, Dictionary<string, T> assetTable, Func<StreamingFile, T> loadHandler)
         {
-            StreamingDirectory directory = source.root.GetDirectory(directoryName);
+            if (!source.root.TryGetDirectory(directoryName, out StreamingDirectory directory)) return;
 
             StreamingFile[] files = directory.files;
             for (int i = 0; i < files.Length; i++)
@@ -69,7 +77,7 @@ namespace ModdingLab.Definition
                 T asset = loadHandler.Invoke(file);
 
                 assetTable.Add(file.name, asset);
-                Debug.Log(file.name);
+                //Debug.Log(file.name);
             }
         }
 
@@ -131,9 +139,9 @@ namespace ModdingLab.Definition
         }
 
         //
-        static To TryGetObject<From,To>(string id, Dictionary<string, From> table, Func<From, To> convertHandler)
+        static To TryGetObject<From, To>(string id, Dictionary<string, From> table, Func<From, To> convertHandler)
         {
-            if(table.TryGetValue(id, out From obj))
+            if (table.TryGetValue(id, out From obj))
             {
                 return convertHandler.Invoke(obj);
             }

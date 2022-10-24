@@ -258,8 +258,10 @@ MonoBehaviour:
     spriteSheets: []
     properties:
       properityFields: []
-    scripts: []
+    behaviors: []
   spriteSheets: []
+  textures: []
+  scripts: []
 --- !u!1 &1432982718
 GameObject:
   m_ObjectHideFlags: 0
