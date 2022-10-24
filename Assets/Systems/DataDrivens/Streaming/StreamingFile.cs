@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using MoonSharp.Interpreter;
 
@@ -15,7 +16,7 @@ namespace DataDriven
         public readonly byte[] data;
         public StreamingFile(string path)
         {
-            string[] fileName = path.Split('\\').Last().Split('.');
+            string[] fileName = Regex.Split(path, "\\/").Last().Split('.');
 
             name = fileName[0];
             format = fileName[1];

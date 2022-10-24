@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace DataDriven
 {
@@ -14,7 +15,8 @@ namespace DataDriven
 
         public StreamingDirectory(string path)
         {
-            this.name = path.Split('\\').Last();
+            // this.name = path.Split('\\').Last();
+            this.name = Regex.Split(path, "\\/").Last();
             this.path = path;
 
             directory = LoadFolders(path);
@@ -50,6 +52,9 @@ namespace DataDriven
 
         public StreamingDirectory GetDirectory(string name)
         {
+            
+            // UnityEngine.Debug.Log(name);
+            // UnityEngine.Debug.Log(directory.Where(n => n.name == name).Count());
             return directory.Where(n => n.name == name).First();
         }
 

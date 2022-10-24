@@ -69,6 +69,7 @@ namespace ModdingLab.Definition
                 T asset = loadHandler.Invoke(file);
 
                 assetTable.Add(file.name, asset);
+                Debug.Log(file.name);
             }
         }
 

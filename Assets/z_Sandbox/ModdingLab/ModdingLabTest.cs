@@ -24,6 +24,10 @@ namespace ModdingLab
             {
                 Initial();
             }
+            if(Input.GetKeyDown(KeyCode.F6))
+            {
+                EntityInstantiator.CreateEntity("Entity_A");
+            }
         }
 
         void Initial()
@@ -42,6 +46,7 @@ namespace ModdingLab
             float duration = Time.realtimeSinceStartup - start;
             Debug.Log(duration);
 
+
             start = Time.realtimeSinceStartup;
             DefinitionTables.LoadDefinitionDatas(items);
             duration = Time.realtimeSinceStartup - start;
@@ -53,7 +58,7 @@ namespace ModdingLab
             scripts.AddRange(DefinitionTables.AccessScripts());
 
             //
-            GameEntity entity = EntityInstantiator.CreateEntity("Entity_A");
+            //GameEntity entity = EntityInstantiator.CreateEntity("Entity_A");
         }
 
 
