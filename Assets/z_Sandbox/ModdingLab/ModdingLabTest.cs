@@ -38,7 +38,6 @@ namespace ModdingLab
             textures.Clear();
             scripts.Clear();
 
-
             ModManager.Initial();
             ModManager.LoadModFiles();
             ModManager.SaveModOptions();
@@ -48,25 +47,13 @@ namespace ModdingLab
             //
             LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
 
-            //
-            //float start = Time.realtimeSinceStartup;
-            //StreamingItem[] items = StreamingLoader.GetItemsWithType("Define");
-            //float duration = Time.realtimeSinceStartup - start;
-            //Debug.Log(duration);
-
-
-            //start = Time.realtimeSinceStartup;
-            //DefinitionTables.LoadDefinitionDatas(items);
-            //duration = Time.realtimeSinceStartup - start;
-            //Debug.Log(duration);
 
             entities.AddRange(DefinitionTables.AccessEntityDefines());
             spriteSheets.AddRange(DefinitionTables.AccessSpriteSheetDefines());
             textures.AddRange(DefinitionTables.AccessTextures());
             scripts.AddRange(DefinitionTables.AccessScripts());
 
-            //
-            //GameEntity entity = EntityInstantiator.CreateEntity("Entity_A");
+
         }
 
 

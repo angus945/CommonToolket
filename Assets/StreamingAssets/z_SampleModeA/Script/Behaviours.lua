@@ -1,4 +1,4 @@
-include = {"Math", "Vector"}
+Include = {"Math", "Vector"}
 
 function MoveUp (properity, delta)
     pos = properity.position;

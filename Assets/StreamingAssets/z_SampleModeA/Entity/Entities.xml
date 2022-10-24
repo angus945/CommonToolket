@@ -38,11 +38,11 @@
     <!--attach lua behavior-->
     <Behavior>
       
-      <Script id="AI" script="enemyAI">
+      <Script id="AI" script="EnemyAI" active="false">
         <Function function="Update" type="Frame" call="2"></Function>
       </Script>
 
-      <Script id="Timer" script="timer">
+      <Script id="Beh" script="Behaviours" active="true">
         <Function function="Update" type="Time" call="5.5"></Function>
       </Script>
       

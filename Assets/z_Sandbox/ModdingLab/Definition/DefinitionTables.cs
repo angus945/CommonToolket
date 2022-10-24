@@ -137,6 +137,10 @@ namespace ModdingLab.Definition
         {
             return TryGetObject(name, textureTable, (texture) => texture);
         }
+        public static string GetScriptCode(string name)
+        {
+            return TryGetObject(name, scriptTable, (code) => code);
+        }
 
         //
         static To TryGetObject<From, To>(string id, Dictionary<string, From> table, Func<From, To> convertHandler)

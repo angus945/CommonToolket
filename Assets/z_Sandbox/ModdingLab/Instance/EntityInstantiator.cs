@@ -5,6 +5,8 @@ using ModdingLab.Definition.TypeScript;
 using ModdingLab.Instance.Visual;
 using ModdingLab.Instance.Behavior;
 using System;
+using MoonSharp.Interpreter;
+using DataDriven.Lua;
 
 namespace ModdingLab.Instance
 {
@@ -48,14 +50,17 @@ namespace ModdingLab.Instance
             }
             for (int i = 0; i < define.behaviors.Length; i++)
             {
-                BehaviorDefine behavior = define.behaviors[i];
+                BehaviorDefine behaviorDefine = define.behaviors[i];
 
-                //LuaFunction[] functions = Array.ConvertAll(behavior.functions, n =>
-                //{
-                //    return new LuaFunction()
-                //});
+                string code = DefinitionTables.GetScriptCode(behaviorDefine.scriptName);
+                if (string.IsNullOrEmpty(code)) continue;
 
-                //LuaBehavior luaBehavior = new LuaBehavior();
+                Script script = LuaInitializer.CreateScript(code);
+
+                LuaFunction[] functions = Array.ConvertAll(behaviorDefine.functions, n => new LuaFunction(n.functionName, n.call, (int)n.type));
+                LuaBehavior behavior = new LuaBehavior(behaviorDefine.active, script, functions);
+
+                entity.AddBehavior(behaviorDefine.id, behavior);
             }
 
             return entity;

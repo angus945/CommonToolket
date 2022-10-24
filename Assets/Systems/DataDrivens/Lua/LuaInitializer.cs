@@ -51,6 +51,24 @@ namespace DataDriven.Lua
             }
         }
 
+        public static Script CreateScript(string code)
+        {
+            Script script = new Script();
+
+            try
+            {
+                script.DoString(code);
+            }
+            catch (SyntaxErrorException ex)
+            {
+                logHandler?.Invoke(ex.DecoratedMessage);
+                throw;
+            }
+
+            IncludeLiberary(script);
+
+            return script;
+        }
         public static void IncludeLiberary(Script script)
         {
             Initialize(UnityEngine.Debug.Log);

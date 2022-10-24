@@ -29,8 +29,8 @@ namespace ModdingLab.Definition.TypeScript
     public class BehaviorDefine
     {
         [XmlAttribute] public string id;
-
-        [XmlAttribute] public string script;
+        [XmlAttribute("script")] public string scriptName;
+        [XmlAttribute] public bool active;
 
         [XmlElement("Function")] public Function[] functions;
 

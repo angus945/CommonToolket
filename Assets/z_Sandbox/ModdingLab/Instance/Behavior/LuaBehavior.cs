@@ -7,19 +7,27 @@ namespace ModdingLab.Instance.Behavior
 {
     enum UpdateType
     {
-        Auto,
-        Time,
-        Frame,
+        Auto = 0,
+        Time = 1,
+        Frame = 2,
     }
 
     public class LuaFunction
     {
-        DynValue function;
-
-        float timer;
+        string name;
         float call;
 
         UpdateType type;
+
+        float timer;
+        DynValue function;
+
+        public LuaFunction(string name,  float call, int type)
+        {
+            this.name = name;
+            this.call = call;
+            this.type = (UpdateType)type;
+        }
 
         public void Update(float delta)
         {
@@ -34,6 +42,15 @@ namespace ModdingLab.Instance.Behavior
         Script script;
 
         LuaFunction[] functions;
+
+        public LuaBehavior(bool isActive, Script script, LuaFunction[] functions)
+        {
+            this.isActive = isActive;
+            this.script = script;
+            this.functions = functions;
+
+            Debug.Log(isActive);
+        }
     }
 
 }
