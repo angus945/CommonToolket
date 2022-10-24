@@ -16,30 +16,13 @@ namespace DataDriven
         public readonly byte[] data;
         public StreamingFile(string path)
         {
-            string[] fileName = Regex.Split(path, "\\/").Last().Split('.');
+            path = path.Replace('\\', '/');
+            string[] fileName = path.Split('/').Last().Split('.');
 
             name = fileName[0];
             format = fileName[1];
 
             data = File.ReadAllBytes(path);
-
-            //switch (format.ToLower())
-            //{
-            //    case "json":
-            //    case "xml":
-            //        content = File.ReadAllText(path);
-            //        break;
-
-            //    case "jpg":
-            //    case "png":
-            //        content = File.ReadAllBytes(path);
-            //        break;
-
-            //    default:
-            //        break;
-            //}
-
-            //Debug.Log(this);
         }
 
         public string ReadString()

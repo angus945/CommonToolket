@@ -15,8 +15,9 @@ namespace DataDriven
 
         public StreamingDirectory(string path)
         {
-            // this.name = path.Split('\\').Last();
-            this.name = Regex.Split(path, "\\/").Last();
+            path = path.Replace('\\', '/');
+
+            this.name = path.Split('/').Last();
             this.path = path;
 
             directory = LoadFolders(path);
@@ -52,9 +53,6 @@ namespace DataDriven
 
         public StreamingDirectory GetDirectory(string name)
         {
-            
-            // UnityEngine.Debug.Log(name);
-            // UnityEngine.Debug.Log(directory.Where(n => n.name == name).Count());
             return directory.Where(n => n.name == name).First();
         }
 
