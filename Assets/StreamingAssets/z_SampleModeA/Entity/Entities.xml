@@ -38,7 +38,7 @@
     <!--attach lua behavior-->
     <Behavior>
       
-      <Script id="AI" script="EnemyAI" active="false">
+      <Script id="AI" script="EntityAI" active="true">
         <Function function="Update" type="Frame" call="2"></Function>
       </Script>
 

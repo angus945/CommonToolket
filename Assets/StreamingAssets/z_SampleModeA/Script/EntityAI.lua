@@ -9,7 +9,7 @@ end
 
 function Update ()
 
-    ActiveTime = ActiveTime + Time.delta;
+    -- ActiveTime = ActiveTime + Time.delta;
 
-    print(ActiveTime);
+    print("Hello");
 end

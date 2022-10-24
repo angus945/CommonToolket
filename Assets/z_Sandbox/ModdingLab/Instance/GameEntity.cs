@@ -19,6 +19,16 @@ namespace ModdingLab.Instance
         Dictionary<string, LuaBehavior> behaviours;
 
         //
+        void Update()
+        {
+            foreach (var item in behaviours)
+            {
+                LuaBehavior behavior = item.Value;
+                behavior.Update(Time.deltaTime);
+            }
+        }
+
+        //
         public void Initial(EntityIdentifier identifier)
         {
             this.identifier = identifier;
@@ -26,6 +36,7 @@ namespace ModdingLab.Instance
             components = new Dictionary<string, Component>();
             spriteSheets = new Dictionary<string, SpriteSheet>();
             properties = new Dictionary<string, float>();
+            behaviours = new Dictionary<string, LuaBehavior>();
         }
         public void AddProperity(string name, float value)
         {

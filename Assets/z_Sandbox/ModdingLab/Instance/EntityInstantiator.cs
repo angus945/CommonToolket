@@ -55,6 +55,7 @@ namespace ModdingLab.Instance
                 string code = DefinitionTables.GetScriptCode(behaviorDefine.scriptName);
                 if (string.IsNullOrEmpty(code)) continue;
 
+                Debug.Log(code);
                 Script script = LuaInitializer.CreateScript(code);
 
                 LuaFunction[] functions = Array.ConvertAll(behaviorDefine.functions, n => new LuaFunction(n.functionName, n.call, (int)n.type));
