@@ -14,24 +14,31 @@ namespace ModdingLab
 {
     public class ModdingLabTest : MonoBehaviour
     {
+        [SerializeField] string summonID = "Inhert_Enemy_A";
+
+        [Space]
         public List<EntityDefine> entities = new List<EntityDefine>();
         public List<SpriteSheetDefine> spriteSheets = new List<SpriteSheetDefine>();
         public List<Texture> textures = new List<Texture>();
         public List<string> scripts = new List<string>();
 
+        void Start()
+        {
+            Application.targetFrameRate = 120;
+        }
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                Initial();
+                Initial(); 
             }
             if(Input.GetKeyDown(KeyCode.F6))
             {
-                EntityInstantiator.CreateEntity("Entity_A");
+                EntityInstantiator.CreateEntity(summonID);
             }
             if (Input.GetKey(KeyCode.F7))
             {
-                EntityInstantiator.CreateEntity("Entity_A");
+                EntityInstantiator.CreateEntity(summonID);
             }
         }
 

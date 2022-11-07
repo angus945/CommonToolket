@@ -15,7 +15,7 @@ namespace ModdingLab.Instance
             id = data.id;
             name = data.name;
             describe = data.describe;
-            tags = data.tags;
+            tags = data.tags.tags.ToArray();
         }
     }
 }

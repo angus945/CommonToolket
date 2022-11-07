@@ -1,0 +1,12 @@
+<Modules>
+    <ProperityModule>
+        <Properties>
+            <Prop name="Speed">5.5</Prop>
+            <Prop name="Force">10</Prop>
+        </Properties>
+    </ProperityModule>
+
+
+</Modules>
+
+

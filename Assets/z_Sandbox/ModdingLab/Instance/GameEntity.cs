@@ -20,7 +20,7 @@ namespace ModdingLab.Instance
         Dictionary<string, List<DynValue>> eventListeners;
 
         //
-        private void Start()
+        void Start()
         {
             ResetEntity();
         }
@@ -61,23 +61,38 @@ namespace ModdingLab.Instance
             properties = new Dictionary<string, float>();
             behaviours = new Dictionary<string, LuaBehavior>();
         }
-        public void AddProperity(string name, float value)
+        public void AddProperity(string id, float value)
         {
-            properties.Add(name, value);
+            if(properties.ContainsKey(id))
+            {
+                properties[id] = value;
+            }
+            else properties.Add(id, value);
         }
         public void AddSpriteSheet(SpriteSheet sheet)
         {
             if (sheet == null) return;
+            if (spriteSheets.ContainsKey(sheet.id)) return;
 
             spriteSheets.Add(sheet.id, sheet);
         }
         public void AddComponent(string id, Component component)
         {
-            components.Add(id, component);
+            if (components.ContainsKey(id))
+            {
+                Destroy(components[id]);
+
+                components[id] = component;
+            }
+            else components.Add(id, component);
         }
         public void AddBehavior(string id, LuaBehavior behavior)
         {
-            behaviours.Add(id, behavior);
+            if (properties.ContainsKey(id))
+            {
+                behaviours[id] = behavior;
+            }
+            else behaviours.Add(id, behavior);
         }
 
         //

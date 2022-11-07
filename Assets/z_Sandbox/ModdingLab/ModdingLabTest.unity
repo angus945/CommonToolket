@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1c36d8683c1c46832e716be404e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  summonID: Entity_A
   entities:
   - id: 
     name: 
@@ -258,10 +259,22 @@ MonoBehaviour:
     spriteSheets: []
     properties:
       properityFields: []
+    components:
+      components: []
     behaviors: []
-  spriteSheets: []
+  spriteSheets:
+  - id: 
+    source: 
+    filter: 0
+    width: 0
+    height: 0
+    animationDatas:
+      defaultAnimation: 
+      animations: []
   textures: []
   scripts: []
+  references:
+    version: 1
 --- !u!1 &1170122648
 GameObject:
   m_ObjectHideFlags: 0

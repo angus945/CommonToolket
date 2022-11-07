@@ -12,8 +12,6 @@
 
     <Visual>
       <SpriteSheet>testSpriteSheet</SpriteSheet>
-      <SpriteSheet>SpriteSheetB</SpriteSheet>
-      <SpriteSheet>SpriteSheetC</SpriteSheet>
     </Visual>
 
     <Audio></Audio>
@@ -44,8 +42,7 @@
       <Event name="OnCollide">
         <Action behavior="AI" function="Alert"></Action>
         <Action behavior="AI" function="Alert"></Action>
-      </Event>
-      
+      </Event>     
       
     </Listeners>
 
