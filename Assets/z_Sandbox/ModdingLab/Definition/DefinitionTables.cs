@@ -6,30 +6,106 @@ using UnityEngine;
 using DataDriven;
 using DataDriven.XML;
 using ModdingLab.Instance.Visual;
+using ModdingLab.Definition.Componentized;
 
 namespace ModdingLab.Definition
 {
-    public class DefinitionTable<T> where T : class, IDefinition
+    public class EntityDefinition
     {
-        //public Dictionary<string, T> abstractTable = new Dictionary<string, T>();
-        public Dictionary<string, T> definitionTable = new Dictionary<string, T>();
+        public DefinitionTable<EntityDefine> entityTable;
 
-        public void Add(T data)
+        public DefinitionTable<EntityTags> tagTable;
+        public DefinitionTable<EntityVisuals> visualTable;
+        //public DefinitionTable<EntityAudio> visualTable;
+        public DefinitionTable<EntityProperties> properityTable;
+        public DefinitionTable<EntityComponents> componentTable;
+        public DefinitionTable<EntityBehaviors> behaviorTable;
+
+        public EntityDefinition()
         {
-            definitionTable.Add(data.id, data);
+            tagTable = new DefinitionTable<EntityTags>();
+            visualTable = new DefinitionTable<EntityVisuals>();
+            properityTable = new DefinitionTable<EntityProperties>();
+            componentTable = new DefinitionTable<EntityComponents>();
+            behaviorTable = new DefinitionTable<EntityBehaviors>();
+
+            entityTable = new DefinitionTable<EntityDefine>();
         }
-        public T GetDefine(string id)
+        public void LoadDefine(StreamingDirectory entityDirectory)
         {
-            if (definitionTable.TryGetValue(id, out T define))
+            StreamingFile[] entities = entityDirectory.files;
+            LoadDefines(entities);
+            
+            if(entityDirectory.TryGetDirectory("Module", out StreamingDirectory moduleDirectory))
             {
-                return define;
+                StreamingFile[] modulesFiles = moduleDirectory.files;
+                LoadDefines(modulesFiles);
             }
-            else
-            {
-                Logger.Log($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
+        }
 
-                return (T)default;
+        //
+        void LoadDefines(StreamingFile[] files) 
+        {
+            for (int i = 0; i < files.Length; i++)
+            {
+                StreamingFile file = files[i];
+
+                XmlDocument xml = file.ReadXML();
+                XmlElement root = xml.DocumentElement;
+
+                XmlNodeList datas = root.ChildNodes;
+                foreach (XmlNode define in datas)
+                {
+                    AddDefine(define);
+                }
             }
+        }
+        void AddDefine(XmlNode define)
+        {
+            Debug.Log(define.Name);
+
+            switch (define.Name)
+            {
+                case "Entity":
+                    entityTable.Add(define);
+                    break;
+
+                case "Tags":
+                    tagTable.Add(define);
+                    break;
+
+                case "Visual":
+                    visualTable.Add(define);
+                    break;
+
+                case "Audio":
+                    break;
+
+                case "Properties":
+                    properityTable.Add(define);
+                    break;
+
+                case "Components":
+                    componentTable.Add(define);
+                    break;
+
+                case "Behavior":
+                    behaviorTable.Add(define);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void ListDatas(out List<EntityDefine> entity, out List<EntityTags> tag, out List<EntityVisuals> visual, out List<EntityProperties> properties, out List<EntityComponents> components, out List<EntityBehaviors> behaviors)
+        {
+            entity = new List<EntityDefine>(entityTable.Values);
+            tag = new List<EntityTags>(tagTable.Values);
+            visual = new List<EntityVisuals>(visualTable.Values);
+            properties = new List<EntityProperties>(properityTable.Values);
+            components = new List<EntityComponents>(componentTable.Values);
+            behaviors = new List<EntityBehaviors>(behaviorTable.Values);
         }
     }
 
@@ -41,8 +117,12 @@ namespace ModdingLab.Definition
         static Dictionary<string, Texture> textureTable;
         static Dictionary<string, string> scriptTable;
 
+        static EntityDefinition entityDefinition;
+
         public static void Initial()
         {
+            entityDefinition = new EntityDefinition();
+
             entityDefineTable = new DefinitionTable< EntityDefine>();
             spriteSheetDefineTable = new DefinitionTable< SpriteSheetDefine>();
             textureTable = new Dictionary<string, Texture>();
@@ -63,7 +143,12 @@ namespace ModdingLab.Definition
         }
         static void LoadDefineData(StreamingItem source)
         {
-            LoadDefineData(source, "Entity", "Entity", entityDefineTable);
+            if(source.root.TryGetDirectory("Entity", out StreamingDirectory entityDirectory))
+            {
+                entityDefinition.LoadDefine(entityDirectory);
+            }
+
+            //LoadDefineData(source, "Entity", "Entity", entityDefineTable);
             LoadDefineData(source, "Visual", "SpriteSheet", spriteSheetDefineTable);
         }
         static void LoadDefineAsset(StreamingItem source)
@@ -107,9 +192,9 @@ namespace ModdingLab.Definition
         }
 
         //TODO Fix
-        public static EntityDefine[] AccessEntityDefines()
+        public static void AccessEntities(out List<EntityDefine> entity, out List<EntityTags> tag, out List<EntityVisuals> visual, out List<EntityProperties> properties, out List<EntityComponents> components, out List<EntityBehaviors> behaviors)
         {
-            return entityDefineTable.definitionTable.Values.ToArray();
+            entityDefinition.ListDatas(out entity, out tag, out visual, out properties, out components, out behaviors);
         }
         public static SpriteSheetDefine[] AccessSpriteSheetDefines()
         {

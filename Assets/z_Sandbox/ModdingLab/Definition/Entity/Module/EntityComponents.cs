@@ -5,6 +5,7 @@ using ModdingLab.Definition.Componentized;
 
 namespace ModdingLab.Definition
 {
+    [XmlType("Componens")]
     [System.Serializable]
     public class EntityComponents : EntityModule<ComponentDefine>
     {

@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace ModdingLab.Definition
 {
-    [XmlType]
+    [XmlType("Visual")]
     [System.Serializable]
     public class EntityVisuals : EntityModule<string>
     {

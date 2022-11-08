@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace ModdingLab.Definition.Componentized
+namespace ModdingLab.Definition
 {
     [XmlType]
     [System.Serializable]

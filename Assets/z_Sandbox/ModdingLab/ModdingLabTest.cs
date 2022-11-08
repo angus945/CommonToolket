@@ -9,6 +9,7 @@ using DataDriven.Lua;
 using ModdingLab.Definition;
 using ModdingLab.Instance;
 using ModdingLab.Management;
+using ModdingLab.Definition.Componentized;
 
 namespace ModdingLab
 {
@@ -18,6 +19,13 @@ namespace ModdingLab
 
         [Space]
         public List<EntityDefine> entities = new List<EntityDefine>();
+        public List<EntityTags> tags = new List<EntityTags>();
+        public List<EntityVisuals> visuals = new List<EntityVisuals>();
+        public List<EntityProperties> properties = new List<EntityProperties>();
+        public List<EntityComponents> components = new List<EntityComponents>();
+        public List<EntityBehaviors> behaviors = new List<EntityBehaviors>();
+
+        [Space]
         public List<SpriteSheetDefine> spriteSheets = new List<SpriteSheetDefine>();
         public List<Texture> textures = new List<Texture>();
         public List<string> scripts = new List<string>();
@@ -59,7 +67,7 @@ namespace ModdingLab
             LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
 
 
-            entities.AddRange(DefinitionTables.AccessEntityDefines());
+            DefinitionTables.AccessEntities(out entities, out tags, out visuals, out properties, out components, out behaviors);
             spriteSheets.AddRange(DefinitionTables.AccessSpriteSheetDefines());
             textures.AddRange(DefinitionTables.AccessTextures());
             scripts.AddRange(DefinitionTables.AccessScripts());

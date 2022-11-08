@@ -1,10 +1,11 @@
+using ModdingLab.Definition.Componentized;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace ModdingLab.Definition.Componentized
+namespace ModdingLab.Definition
 {
 
-    [XmlType]
+    [XmlType("Properties")]
     [System.Serializable]
     public class EntityProperties : EntityModule<ProperityField>
     {

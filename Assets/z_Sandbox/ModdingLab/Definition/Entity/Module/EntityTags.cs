@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace ModdingLab.Definition
 {
-    [XmlType]
+    [XmlType("Tags")]
     [System.Serializable]
     public class EntityTags : EntityModule<string>
     {

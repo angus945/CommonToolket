@@ -1,12 +1,24 @@
 <Modules>
-    <ProperityModule>
-        <Properties>
-            <Prop name="Speed">5.5</Prop>
-            <Prop name="Force">10</Prop>
-        </Properties>
-    </ProperityModule>
+    <Tags id="tags_a">
+      <Tag>TagA</Tag>
+    </Tags>
+  
+    <Tags id="tags_b">
+      <Tag>TagA</Tag>
+    </Tags>
 
-
+    <Properties id="prop-a">
+        <Prop name="Speed">5.5</Prop>
+        <Prop name="Force">10</Prop>
+    </Properties>
+    <Properties id="prop-b">
+        <Prop name="Speed">5.5</Prop>
+        <Prop name="Force">10</Prop>
+    </Properties>
+    <Properties id="prop-c">
+        <Prop name="Speed">5.5</Prop>
+        <Prop name="Force">10</Prop>
+    </Properties>
 </Modules>
 
 
