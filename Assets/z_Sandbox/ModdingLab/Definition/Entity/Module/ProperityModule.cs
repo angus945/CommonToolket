@@ -8,11 +8,17 @@ namespace ModdingLab.Definition
 
     [XmlType("Properties")]
     [System.Serializable]
-    public class EntityProperties : EntityModule
+    public class ProperityModule : EntityModule
     {
         //protected override IList moduleContents { get => properityFields; }
 
         [XmlElement("Prop", IsNullable = false)] 
         public List<ProperityField> properityFields;
+
+        public int length { get => properityFields.Count; }
+        public ProperityField this[int index]
+        {
+            get => properityFields[index];
+        }
     }
 }

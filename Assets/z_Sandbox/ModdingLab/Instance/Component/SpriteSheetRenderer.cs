@@ -49,15 +49,14 @@ namespace ModdingLab.Instance.Componentized
             return mesh;
         }
 
+        string defaultSheet;
         SpriteSheet spriteSheet;
-
-        //MeshFilter filter;
-        //Renderer renderer;
-
         Material material;
 
-        public void Initial()
+        public void Initial(string defaultSheet)
         {
+            this.defaultSheet = defaultSheet;
+
             MeshFilter filter = GetComponent<MeshFilter>();
             Renderer renderer = GetComponent<Renderer>();
 
@@ -67,11 +66,21 @@ namespace ModdingLab.Instance.Componentized
             renderer.material = material;
         }
 
-        public void SetSpriteSheet(SpriteSheet spriteSheet)
+        void Start()
         {
-            this.spriteSheet = spriteSheet;
+            SetSpriteSheet(defaultSheet);
 
-            material.SetTexture("_MainTex", spriteSheet.sheetTexture);
+            //SpriteSheet spriteSheet = GetSpriteSheetByID(spriteSheetID);
+            //renderer.SetSpriteSheet(spriteSheet);
+        }
+        public void SetSpriteSheet(string sheetID)
+        {
+            spriteSheet = GetComponent<GameEntity>().GetSpriteSheetByID(sheetID);
+
+            if(spriteSheet != null)
+            {
+                material.SetTexture("_MainTex", spriteSheet.sheetTexture);
+            }
         }
         public void SetSprite(int index, int frameNumber)
         {

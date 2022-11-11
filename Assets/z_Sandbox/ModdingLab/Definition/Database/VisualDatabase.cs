@@ -4,6 +4,7 @@ using System.Xml;
 using UnityEngine;
 using DataDriven;
 using ModdingLab.Instance.Visual;
+using System.Linq;
 
 namespace ModdingLab.Definition
 {
@@ -17,6 +18,14 @@ namespace ModdingLab.Definition
         public static SpriteSheetAnimation[] TryGetAnimations(string sheetID, out string defaultAnimation)
         {
             return instance.GetSpriteSheetAnimations(sheetID, out defaultAnimation);
+        }
+        public static void GetAllSpriteSheets(out List<SpriteSheetDefine> spriteSheets)
+        {
+            spriteSheets = new List<SpriteSheetDefine>(instance.defineTable.Values);
+        }
+        public static void GetAllTextures(out List<Texture> textures)
+        {
+            textures = new List<Texture>(instance.textureTable.Values);
         }
 
         //

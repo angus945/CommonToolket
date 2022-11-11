@@ -18,50 +18,71 @@ namespace ModdingLab.Instance
         {
             Logger.Tick(null);
 
-            if (EntityDatabase.GryGetEntity(entityID, out EntityDefine define, out _))
-            {
-                GameEntity entity = CreateEntity(define);
+            GameEntity entity = null;
 
-                SetEntity(entity, define);
-
-                Logger.Tick("Entity Instance");
-                return entity;
-            }
-            else
+            if (EntityDatabase.TryGetEntity(entityID, out EntityDefine define, out EntityModule[] modules))
             {
-                return null;
+                entity = CreateEntity(define, modules);
             }
+
+            Logger.Tick("Entity Instance");
+
+            return entity;
         }
 
-        static GameEntity CreateEntity(EntityDefine define)
+        static GameEntity CreateEntity(EntityDefine define, EntityModule[] modules)
         {
             GameObject entityObject = new GameObject(define.name);
 
             GameEntity entity = entityObject.AddComponent<GameEntity>();
-
             SetIdentifier(entity, define);
 
+            AddModule(entity, define.spriteSheets);
+            AddModule(entity, define.properties);
+            AddModule(entity, define.components);
+            AddModule(entity, define.behaviors);
+
+            for (int i = 0; i < modules.Length; i++)
+            {
+                AddModule(entity, modules[i]);
+            }
+
             return entity;
-        }
-        static void SetEntity(GameEntity entity, EntityDefine define)
-        {
-            SetSpriteSheet(entity, define.spriteSheets.spriteSheets);
-            SetProperties(entity, define.properties);
-            SetComponents(entity, define.components.components);
-            SetBehaviors(entity, define.behaviors.behaviors);
         }
         static void SetIdentifier(GameEntity entity, EntityDefine define)
         {
             EntityIdentifier identifier = new EntityIdentifier(define);
             entity.Initial(identifier);
         }
-        static void SetSpriteSheet(GameEntity entity, List<string> spriteSheets)
-        {
-            if (spriteSheets == null) return;
 
-            for (int i = 0; i < spriteSheets.Count; i++)
+        static void AddModule(GameEntity entity, EntityModule module)
+        {
+            if (module == null) return;
+
+            switch (module)
             {
-                string sheetID = spriteSheets[i];
+                case VisualModule visual:
+                    SetSpriteSheet(entity, visual);
+                    break;
+
+                case ProperityModule properties:
+                    SetProperties(entity, properties);
+                    break;
+
+                case ComponentModule components:
+                    SetComponents(entity, components);
+                    break;
+
+                case BehaviorModule behaviors:
+                    SetBehaviors(entity, behaviors);
+                    break;
+            }
+        }
+        static void SetSpriteSheet(GameEntity entity, VisualModule visual)
+        {
+            for (int i = 0; i < visual.length; i++)
+            {
+                string sheetID = visual[i];
 
                 if(VisualDatabase.TryGetSpriteSheet(sheetID, out SpriteSheet sheet))
                 {
@@ -69,21 +90,17 @@ namespace ModdingLab.Instance
                 }
             }
         }
-        static void SetProperties(GameEntity entity, EntityProperties properties)
+        static void SetProperties(GameEntity entity, ProperityModule properties)
         {
-            if (properties == null) return;
-
-            for (int i = 0; i < properties.properityFields.Count; i++)
+            for (int i = 0; i < properties.length; i++)
             {
-                ProperityField properity = properties.properityFields[i];
+                ProperityField properity = properties[i];
                 entity.AddProperity(properity.name, properity.value);
             }
         }
-        static void SetComponents(GameEntity entity, List<ComponentDefine> components)
+        static void SetComponents(GameEntity entity, ComponentModule components)
         {
-            if (components == null) return;
-
-            for (int i = 0; i < components.Count; i++)
+            for (int i = 0; i < components.length; i++)
             {
                 ComponentDefine define = components[i];
 
@@ -93,15 +110,13 @@ namespace ModdingLab.Instance
                 entity.AddComponent(define.id, component);
             }
         }
-        static void SetBehaviors(GameEntity entity, List<BehaviorDefine> behaviors)
+        static void SetBehaviors(GameEntity entity, BehaviorModule behaviors)
         {
-            if (behaviors == null) return;
-
-            for (int i = 0; i < behaviors.Count; i++)
+            for (int i = 0; i < behaviors.length; i++)
             {
                 BehaviorDefine behaviorDefine = behaviors[i];
 
-                string code = EntityDatabase.GetScriptCode(behaviorDefine.scriptName);
+                string code = EntityDatabase.GetBehaviorScript(behaviorDefine.scriptName);
                 if (string.IsNullOrEmpty(code)) continue;
 
                 Script script = LuaInitializer.CreateScript(code);

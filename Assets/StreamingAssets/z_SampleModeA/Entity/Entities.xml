@@ -4,21 +4,13 @@
     <Name> Entity A </Name>
     <Describe> a basis Entity </Describe>
 
-    <Tags>
-      <Tag>TagA</Tag>
-      <Tag>TagB</Tag>
-      <Tag>TagC</Tag>
-    </Tags>
+    <Tags include="debug"></Tags>
 
-    <Visual>
-      <SpriteSheet>testSpriteSheet</SpriteSheet>
-    </Visual>
+    <Visual include="debug"></Visual>
 
     <Audio></Audio>
 
-    <Properties include="enemy fly health">
-      <Prop name="Speed">5.5</Prop>
-      <Prop name="Force">10</Prop>
+    <Properties include="debug">
     </Properties>
     
     <!--attach unity component-->
@@ -30,21 +22,10 @@
     </Components>
 
     <!--attach lua behavior-->
-    <Behavior>
-      <Script id="AI" script="EntityAI" active="true">
-        <Function function="Update" type="Time" call="1"></Function>
-      </Script>
-    </Behavior>
+    <Behavior include="debug"></Behavior>
 
     <!--register event listener-->
-    <Listeners>
-      
-      <Event name="OnCollide">
-        <Action behavior="AI" function="Alert"></Action>
-        <Action behavior="AI" function="Alert"></Action>
-      </Event>     
-      
-    </Listeners>
+    <Listeners></Listeners>
 
   </Entity>
 

@@ -7,17 +7,21 @@ namespace ModdingLab.Definition
     public class EntityDatabase
     {
         static EntityDatabase instance;
-        public static bool GryGetEntity(string id, out EntityDefine entity, out EntityModule[] modules)
+        public static bool TryGetEntity(string id, out EntityDefine entity, out EntityModule[] modules)
         {
             return instance.GetEntity(id, out entity, out modules);
         }
-        public static void DebugAccess(out List<EntityDefine> entity, out List<EntityTags> tag, out List<EntityVisuals> visual, out List<EntityProperties> properties, out List<EntityComponents> components, out List<EntityBehaviors> behaviors)
+        public static string GetBehaviorScript(string name)
+        {
+            return instance.GetScript(name);
+        }
+        public static void GetAllDatas(out List<EntityDefine> entity, out List<EntityTags> tag, out List<VisualModule> visual, out List<ProperityModule> properties, out List<ComponentModule> components, out List<BehaviorModule> behaviors)
         {
             instance.ListDatas(out entity, out tag, out visual, out properties, out components, out behaviors);
         }
-        public static string GetScriptCode(string name)
+        public static void GetAllScripts(out List<string> scripts)
         {
-            return instance.GetScript(name);
+            scripts = new List<string>(instance.scriptTable.Values);
         }
 
         //Entity
@@ -25,11 +29,11 @@ namespace ModdingLab.Definition
 
         //Module
         DefinitionTable<EntityTags> tagTable;
-        DefinitionTable<EntityVisuals> visualTable;
+        DefinitionTable<VisualModule> visualTable;
         //public DefinitionTable<EntityAudio> visualTable;
-        DefinitionTable<EntityProperties> properityTable;
-        DefinitionTable<EntityComponents> componentTable;
-        DefinitionTable<EntityBehaviors> behaviorTable;
+        DefinitionTable<ProperityModule> properityTable;
+        DefinitionTable<ComponentModule> componentTable;
+        DefinitionTable<BehaviorModule> behaviorTable;
 
         //Script
         Dictionary<string, string> scriptTable;
@@ -45,10 +49,10 @@ namespace ModdingLab.Definition
             instance = this;
 
             tagTable = new DefinitionTable<EntityTags>();
-            visualTable = new DefinitionTable<EntityVisuals>();
-            properityTable = new DefinitionTable<EntityProperties>();
-            componentTable = new DefinitionTable<EntityComponents>();
-            behaviorTable = new DefinitionTable<EntityBehaviors>();
+            visualTable = new DefinitionTable<VisualModule>();
+            properityTable = new DefinitionTable<ProperityModule>();
+            componentTable = new DefinitionTable<ComponentModule>();
+            behaviorTable = new DefinitionTable<BehaviorModule>();
 
             entityTable = new DefinitionTable<EntityDefine>();
             scriptTable = new Dictionary<string, string>();
@@ -168,14 +172,14 @@ namespace ModdingLab.Definition
             //return TryGetObject(name, scriptTable, (code) => code);
         }
 
-        public void ListDatas(out List<EntityDefine> entity, out List<EntityTags> tag, out List<EntityVisuals> visual, out List<EntityProperties> properties, out List<EntityComponents> components, out List<EntityBehaviors> behaviors)
+        void ListDatas(out List<EntityDefine> entity, out List<EntityTags> tag, out List<VisualModule> visual, out List<ProperityModule> properties, out List<ComponentModule> components, out List<BehaviorModule> behaviors)
         {
             entity = new List<EntityDefine>(entityTable.Values);
             tag = new List<EntityTags>(tagTable.Values);
-            visual = new List<EntityVisuals>(visualTable.Values);
-            properties = new List<EntityProperties>(properityTable.Values);
-            components = new List<EntityComponents>(componentTable.Values);
-            behaviors = new List<EntityBehaviors>(behaviorTable.Values);
+            visual = new List<VisualModule>(visualTable.Values);
+            properties = new List<ProperityModule>(properityTable.Values);
+            components = new List<ComponentModule>(componentTable.Values);
+            behaviors = new List<BehaviorModule>(behaviorTable.Values);
         }
     }
 

@@ -21,16 +21,16 @@ namespace ModdingLab.Definition
         public EntityTags tags;
 
         [XmlElement("Visual", IsNullable = false)]
-        public EntityVisuals spriteSheets;
+        public VisualModule spriteSheets;
 
         [XmlElement("Properties", IsNullable = false)]
-        public EntityProperties properties;
+        public ProperityModule properties;
 
         [XmlElement("Components", IsNullable = false)]
-        public EntityComponents components;
+        public ComponentModule components;
 
         [XmlElement("Behavior", IsNullable = false)]
-        public EntityBehaviors behaviors;
+        public BehaviorModule behaviors;
     }
 
 }

@@ -21,10 +21,8 @@ namespace ModdingLab.Definition.Componentized
         public override void InitialComponent(GameEntity entity, Component component)
         {
             SpriteSheetRenderer renderer = component as SpriteSheetRenderer;
-            SpriteSheet spriteSheet = entity.GetSpriteSheetByID(spriteSheetID);
 
-            renderer.Initial();
-            renderer.SetSpriteSheet(spriteSheet);
+            renderer.Initial(spriteSheetID);
         }
     }
 

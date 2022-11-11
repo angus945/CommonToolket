@@ -7,12 +7,18 @@ namespace ModdingLab.Definition
 {
     [XmlType("Visual")]
     [System.Serializable]
-    public class EntityVisuals : EntityModule
+    public class VisualModule : EntityModule
     {
         //protected override IList moduleContents { get => spriteSheets; }
 
         [XmlElement("SpriteSheet", IsNullable = false)]
         public List<string> spriteSheets;
+
+        public int length { get => spriteSheets.Count; }
+        public string this[int index]
+        {
+            get => spriteSheets[index];
+        }
     }
 
 }

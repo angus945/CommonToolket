@@ -17,7 +17,7 @@ namespace ModdingLab.Instance
         Dictionary<string, SpriteSheet> spriteSheets;
         Dictionary<string, Component> components;
         Dictionary<string, LuaBehavior> behaviours;
-        Dictionary<string, List<DynValue>> eventListeners;
+        //Dictionary<string, List<DynValue>> eventListeners;
 
         //
         void Start()
@@ -63,36 +63,27 @@ namespace ModdingLab.Instance
         }
         public void AddProperity(string id, float value)
         {
-            if(properties.ContainsKey(id))
-            {
-                properties[id] = value;
-            }
-            else properties.Add(id, value);
+            if (properties.ContainsKey(id)) return;
+
+            properties[id] = value;
         }
         public void AddSpriteSheet(SpriteSheet sheet)
         {
-            if (sheet == null) return;
             if (spriteSheets.ContainsKey(sheet.id)) return;
 
             spriteSheets.Add(sheet.id, sheet);
         }
         public void AddComponent(string id, Component component)
         {
-            if (components.ContainsKey(id))
-            {
-                Destroy(components[id]);
+            if (components.ContainsKey(id)) return;
 
-                components[id] = component;
-            }
-            else components.Add(id, component);
+            components[id] = component;
         }
         public void AddBehavior(string id, LuaBehavior behavior)
         {
-            if (properties.ContainsKey(id))
-            {
-                behaviours[id] = behavior;
-            }
-            else behaviours.Add(id, behavior);
+            if (properties.ContainsKey(id)) return;
+
+            behaviours.Add(id, behavior);
         }
 
         //

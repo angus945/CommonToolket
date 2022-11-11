@@ -1,19 +1,17 @@
 <Modules>
-    <Tags id="tags_a">
-      <Tag>TagA</Tag>
-    </Tags>
-  
-    <Tags id="tags_b">
-      <Tag>TagA</Tag>
+    <Tags id="debug">
+      <Tag>Debug</Tag>
     </Tags>
 
-    <Properties id="enemy">
-        <Prop name="Health">5.5</Prop>
-        <Prop name="Damage">10</Prop>
-    </Properties>
-    <Properties id="fly">
-        <Prop name="Speed">5.5</Prop>
-    </Properties>
+    <Visual id="debug">
+      <SpriteSheet>testSpriteSheet</SpriteSheet>
+    </Visual>
+
+    <Behavior id="debug">
+      <Script id="AI" script="EntityAI" active="true">
+        <Function function="Update" type="Time" call="1"></Function>
+      </Script>
+    </Behavior>
 </Modules>
 
 
