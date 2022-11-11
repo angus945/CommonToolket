@@ -31,7 +31,6 @@ namespace ModdingLab.Definition
 
         [XmlElement("Behavior", IsNullable = false)]
         public EntityBehaviors behaviors;
-
     }
 
 }

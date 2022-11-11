@@ -7,17 +7,12 @@
       <Tag>TagA</Tag>
     </Tags>
 
-    <Properties id="prop-a">
-        <Prop name="Speed">5.5</Prop>
-        <Prop name="Force">10</Prop>
+    <Properties id="enemy">
+        <Prop name="Health">5.5</Prop>
+        <Prop name="Damage">10</Prop>
     </Properties>
-    <Properties id="prop-b">
+    <Properties id="fly">
         <Prop name="Speed">5.5</Prop>
-        <Prop name="Force">10</Prop>
-    </Properties>
-    <Properties id="prop-c">
-        <Prop name="Speed">5.5</Prop>
-        <Prop name="Force">10</Prop>
     </Properties>
 </Modules>
 

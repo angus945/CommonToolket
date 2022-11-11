@@ -22,7 +22,7 @@ namespace ModdingLab.Definition.Componentized
         {
             SpriteSheetAnimator animator = component as SpriteSheetAnimator;
 
-            SpriteSheetAnimation[] animations = DefinitionTables.GetSpriteSheetAnimations(spriteSheetID, out string defaultAnim);
+            SpriteSheetAnimation[] animations = VisualDatabase.TryGetAnimations(spriteSheetID, out string defaultAnim);
 
             animator.Initial(animations, defaultAnim);
         }

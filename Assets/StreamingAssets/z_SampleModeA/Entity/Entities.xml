@@ -16,7 +16,7 @@
 
     <Audio></Audio>
 
-    <Properties>
+    <Properties include="enemy fly health">
       <Prop name="Speed">5.5</Prop>
       <Prop name="Force">10</Prop>
     </Properties>

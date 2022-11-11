@@ -1,4 +1,5 @@
 ﻿using DataDriven.XML;
+using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -6,15 +7,15 @@ namespace ModdingLab.Definition
 {
     public class DefinitionTable<T> where T : class, IDefinition
     {
-        public Dictionary<string, T> definitionTable = new Dictionary<string, T>();
+        Dictionary<string, T> table = new Dictionary<string, T>();
         public Dictionary<string, T>.ValueCollection Values
         {
-            get => definitionTable.Values;
+            get => table.Values;
         }
 
         public void Add(T data)
         {
-            definitionTable.Add(data.id, data);
+            table.Add(data.id, data);
         }
         public void Add(XmlNode node)
         {
@@ -22,17 +23,28 @@ namespace ModdingLab.Definition
 
             Add(data);
         }
-        public T GetDefine(string id)
+        public bool TryGetDefine(string id, out T define)
         {
-            if (definitionTable.TryGetValue(id, out T define))
+            if (table.TryGetValue(id, out define))
             {
-                return define;
+                return true;
             }
             else
             {
                 Logger.Log($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
 
-                return (T)default;
+                return false;
+            }
+        }
+
+        public IEnumerable<T> GetDefines(string[] identifiers)
+        {
+            for (int i = 0; i < identifiers.Length; i++)
+            {
+                if(table.TryGetValue(identifiers[i], out T value))
+                {
+                    yield return value;
+                }
             }
         }
     }

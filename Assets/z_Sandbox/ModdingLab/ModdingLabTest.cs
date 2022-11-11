@@ -67,10 +67,10 @@ namespace ModdingLab
             LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
 
 
-            DefinitionTables.AccessEntities(out entities, out tags, out visuals, out properties, out components, out behaviors);
-            spriteSheets.AddRange(DefinitionTables.AccessSpriteSheetDefines());
-            textures.AddRange(DefinitionTables.AccessTextures());
-            scripts.AddRange(DefinitionTables.AccessScripts());
+            EntityDatabase.DebugAccess(out entities, out tags, out visuals, out properties, out components, out behaviors);
+            //spriteSheets.AddRange(DefinitionManager.AccessSpriteSheetDefines());
+            //textures.AddRange(DefinitionManager.AccessTextures());
+            //scripts.AddRange(DefinitionManager.AccessScripts());
 
             //Rigidbody2D r;
             //r.velocity

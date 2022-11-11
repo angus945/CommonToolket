@@ -1,22 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml.Serialization;
-using UnityEngine;
 
 namespace ModdingLab.Definition
 {
-    public abstract class EntityModule<T> : IDefinition
+    public abstract class EntityModule : IDefinition
     {
-        [field:SerializeField]
-        [XmlAttribute] 
-        public string id { get; set; }
+        string IDefinition.id { get => id; }
 
-        protected abstract List<T> moduleContents { get; }
+        [XmlAttribute]
+        public string id;
 
-        public T this[int index] 
+        [XmlAttribute]
+        public string include;
+
+        public string[] includes
         {
-            get => moduleContents[index];
+            get
+            {
+                return (include != null) ? include.Split(' ') : new string[0];
+            }
         }
-        public int length { get => moduleContents.Count; }
     }
 }

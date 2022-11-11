@@ -35,7 +35,7 @@ namespace ModdingLab.Management
             optionStorage = StorageTokenLoader.LoadStorageToken<ModOptionStorage>();
 
             StreamingLoader.LoadStreamingItems();
-            DefinitionTables.Initial();
+            DefinitionManager.Initial();
         }
         public static void LoadModFiles()
         {
@@ -70,7 +70,7 @@ namespace ModdingLab.Management
                 if(modData.active)
                 {
                     StreamingItem modItem = modData.modItem;
-                    DefinitionTables.LoadDefinitionData(modItem);
+                    DefinitionManager.LoadDefinitionData(modItem);
 
                     Logger.Tick($"Data Parsed, Mod: {modData.name}");
                 }

@@ -18,7 +18,7 @@ namespace ModdingLab.Instance
         {
             Logger.Tick(null);
 
-            if (DefinitionTables.GetEntityDefine(entityID, out EntityDefine define))
+            if (EntityDatabase.GryGetEntity(entityID, out EntityDefine define, out _))
             {
                 GameEntity entity = CreateEntity(define);
 
@@ -62,18 +62,20 @@ namespace ModdingLab.Instance
             for (int i = 0; i < spriteSheets.Count; i++)
             {
                 string sheetID = spriteSheets[i];
-                SpriteSheet sheet = DefinitionTables.GetSpriteSheet(sheetID);
 
-                entity.AddSpriteSheet(sheet);
+                if(VisualDatabase.TryGetSpriteSheet(sheetID, out SpriteSheet sheet))
+                {
+                    entity.AddSpriteSheet(sheet);
+                }
             }
         }
         static void SetProperties(GameEntity entity, EntityProperties properties)
         {
             if (properties == null) return;
 
-            for (int i = 0; i < properties.length; i++)
+            for (int i = 0; i < properties.properityFields.Count; i++)
             {
-                ProperityField properity = properties[i];
+                ProperityField properity = properties.properityFields[i];
                 entity.AddProperity(properity.name, properity.value);
             }
         }
@@ -99,7 +101,7 @@ namespace ModdingLab.Instance
             {
                 BehaviorDefine behaviorDefine = behaviors[i];
 
-                string code = DefinitionTables.GetScriptCode(behaviorDefine.scriptName);
+                string code = EntityDatabase.GetScriptCode(behaviorDefine.scriptName);
                 if (string.IsNullOrEmpty(code)) continue;
 
                 Script script = LuaInitializer.CreateScript(code);

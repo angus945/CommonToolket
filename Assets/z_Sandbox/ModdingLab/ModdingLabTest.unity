@@ -255,22 +255,32 @@ MonoBehaviour:
   - id: 
     name: 
     describe: 
-    tags: []
-    spriteSheets: []
+    tags:
+      id: 
+      include: 
+      tags: []
+    spriteSheets:
+      id: 
+      include: 
+      spriteSheets: []
     properties:
+      id: 
+      include: 
       properityFields: []
     components:
+      id: 
+      include: 
       components: []
-    behaviors: []
-  spriteSheets:
-  - id: 
-    source: 
-    filter: 0
-    width: 0
-    height: 0
-    animationDatas:
-      defaultAnimation: 
-      animations: []
+    behaviors:
+      id: 
+      include: 
+      behaviors: []
+  tags: []
+  visuals: []
+  properties: []
+  components: []
+  behaviors: []
+  spriteSheets: []
   textures: []
   scripts: []
   references:
