@@ -104,10 +104,13 @@ namespace ModdingLab.Instance
             {
                 ComponentDefine define = components[i];
 
-                Component component = entity.gameObject.AddComponent(define.RequireComponentType);
+                if(!entity.ContainsComponent(define.id))
+                {
+                    Component component = entity.gameObject.AddComponent(define.RequireComponentType);
 
-                define.InitialComponent(entity, component);
-                entity.AddComponent(define.id, component);
+                    define.InitialComponent(component);
+                    entity.AddComponent(define.id, component);
+                }
             }
         }
         static void SetBehaviors(GameEntity entity, BehaviorModule behaviors)

@@ -13,7 +13,7 @@ namespace ModdingLab.Definition.Componentized
 
         public override Type RequireComponentType { get => typeof(BoxCollider2D); }
 
-        public override void InitialComponent(GameEntity entity, Component component)
+        public override void InitialComponent(Component component)
         {
             BoxCollider2D collider = component as BoxCollider2D;
         }

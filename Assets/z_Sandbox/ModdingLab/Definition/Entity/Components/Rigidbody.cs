@@ -13,7 +13,7 @@ namespace ModdingLab.Definition.Componentized
 
         public override Type RequireComponentType { get => typeof(Rigidbody2D); }
 
-        public override void InitialComponent(GameEntity entity, Component component)
+        public override void InitialComponent(Component component)
         {
             Rigidbody2D rigidbody = component as Rigidbody2D;
 

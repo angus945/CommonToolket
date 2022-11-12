@@ -6,7 +6,7 @@ using ModdingLab.Definition.Componentized;
 
 namespace ModdingLab.Definition
 {
-    [XmlType("Componens")]
+    [XmlType("Components")]
     [System.Serializable]
     public class ComponentModule : EntityModule
     {
@@ -17,6 +17,7 @@ namespace ModdingLab.Definition
         [XmlElement("Rigidbody", typeof(Rigidbody))]
         [XmlElement("Rendering", typeof(SpriteSheetRendering))]
         [XmlElement("Animation", typeof(SpriteSheetAnimaton))]
+        [XmlElement("DebugFlag", typeof(DebugFlag))]
         public List<ComponentDefine> components;
 
         public int length { get => components.Count; }

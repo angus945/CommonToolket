@@ -16,7 +16,7 @@ namespace ModdingLab.Definition.Componentized
         protected abstract string defaultID { get; }
 
         public abstract Type RequireComponentType { get; }
-        public abstract void InitialComponent(GameEntity entity, Component component);
+        public abstract void InitialComponent(Component component);
     }
 
 }

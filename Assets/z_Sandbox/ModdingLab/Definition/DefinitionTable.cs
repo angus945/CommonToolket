@@ -19,9 +19,18 @@ namespace ModdingLab.Definition
         }
         public void Add(XmlNode node)
         {
-            T data = XMLConverter.ConvertNode<T>(node);
+            try
+            {
+                T data = XMLConverter.ConvertNode<T>(node);
 
-            Add(data);
+                Add(data);
+            }
+            catch (Exception)
+            {
+                Logger.Log($"Analyze Error, type: {typeof(T)}", LogType.Error);
+                throw;
+            }
+
         }
         public bool TryGetDefine(string id, out T define)
         {

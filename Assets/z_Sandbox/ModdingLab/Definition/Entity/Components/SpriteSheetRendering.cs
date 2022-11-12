@@ -18,7 +18,7 @@ namespace ModdingLab.Definition.Componentized
         [XmlAttribute("spriteSheet")]
         public string spriteSheetID;
 
-        public override void InitialComponent(GameEntity entity, Component component)
+        public override void InitialComponent(Component component)
         {
             SpriteSheetRenderer renderer = component as SpriteSheetRenderer;
 

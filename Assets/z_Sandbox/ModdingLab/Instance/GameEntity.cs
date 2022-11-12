@@ -87,6 +87,10 @@ namespace ModdingLab.Instance
         }
 
         //
+        public bool ContainsComponent(string id)
+        {
+            return components.ContainsKey(id);
+        }
         public float GetProperity(string name)
         {
             if(properties.TryGetValue(name, out float value))

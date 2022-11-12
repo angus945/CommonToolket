@@ -7,11 +7,16 @@
       <SpriteSheet>testSpriteSheet</SpriteSheet>
     </Visual>
 
+    <Components id="debug">
+      <DebugFlag flag="debug"></DebugFlag>
+    </Components>
+
     <Behavior id="debug">
       <Script id="AI" script="EntityAI" active="true">
         <Function function="Update" type="Time" call="1"></Function>
       </Script>
     </Behavior>
+
 </Modules>
 
 

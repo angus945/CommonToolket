@@ -14,12 +14,14 @@
     </Properties>
     
     <!--attach unity component-->
-    <Components>
+    <Components include="debug">
       <Collision></Collision>
       <Rigidbody></Rigidbody>
       <Rendering spriteSheet="testSpriteSheet"></Rendering>
       <Animation spriteSheet="testSpriteSheet"></Animation>
+      <DebugFlag flag="overrite"></DebugFlag>
     </Components>
+
 
     <!--attach lua behavior-->
     <Behavior include="debug"></Behavior>
