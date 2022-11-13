@@ -10,6 +10,7 @@ using ModdingLab.Definition;
 using ModdingLab.Instance;
 using ModdingLab.Management;
 using ModdingLab.Definition.Componentized;
+using MoonSharp.Interpreter;
 
 namespace ModdingLab
 {
@@ -57,18 +58,16 @@ namespace ModdingLab
             textures.Clear();
             scripts.Clear();
 
+            LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
+
             ModManager.Initial();
             ModManager.LoadModFiles();
             ModManager.SaveModOptions();
             ModManager.ParseModFiles();
             //
 
-            //
-            LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
-
-
             EntityDatabase.GetAllDatas(out entities, out tags, out visuals, out properties, out components, out behaviors);
-            EntityDatabase.GetAllScripts(out scripts);
+            //EntityDatabase.GetAllScripts(out scripts);
             VisualDatabase.GetAllSpriteSheets(out spriteSheets);
             VisualDatabase.GetAllTextures(out textures);
 
@@ -76,7 +75,5 @@ namespace ModdingLab
             //r.velocity
             //r.AddForce()
         }
-
-
     }
 }

@@ -58,6 +58,8 @@ namespace ModdingLab.Management
 
                 modDatas.Add(item.itemName, new ModData(item, option));
             }
+
+            System.GC.Collect();
         }
         public static void ParseModFiles()
         {

@@ -10,6 +10,7 @@ namespace DataDriven.Lua
     public class LuaInitializer
     {
         static bool isInitialized;
+        static Queue<Script> scriptPool;
 
         static Action<string> logHandler;
 
@@ -44,6 +45,16 @@ namespace DataDriven.Lua
             UserData.RegisterType<DataDriven.Lua.Library.Vector>();
             UserData.RegisterType<DataDriven.Lua.Library.Time>();
         }
+        static void CreateScripts(int amount)
+        {
+            scriptPool = new Queue<Script>();
+
+            for (int i = 0; i < amount; i++)
+            {
+                scriptPool.Enqueue(new Script());
+            }
+        }
+
         public static void RegisterTypes(params System.Type[] types)
         {
             for (int i = 0; i < types.Length; i++)

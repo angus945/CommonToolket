@@ -1,0 +1,15 @@
+<Modules>
+
+    <Components id="physics">
+      <Collision></Collision>
+      <Rigidbody></Rigidbody>
+    </Components>
+
+    <Components id="render">
+      <Rendering spriteSheet="CharacterSprite"></Rendering>
+      <Animation spriteSheet="CharacterSprite"></Animation>
+    </Components>
+
+</Modules>
+
+

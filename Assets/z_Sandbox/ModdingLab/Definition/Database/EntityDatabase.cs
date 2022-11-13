@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
+using MoonSharp.Interpreter;
 using DataDriven;
+using DataDriven.Lua;
 
 namespace ModdingLab.Definition
 {
@@ -11,17 +13,13 @@ namespace ModdingLab.Definition
         {
             return instance.GetEntity(id, out entity, out modules);
         }
-        public static string GetBehaviorScript(string name)
+        public static bool GetBehaviorScript(string name, out Script script)
         {
-            return instance.GetScript(name);
+            return instance.GetScript(name, out script);
         }
         public static void GetAllDatas(out List<EntityDefine> entity, out List<EntityTags> tag, out List<VisualModule> visual, out List<ProperityModule> properties, out List<ComponentModule> components, out List<BehaviorModule> behaviors)
         {
             instance.ListDatas(out entity, out tag, out visual, out properties, out components, out behaviors);
-        }
-        public static void GetAllScripts(out List<string> scripts)
-        {
-            scripts = new List<string>(instance.scriptTable.Values);
         }
 
         //Entity
@@ -36,7 +34,7 @@ namespace ModdingLab.Definition
         DefinitionTable<BehaviorModule> behaviorTable;
 
         //Script
-        Dictionary<string, string> scriptTable;
+        Dictionary<string, Script> scriptTable;
 
         public EntityDatabase()
         {
@@ -55,7 +53,7 @@ namespace ModdingLab.Definition
             behaviorTable = new DefinitionTable<BehaviorModule>();
 
             entityTable = new DefinitionTable<EntityDefine>();
-            scriptTable = new Dictionary<string, string>();
+            scriptTable = new Dictionary<string, Script>();
         }
 
         public void LoadDefine(StreamingDirectory entityDirectory)
@@ -98,7 +96,8 @@ namespace ModdingLab.Definition
                 StreamingFile file = files[i];
                 string code = file.ReadString();
 
-                scriptTable.Add(file.name, code);
+                Script script = LuaInitializer.CreateScript(code);
+                scriptTable.Add(file.name, script);
             }
         }
         void AddDefineData(XmlNode define)
@@ -161,13 +160,14 @@ namespace ModdingLab.Definition
                 return false;
             }
         }
-        string GetScript(string name)
+        bool GetScript(string name, out Script script)
         {
-            if (scriptTable.ContainsKey(name))
-            {
-                return scriptTable[name];
-            }
-            else return "";
+            return scriptTable.TryGetValue(name, out script);
+            //if (scriptTable.ContainsKey(name))
+            //{
+            //    return scriptTable[name];
+            //}
+            //else return "";
             //TODO errorlog
             //return TryGetObject(name, scriptTable, (code) => code);
         }

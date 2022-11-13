@@ -1,0 +1,32 @@
+<Entities>
+  
+  <Entity id="Entity_A">
+    <Name> Entity A </Name>
+    <Describe> a basis Entity </Describe>
+
+    <Tags include="debug"></Tags>
+
+    <Visual>
+      <SpriteSheet>CharacterSprite</SpriteSheet>
+    </Visual>
+    
+    <Audio></Audio>
+
+    <Properties></Properties>
+    
+    <!--attach unity component-->
+    <Components include="physics render"></Components>
+
+    <!--attach lua behavior-->
+    <Behavior>
+      <Script id="AI" script="Jump" active="true">
+        <Function function="Update" type="Time" call="3"></Function>
+      </Script>
+    </Behavior>
+
+    <!--register event listener-->
+    <Listeners></Listeners>
+
+  </Entity>
+
+</Entities>

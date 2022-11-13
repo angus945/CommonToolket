@@ -54,10 +54,14 @@ namespace DataDriven
             docs.LoadXml(xml);
             return docs;
         }
-        //public Object ReadObject()
-        //{
-        //    return ByteComverter.FromByteArray<Object>(data);
-        //}
+        public T ReadJsonObject<T>()
+        {
+            return JsonUtility.FromJson<T>(ReadString());
+        }
+        public T[] ReadJsonObjects<T>()
+        {
+            return TextAnalize.FromJsonArray<T>(ReadString());
+        }
 
         public override string ToString()
         {

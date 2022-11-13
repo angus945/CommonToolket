@@ -91,7 +91,7 @@ namespace ModdingLab.Definition
             {
                 //TODO logerror
 
-                sheet = null;
+                sheet = default;
                 return false;
             }
         }
