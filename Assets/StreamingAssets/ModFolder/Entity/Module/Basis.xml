@@ -1,13 +1,13 @@
 <Modules>
 
     <Components id="physics">
-      <Collision></Collision>
+      <Collision type="box"></Collision>
       <Rigidbody></Rigidbody>
     </Components>
 
     <Components id="render">
-      <Rendering spriteSheet="CharacterSprite"></Rendering>
-      <Animation spriteSheet="CharacterSprite"></Animation>
+      <Rendering spriteSheet="main"></Rendering>
+      <Animation spriteSheet="main"></Animation>
     </Components>
 
 </Modules>

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using ModdingLab.Instance.Visual;
+using ModdingLaboratory.Instance.Visual;
 
-namespace ModdingLab.Instance.Componentized
+namespace ModdingLaboratory.Instance.Componentized
 {
     public class SpriteSheetAnimator : MonoBehaviour
     {
@@ -11,12 +11,23 @@ namespace ModdingLab.Instance.Componentized
         SpriteSheetRenderer renderer;
 
         //
+        string sheet;
         float time;
         SpriteSheetAnimation activeAnimation;
 
-        public void Initial(SpriteSheetAnimation[] animations, string defaultAnimation)
+        public void Initial(string defaultSheet)
         {
             animationTable.Clear();
+
+            sheet = defaultSheet;
+        }
+
+        void Start()
+        {
+            renderer = GetComponent<SpriteSheetRenderer>();
+
+            SpriteSheet spriteSheet = GetComponent<GameEntity>().GetSpriteSheetByID(sheet);
+            SpriteSheetAnimation[] animations = spriteSheet.animations;
 
             for (int i = 0; i < animations.Length; i++)
             {
@@ -24,12 +35,7 @@ namespace ModdingLab.Instance.Componentized
                 animationTable.Add(animation.name, animation);
             }
 
-            SetAnimation(defaultAnimation);
-        }
-
-        void Start()
-        {
-            renderer = GetComponent<SpriteSheetRenderer>();
+            SetAnimation(spriteSheet.defaultAnimation);
         }
         void Update()
         {

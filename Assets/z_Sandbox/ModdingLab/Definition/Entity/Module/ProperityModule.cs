@@ -1,9 +1,9 @@
-using ModdingLab.Definition.Componentized;
+using ModdingLaboratory.Definition.Componentized;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
 
     [XmlType("Properties")]

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using DataDriven;
 using DataDriven.XML;
-using ModdingLab.Definition.Componentized;
+using ModdingLaboratory.Definition.Componentized;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
 
     public class DefinitionManager

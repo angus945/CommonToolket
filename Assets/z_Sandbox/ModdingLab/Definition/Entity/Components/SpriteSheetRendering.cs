@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
-using ModdingLab.Instance;
-using ModdingLab.Instance.Componentized;
-using ModdingLab.Instance.Visual;
+using ModdingLaboratory.Instance;
+using ModdingLaboratory.Instance.Componentized;
+using ModdingLaboratory.Instance.Visual;
 
-namespace ModdingLab.Definition.Componentized
+namespace ModdingLaboratory.Definition.Componentized
 {
     public class SpriteSheetRendering : ComponentDefine
     {

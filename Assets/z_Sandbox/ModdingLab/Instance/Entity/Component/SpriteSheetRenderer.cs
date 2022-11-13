@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ModdingLab.Instance.Visual;
+using ModdingLaboratory.Instance.Visual;
 
-namespace ModdingLab.Instance.Componentized
+namespace ModdingLaboratory.Instance.Componentized
 {
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]

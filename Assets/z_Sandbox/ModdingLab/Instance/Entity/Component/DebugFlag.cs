@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ModdingLab.Instance.Componentized
+namespace ModdingLaboratory.Instance.Componentized
 {
     public class DebugFlag : MonoBehaviour
     {

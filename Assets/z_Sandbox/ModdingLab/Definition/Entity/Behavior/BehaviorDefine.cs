@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 using UnityEngine;
 using DataDriven;
 
-namespace ModdingLab.Definition.TypeScript
+namespace ModdingLaboratory.Definition.TypeScript
 {
     public enum UpdateType
     {

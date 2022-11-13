@@ -1,11 +1,11 @@
-using ModdingLab.Instance;
+using ModdingLaboratory.Instance;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-namespace ModdingLab.Definition.Componentized
+namespace ModdingLaboratory.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]

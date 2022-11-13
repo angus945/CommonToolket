@@ -1,7 +1,7 @@
 using MoonSharp.Interpreter;
 using System;
 
-namespace ModdingLab.Instance.Behavior
+namespace ModdingLaboratory.Instance.Behavior
 {
 
     public class LuaFunction

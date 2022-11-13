@@ -1,6 +1,6 @@
-﻿using ModdingLab.Definition;
+﻿using ModdingLaboratory.Definition;
 
-namespace ModdingLab.Instance
+namespace ModdingLaboratory.Instance
 {
     [System.Serializable]
     public class EntityIdentifier

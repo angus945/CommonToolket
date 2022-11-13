@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace ModdingLab.Management
+namespace ModdingLaboratory.Management
 {
     [System.Serializable]
     public class ModOption

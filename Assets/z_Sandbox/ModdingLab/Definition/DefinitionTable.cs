@@ -1,9 +1,10 @@
-﻿using DataDriven.XML;
+﻿using DataDriven;
+using DataDriven.XML;
 using System;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     public class DefinitionTable<T> where T : class, IDefinition
     {
@@ -27,7 +28,7 @@ namespace ModdingLab.Definition
             }
             catch (Exception)
             {
-                Logger.Log($"Analyze Error, type: {typeof(T)}", LogType.Error);
+                LogPrinter.Print($"Parsing Error, type: {typeof(T)}", LogType.Error);
                 throw;
             }
 
@@ -40,7 +41,7 @@ namespace ModdingLab.Definition
             }
             else
             {
-                Logger.Log($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
+                LogPrinter.Print($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
 
                 return false;
             }

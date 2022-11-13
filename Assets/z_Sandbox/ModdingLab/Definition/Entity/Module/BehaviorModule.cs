@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
-using ModdingLab.Definition.TypeScript;
+using ModdingLaboratory.Definition.TypeScript;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     [XmlType("Behavior")]
     [System.Serializable]

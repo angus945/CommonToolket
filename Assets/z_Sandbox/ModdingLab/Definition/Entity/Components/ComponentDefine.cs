@@ -2,9 +2,9 @@
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using ModdingLab.Instance;
+using ModdingLaboratory.Instance;
 
-namespace ModdingLab.Definition.Componentized
+namespace ModdingLaboratory.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]

@@ -1,9 +1,9 @@
 using System.Xml;
 using System.Xml.Serialization;
 using DataDriven;
-using ModdingLab.Definition.Componentized;
+using ModdingLaboratory.Definition.Componentized;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
 
     [XmlType("Entity")]

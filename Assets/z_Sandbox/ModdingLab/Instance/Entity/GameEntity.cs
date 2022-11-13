@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
-using ModdingLab.Instance.Visual;
-using ModdingLab.Instance.Behavior;
+using ModdingLaboratory.Instance.Visual;
+using ModdingLaboratory.Instance.Behavior;
 
-namespace ModdingLab.Instance
+namespace ModdingLaboratory.Instance
 {
 
     [MoonSharpUserData]
@@ -22,20 +22,13 @@ namespace ModdingLab.Instance
         //
         void Start()
         {
-            //ResetBehavior();
+
         }
         void Update()
         {
             UpdateBehaviors(Time.deltaTime);
         }
 
-        public void ResetBehavior()
-        {
-            //foreach (var behavior in behaviours)
-            //{
-            //    behavior.Value.Reset();
-            //}
-        }
         void UpdateBehaviors(float delta)
         {
             foreach (var behavior in behaviours)
@@ -60,11 +53,11 @@ namespace ModdingLab.Instance
 
             properties[id] = value;
         }
-        public void AddSpriteSheet(SpriteSheet sheet)
+        public void AddSpriteSheet(string id, SpriteSheet sheet)
         {
-            if (spriteSheets.ContainsKey(sheet.id)) return;
+            if (spriteSheets.ContainsKey(id)) return;
 
-            spriteSheets.Add(sheet.id, sheet);
+            spriteSheets.Add(id, sheet);
         }
         public void AddComponent(string id, Component component)
         {

@@ -6,13 +6,13 @@ using UnityEngine;
 using DataDriven;
 using DataDriven.XML;
 using DataDriven.Lua;
-using ModdingLab.Definition;
-using ModdingLab.Instance;
-using ModdingLab.Management;
-using ModdingLab.Definition.Componentized;
+using ModdingLaboratory.Definition;
+using ModdingLaboratory.Instance;
+using ModdingLaboratory.Management;
+using ModdingLaboratory.Definition.Componentized;
 using MoonSharp.Interpreter;
 
-namespace ModdingLab
+namespace ModdingLaboratory
 {
     public class ModdingLabTest : MonoBehaviour
     {
@@ -28,7 +28,7 @@ namespace ModdingLab
         public List<string> scripts = new List<string>();
 
         [Space]
-        public List<SpriteSheetDefine> spriteSheets = new List<SpriteSheetDefine>();
+        public List<VisualDataDefine> spriteSheets = new List<VisualDataDefine>();
         public List<Texture> textures = new List<Texture>();
 
         void Start()
@@ -44,6 +44,7 @@ namespace ModdingLab
             if(Input.GetKeyDown(KeyCode.F6))
             {
                 EntityInstantiator.CreateEntity(summonID);
+                Debug.Break();
             }
             if (Input.GetKey(KeyCode.F7))
             {

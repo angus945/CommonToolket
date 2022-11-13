@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataDriven;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     [XmlType("Animation")]
     [System.Serializable]
@@ -30,9 +30,9 @@ namespace ModdingLab.Definition
         public AnimationData[] animations;
     }
 
-    [XmlType("SpriteSheet")]
+    [XmlType("VisualData")]
     [System.Serializable]
-    public class SpriteSheetDefine : IDefinition
+    public class VisualDataDefine : IDefinition
     {
         string IDefinition.id { get => id; }
 

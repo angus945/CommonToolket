@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using DataDriven;
-using ModdingLab.Instance.Visual;
+using ModdingLaboratory.Instance.Visual;
 using System.Linq;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     public class VisualDatabase
     {
@@ -15,13 +15,9 @@ namespace ModdingLab.Definition
         {
             return instance.GetSpriteSheet(sheetID, out spriteSheet);
         }
-        public static SpriteSheetAnimation[] TryGetAnimations(string sheetID, out string defaultAnimation)
+        public static void GetAllSpriteSheets(out List<VisualDataDefine> spriteSheets)
         {
-            return instance.GetSpriteSheetAnimations(sheetID, out defaultAnimation);
-        }
-        public static void GetAllSpriteSheets(out List<SpriteSheetDefine> spriteSheets)
-        {
-            spriteSheets = new List<SpriteSheetDefine>(instance.defineTable.Values);
+            spriteSheets = new List<VisualDataDefine>(instance.defineTable.Values);
         }
         public static void GetAllTextures(out List<Texture> textures)
         {
@@ -29,7 +25,7 @@ namespace ModdingLab.Definition
         }
 
         //
-        DefinitionTable<SpriteSheetDefine> defineTable;
+        DefinitionTable<VisualDataDefine> defineTable;
         Dictionary<string, Texture> textureTable;
 
         public VisualDatabase()
@@ -37,7 +33,7 @@ namespace ModdingLab.Definition
             if (instance != null) return;
 
             instance = this;
-            defineTable = new DefinitionTable<SpriteSheetDefine>();
+            defineTable = new DefinitionTable<VisualDataDefine>();
             textureTable = new Dictionary<string, Texture>();
         }
 
@@ -81,39 +77,23 @@ namespace ModdingLab.Definition
 
         bool GetSpriteSheet(string sheetID, out SpriteSheet sheet)
         {
-            if (defineTable.TryGetDefine(sheetID, out SpriteSheetDefine spriteSheet))
+            if (defineTable.TryGetDefine(sheetID, out VisualDataDefine define))
             {
-                Texture texture = GetTexture(spriteSheet.source);
-                sheet = new SpriteSheet(spriteSheet.id, spriteSheet.width, spriteSheet.height, texture);
-                return true;
-            }
-            else
-            {
-                //TODO logerror
-
-                sheet = default;
-                return false;
-            }
-        }
-        SpriteSheetAnimation[] GetSpriteSheetAnimations(string sheetID, out string defaultAnimation)
-        {
-            defaultAnimation = "";
-            string defaultAnim = "";
-
-            if (defineTable.TryGetDefine(sheetID, out SpriteSheetDefine define))
-            {
-                defaultAnim = define.animationDatas.defaultAnimation;
-
+                Texture texture = GetTexture(define.source);
                 SpriteSheetAnimation[] animations = Array.ConvertAll(define.animationDatas.animations, n =>
                 {
                     return new SpriteSheetAnimation(n.name, n.index, n.length, n.loop, n.duration);
                 });
-                defaultAnimation = defaultAnim;
-
-                return animations;
+                sheet = new SpriteSheet(define.width, define.height, texture, define.animationDatas.defaultAnimation, animations);
+                return true;
             }
+            else
+            {
+                LogPrinter.Print($"SpriteSheet not found, id: {sheetID}");
 
-            return null;
+                sheet = default;
+                return false;
+            }
         }
 
         Texture GetTexture(string name)

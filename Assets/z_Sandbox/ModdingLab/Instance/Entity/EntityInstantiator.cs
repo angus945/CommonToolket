@@ -1,22 +1,21 @@
-using DataDriven.Lua;
-using ModdingLab.Definition;
-using ModdingLab.Definition.Componentized;
-using ModdingLab.Definition.TypeScript;
-using ModdingLab.Instance.Behavior;
-using ModdingLab.Instance.Visual;
-using MoonSharp.Interpreter;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using DataDriven;
+using ModdingLaboratory.Definition;
+using ModdingLaboratory.Definition.Componentized;
+using ModdingLaboratory.Definition.TypeScript;
+using ModdingLaboratory.Instance.Behavior;
+using ModdingLaboratory.Instance.Visual;
+using MoonSharp.Interpreter;
 
-namespace ModdingLab.Instance
+namespace ModdingLaboratory.Instance
 {
     public class EntityInstantiator
     {
 
         public static GameEntity CreateEntity(string entityID)
         {
-            Logger.Tick(null);
+            LogPrinter.Tick();
 
             GameEntity entity = null;
 
@@ -25,7 +24,7 @@ namespace ModdingLab.Instance
                 entity = CreateEntity(define, modules);
             }
 
-            Logger.Tick("Entity Instance");
+            LogPrinter.Tick("Entity Instance");
 
             return entity;
         }
@@ -82,11 +81,11 @@ namespace ModdingLab.Instance
         {
             for (int i = 0; i < visual.length; i++)
             {
-                string sheetID = visual[i];
+                VisualModule.SpriteSheet sheet = visual[i];
 
-                if(VisualDatabase.TryGetSpriteSheet(sheetID, out SpriteSheet sheet))
+                if(VisualDatabase.TryGetSpriteSheet(sheet.sheet, out SpriteSheet spriteSheet))
                 {
-                    entity.AddSpriteSheet(sheet);
+                    entity.AddSpriteSheet(sheet.id, spriteSheet);
                 }
             }
         }

@@ -4,9 +4,9 @@ using UnityEngine;
 using DataStorage;
 using DataDriven;
 using System.Linq;
-using ModdingLab.Definition;
+using ModdingLaboratory.Definition;
 
-namespace ModdingLab.Management
+namespace ModdingLaboratory.Management
 {
 
     [System.Serializable]
@@ -63,7 +63,7 @@ namespace ModdingLab.Management
         }
         public static void ParseModFiles()
         {
-            Logger.Tick(null);
+            LogPrinter.Tick(null);
 
             foreach (var mod in modDatas)
             {
@@ -74,7 +74,7 @@ namespace ModdingLab.Management
                     StreamingItem modItem = modData.modItem;
                     DefinitionManager.LoadDefinitionData(modItem);
 
-                    Logger.Tick($"Data Parsed, Mod: {modData.name}");
+                    LogPrinter.Tick($"Data Parsed, Mod: {modData.name}");
                 }
             }
         }

@@ -7,7 +7,7 @@
     <Tags include="debug"></Tags>
 
     <Visual>
-      <SpriteSheet>CharacterSprite</SpriteSheet>
+      <SpriteSheet id="main">CharacterSprite</SpriteSheet>
     </Visual>
     
     <Audio></Audio>
@@ -15,7 +15,9 @@
     <Properties></Properties>
     
     <!--attach unity component-->
-    <Components include="physics render"></Components>
+    <Components include="physics render">
+      <Collision type="circle"></Collision>
+    </Components>
 
     <!--attach lua behavior-->
     <Behavior>

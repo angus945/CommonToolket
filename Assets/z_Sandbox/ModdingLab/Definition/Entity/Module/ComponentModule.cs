@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
-using ModdingLab.Definition.Componentized;
+using ModdingLaboratory.Definition.Componentized;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     [XmlType("Components")]
     [System.Serializable]

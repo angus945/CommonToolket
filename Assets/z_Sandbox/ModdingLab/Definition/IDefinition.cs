@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     public interface IDefinition
     {

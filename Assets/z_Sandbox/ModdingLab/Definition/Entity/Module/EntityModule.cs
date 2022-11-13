@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     public abstract class EntityModule : IDefinition
     {

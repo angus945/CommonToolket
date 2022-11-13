@@ -67,7 +67,7 @@ namespace DataDriven.Localization
         {
             localizationTable = new Dictionary<string, LocalizationTable>();
 
-            StreamingItem[] contents = StreamingLoader.GetItemsWithType(KeywordDefine.LOCALIZATION);
+            StreamingItem[] contents = StreamingLoader.GetItemsWithType("Localization");
 
             for (int i = 0; i < contents.Length; i++)
             {

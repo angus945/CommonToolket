@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     [XmlType("Tags")]
     [System.Serializable]

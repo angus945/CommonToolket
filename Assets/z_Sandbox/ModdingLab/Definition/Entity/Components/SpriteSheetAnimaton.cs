@@ -1,11 +1,11 @@
 using System;
 using System.Xml.Serialization;
 using UnityEngine;
-using ModdingLab.Instance;
-using ModdingLab.Instance.Visual;
-using ModdingLab.Instance.Componentized;
+using ModdingLaboratory.Instance;
+using ModdingLaboratory.Instance.Visual;
+using ModdingLaboratory.Instance.Componentized;
 
-namespace ModdingLab.Definition.Componentized
+namespace ModdingLaboratory.Definition.Componentized
 {
     [XmlType]
     [System.Serializable]
@@ -22,9 +22,9 @@ namespace ModdingLab.Definition.Componentized
         {
             SpriteSheetAnimator animator = component as SpriteSheetAnimator;
 
-            SpriteSheetAnimation[] animations = VisualDatabase.TryGetAnimations(spriteSheetID, out string defaultAnim);
-
-            animator.Initial(animations, defaultAnim);
+            //SpriteSheetAnimation[] animations = VisualDatabase.TryGetAnimations(spriteSheetID, out string defaultAnim);
+            //Debug.LogError(spriteSheetID);
+            animator.Initial(spriteSheetID);
         }
     }
 

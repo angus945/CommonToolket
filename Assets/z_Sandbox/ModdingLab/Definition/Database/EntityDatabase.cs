@@ -4,7 +4,7 @@ using MoonSharp.Interpreter;
 using DataDriven;
 using DataDriven.Lua;
 
-namespace ModdingLab.Definition
+namespace ModdingLaboratory.Definition
 {
     public class EntityDatabase
     {
@@ -40,7 +40,7 @@ namespace ModdingLab.Definition
         {
             if (instance != null)
             {
-                Logger.Log("Warning, try instance mulpitle time");
+                LogPrinter.Print("Warning, try instance mulpitle time");
                 return;
             }
 

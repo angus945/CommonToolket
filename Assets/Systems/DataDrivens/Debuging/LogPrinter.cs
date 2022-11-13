@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ModdingLab
+namespace DataDriven
 {
     public enum LogType
     {
@@ -11,11 +11,11 @@ namespace ModdingLab
         Error,
     }
 
-    public class Logger
+    public class LogPrinter
     {
         static float tick;
 
-        public static void Tick(string message = "")
+        public static void Tick(string message = null)
         {
             float last = tick;
             tick = Time.realtimeSinceStartup;
@@ -25,9 +25,9 @@ namespace ModdingLab
             float duration = tick - last;
             string text = $"Time: {duration.ToString("f4")}, {message}";
 
-            Logger.Log(text);
+            LogPrinter.Print(text);
         }
-        public static void Log(object message, LogType type = LogType.Normal)
+        public static void Print(object message, LogType type = LogType.Normal)
         {
             switch (type)
             {
