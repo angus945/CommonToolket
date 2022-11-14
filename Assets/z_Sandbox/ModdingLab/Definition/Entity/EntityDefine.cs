@@ -8,11 +8,21 @@ namespace ModdingLaboratory.Definition
 
     [XmlType("Entity")]
     [System.Serializable]
-    public class EntityDefine : IDefinition
+    public class EntityDefine : DefinitionBase
     {
-        string IDefinition.id { get => id; }
+        protected override string localID { get => id; }
+        public override void SetGroup(string group)
+        {
+            tags.SetGroup(group);
+            visuals.SetGroup(group);
+            properties.SetGroup(group);
+            components.SetGroup(group);
+            behaviors.SetGroup(group);
 
-        [XmlAttribute] public string id;
+            base.SetGroup(group);
+        }
+
+        [XmlAttribute("id")] public string id;
 
         [XmlElement("Name")] public string name;
         [XmlElement("Describe")] public string describe;
@@ -21,7 +31,7 @@ namespace ModdingLaboratory.Definition
         public EntityTags tags;
 
         [XmlElement("Visual", IsNullable = false)]
-        public VisualModule spriteSheets;
+        public VisualModule visuals;
 
         [XmlElement("Properties", IsNullable = false)]
         public ProperityModule properties;
@@ -31,6 +41,7 @@ namespace ModdingLaboratory.Definition
 
         [XmlElement("Behavior", IsNullable = false)]
         public BehaviorModule behaviors;
+        //internal
     }
 
 }

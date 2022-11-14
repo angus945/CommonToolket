@@ -17,6 +17,7 @@ namespace ModdingLaboratory
     public class ModdingLabTest : MonoBehaviour
     {
         [SerializeField] string summonID = "Inhert_Enemy_A";
+        [SerializeField] bool breakOnSpawn;
 
         [Space]
         public List<EntityDefine> entities = new List<EntityDefine>();
@@ -44,7 +45,7 @@ namespace ModdingLaboratory
             if(Input.GetKeyDown(KeyCode.F6))
             {
                 EntityInstantiator.CreateEntity(summonID);
-                Debug.Break();
+                if(breakOnSpawn) Debug.Break();
             }
             if (Input.GetKey(KeyCode.F7))
             {

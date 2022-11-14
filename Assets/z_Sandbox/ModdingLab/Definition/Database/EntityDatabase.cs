@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Xml;
-using MoonSharp.Interpreter;
-using DataDriven;
+﻿using DataDriven;
 using DataDriven.Lua;
+using MoonSharp.Interpreter;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace ModdingLaboratory.Definition
 {
@@ -40,7 +40,7 @@ namespace ModdingLaboratory.Definition
         {
             if (instance != null)
             {
-                LogPrinter.Print("Warning, try instance mulpitle time");
+                Debugger.Print("Warning, try instance mulpitle time");
                 return;
             }
 
@@ -56,24 +56,24 @@ namespace ModdingLaboratory.Definition
             scriptTable = new Dictionary<string, Script>();
         }
 
-        public void LoadDefine(StreamingDirectory entityDirectory)
+        public void LoadDefine(string prefix, StreamingDirectory entityDirectory)
         {
             StreamingFile[] entities = entityDirectory.files;
-            LoadDefines(entities);
-            
-            if(entityDirectory.TryGetDirectory("Module", out StreamingDirectory moduleDirectory))
+            LoadDefines(prefix, entities);
+
+            if (entityDirectory.TryGetDirectory("Module", out StreamingDirectory moduleDirectory))
             {
                 StreamingFile[] modulesFiles = moduleDirectory.files;
-                LoadDefines(modulesFiles);
+                LoadDefines(prefix, modulesFiles);
             }
-            if(entityDirectory.TryGetDirectory("Script", out StreamingDirectory scriptDirectory))
+            if (entityDirectory.TryGetDirectory("Script", out StreamingDirectory scriptDirectory))
             {
                 StreamingFile[] scriptFiles = scriptDirectory.files;
-                LoadScrips(scriptFiles);
+                LoadScrips(prefix, scriptFiles);
 
             }
         }
-        void LoadDefines(StreamingFile[] files) 
+        void LoadDefines(string prefix, StreamingFile[] files)
         {
             for (int i = 0; i < files.Length; i++)
             {
@@ -85,11 +85,11 @@ namespace ModdingLaboratory.Definition
                 XmlNodeList datas = root.ChildNodes;
                 foreach (XmlNode define in datas)
                 {
-                    AddDefineData(define);
+                    AddDefineData(prefix, define);
                 }
             }
         }
-        void LoadScrips(StreamingFile[] files)
+        void LoadScrips(string prefix, StreamingFile[] files)
         {
             for (int i = 0; i < files.Length; i++)
             {
@@ -97,38 +97,38 @@ namespace ModdingLaboratory.Definition
                 string code = file.ReadString();
 
                 Script script = LuaInitializer.CreateScript(code);
-                scriptTable.Add(file.name, script);
+                scriptTable.Add($"{prefix}.{file.name}", script);
             }
         }
-        void AddDefineData(XmlNode define)
+        void AddDefineData(string group, XmlNode define)
         {
             switch (define.Name)
             {
                 case "Entity":
-                    entityTable.Add(define);
+                    entityTable.Add(group, define);
                     break;
 
                 case "Tags":
-                    tagTable.Add(define);
+                    tagTable.Add(group, define);
                     break;
 
                 case "Visual":
-                    visualTable.Add(define);
+                    visualTable.Add(group, define);
                     break;
 
                 case "Audio":
                     break;
 
                 case "Properties":
-                    properityTable.Add(define);
+                    properityTable.Add(group, define);
                     break;
 
                 case "Components":
-                    componentTable.Add(define);
+                    componentTable.Add(group, define);
                     break;
 
                 case "Behavior":
-                    behaviorTable.Add(define);
+                    behaviorTable.Add(group, define);
                     break;
 
                 default:
@@ -146,7 +146,7 @@ namespace ModdingLaboratory.Definition
             {
                 List<EntityModule> entityModules = new List<EntityModule>();
                 entityModules.AddRange(tagTable.GetDefines(entity.tags.includes));
-                entityModules.AddRange(visualTable.GetDefines(entity.spriteSheets.includes));
+                entityModules.AddRange(visualTable.GetDefines(entity.visuals.includes));
                 entityModules.AddRange(properityTable.GetDefines(entity.properties.includes));
                 entityModules.AddRange(componentTable.GetDefines(entity.components.includes));
                 entityModules.AddRange(behaviorTable.GetDefines(entity.behaviors.includes));

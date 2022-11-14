@@ -31,13 +31,14 @@ namespace ModdingLaboratory.Definition
         }
         static void LoadDefineData(StreamingItem source)
         {
+            string prefix = source.itemName;
             if(source.root.TryGetDirectory("Entity", out StreamingDirectory entityDirectory))
             {
-                entityDefinition.LoadDefine(entityDirectory);
+                entityDefinition.LoadDefine(prefix, entityDirectory);
             }
             if (source.root.TryGetDirectory("Visual", out StreamingDirectory visualDirectory))
             {
-                visualDefinition.LoadDefine(visualDirectory);
+                visualDefinition.LoadDefine(prefix, visualDirectory);
             }
         }
     }

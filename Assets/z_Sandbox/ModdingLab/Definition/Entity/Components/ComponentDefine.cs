@@ -10,9 +10,9 @@ namespace ModdingLaboratory.Definition.Componentized
     [System.Serializable]
     public abstract class ComponentDefine
     {
-        [XmlAttribute("id")] [SerializeField] string _id;
+        [XmlAttribute("id")] public string id;
 
-        public string id { get => string.IsNullOrEmpty(_id) ? defaultID : _id; }
+        public string localID { get => string.IsNullOrEmpty(id) ? defaultID : id; }
         protected abstract string defaultID { get; }
 
         public abstract Type RequireComponentType { get; }

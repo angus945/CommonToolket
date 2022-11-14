@@ -1,0 +1,14 @@
+<Modules>
+    <Tags id="debug">
+      <Tag>Debug</Tag>
+    </Tags>
+
+    <Components id="debug">
+      <DebugFlag id="debugA" flag="FlagA"></DebugFlag>
+      <DebugFlag id="debugB" flag="FlagB"></DebugFlag>
+      <DebugFlag id="debugC" flag="FlagC"></DebugFlag>
+    </Components>
+
+</Modules>
+
+

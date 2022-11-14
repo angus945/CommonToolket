@@ -16,9 +16,20 @@ namespace ModdingLaboratory.Definition
             public string id;
 
             [XmlText]
-            public string sheet;
+            public string sheetName;
         }
-        //protected override IList moduleContents { get => spriteSheets; }
+
+        public override void SetGroup(string group)
+        {
+            base.SetGroup(group);
+
+            for (int i = 0; i < length; i++)
+            {
+                SpriteSheet sheet = spriteSheets[i];
+                sheet.sheetName = base.ApplyGroupID(spriteSheets[i].sheetName);
+                spriteSheets[i] = sheet;
+            }
+        }
 
         [XmlElement("SpriteSheet", IsNullable = false)]
         public List<SpriteSheet> spriteSheets;

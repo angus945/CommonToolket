@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   printOnStoring: 0
   modOptions:
-  - modName: ModDefineSampleA
+  - modName: GlobalDefine
     modActive: 1
-  - modName: ModDefineSampleB
-    modActive: 0
+  - modName: LocalDefine
+    modActive: 1

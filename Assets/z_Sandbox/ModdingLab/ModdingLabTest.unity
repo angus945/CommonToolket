@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d1c36d8683c1c46832e716be404e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  summonID: Entity_A
+  summonID: LocalDefine.Entity_A
   entities: []
   tags: []
   visuals: []

@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace ModdingLaboratory.Definition
 {
-    public class DefinitionTable<T> where T : class, IDefinition
+    public class DefinitionTable<T> where T : DefinitionBase
     {
         Dictionary<string, T> table = new Dictionary<string, T>();
         public Dictionary<string, T>.ValueCollection Values
@@ -14,21 +14,23 @@ namespace ModdingLaboratory.Definition
             get => table.Values;
         }
 
-        public void Add(T data)
+        public void Add(string group, T data)
         {
-            table.Add(data.id, data);
+            data.SetGroup(group);
+
+            table.Add(data.globalID, data);
         }
-        public void Add(XmlNode node)
+        public void Add(string group, XmlNode node)
         {
             try
             {
                 T data = XMLConverter.ConvertNode<T>(node);
 
-                Add(data);
+                Add(group, data);
             }
             catch (Exception)
             {
-                LogPrinter.Print($"Parsing Error, type: {typeof(T)}", LogType.Error);
+                Debugger.Print($"Parsing Error, type: {typeof(T)}", LogType.Error);
                 throw;
             }
 
@@ -41,7 +43,7 @@ namespace ModdingLaboratory.Definition
             }
             else
             {
-                LogPrinter.Print($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
+                Debugger.Print($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
 
                 return false;
             }

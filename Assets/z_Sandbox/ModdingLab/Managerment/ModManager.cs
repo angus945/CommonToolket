@@ -63,7 +63,7 @@ namespace ModdingLaboratory.Management
         }
         public static void ParseModFiles()
         {
-            LogPrinter.Tick(null);
+            Debugger.Tick(null);
 
             foreach (var mod in modDatas)
             {
@@ -74,7 +74,7 @@ namespace ModdingLaboratory.Management
                     StreamingItem modItem = modData.modItem;
                     DefinitionManager.LoadDefinitionData(modItem);
 
-                    LogPrinter.Tick($"Data Parsed, Mod: {modData.name}");
+                    Debugger.Tick($"Data Parsed, Mod: {modData.name}");
                 }
             }
         }

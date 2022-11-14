@@ -15,7 +15,7 @@ namespace ModdingLaboratory.Instance
 
         public static GameEntity CreateEntity(string entityID)
         {
-            LogPrinter.Tick();
+            Debugger.Tick();
 
             GameEntity entity = null;
 
@@ -24,7 +24,7 @@ namespace ModdingLaboratory.Instance
                 entity = CreateEntity(define, modules);
             }
 
-            LogPrinter.Tick("Entity Instance");
+            Debugger.Tick("Entity Instance");
 
             return entity;
         }
@@ -36,7 +36,7 @@ namespace ModdingLaboratory.Instance
             GameEntity entity = entityObject.AddComponent<GameEntity>();
             SetIdentifier(entity, define);
 
-            AddModule(entity, define.spriteSheets); //GC 5.4 KB
+            AddModule(entity, define.visuals); //GC 5.4 KB
             AddModule(entity, define.properties); //GC 5.2 KB
             AddModule(entity, define.components); //GC 5.2 KB
             AddModule(entity, define.behaviors); //GC 2.4MB
@@ -83,7 +83,7 @@ namespace ModdingLaboratory.Instance
             {
                 VisualModule.SpriteSheet sheet = visual[i];
 
-                if(VisualDatabase.TryGetSpriteSheet(sheet.sheet, out SpriteSheet spriteSheet))
+                if(VisualDatabase.TryGetSpriteSheet(sheet.sheetName, out SpriteSheet spriteSheet))
                 {
                     entity.AddSpriteSheet(sheet.id, spriteSheet);
                 }
@@ -103,12 +103,12 @@ namespace ModdingLaboratory.Instance
             {
                 ComponentDefine define = components[i];
 
-                if(!entity.ContainsComponent(define.id))
+                if(!entity.ContainsComponent(define.localID))
                 {
                     Component component = entity.gameObject.AddComponent(define.RequireComponentType);
 
                     define.InitialComponent(component);
-                    entity.AddComponent(define.id, component);
+                    entity.AddComponent(define.localID, component);
                 }
             }
         }

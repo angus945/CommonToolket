@@ -37,18 +37,18 @@ namespace ModdingLaboratory.Definition
             textureTable = new Dictionary<string, Texture>();
         }
 
-        public void LoadDefine(StreamingDirectory visualDirectory)
+        public void LoadDefine(string prefix, StreamingDirectory visualDirectory)
         {
             StreamingFile[] entities = visualDirectory.files;
-            LoadDefines(entities);
+            LoadDefines(prefix, entities);
 
             if (visualDirectory.TryGetDirectory("Texture", out StreamingDirectory moduleDirectory))
             {
                 StreamingFile[] modulesFiles = moduleDirectory.files;
-                LoadAssets(modulesFiles);
+                LoadAssets(prefix, modulesFiles);
             }
         }
-        void LoadDefines(StreamingFile[] files)
+        void LoadDefines(string group, StreamingFile[] files)
         {
             for (int i = 0; i < files.Length; i++)
             {
@@ -60,18 +60,18 @@ namespace ModdingLaboratory.Definition
                 XmlNodeList datas = root.ChildNodes;
                 foreach (XmlNode define in datas)
                 {
-                    defineTable.Add(define);
+                    defineTable.Add(group, define);
                 }
             }
         }
-        void LoadAssets(StreamingFile[] files)
+        void LoadAssets(string prefix, StreamingFile[] files)
         {
             for (int i = 0; i < files.Length; i++)
             {
                 StreamingFile file = files[i];
                 Texture asset = file.ReadImage(FilterMode.Point);
 
-                textureTable.Add(file.name, asset);
+                textureTable.Add($"{prefix}.{file.name}", asset);
             }
         }
 
@@ -89,7 +89,7 @@ namespace ModdingLaboratory.Definition
             }
             else
             {
-                LogPrinter.Print($"SpriteSheet not found, id: {sheetID}");
+                Debugger.Print($"SpriteSheet not found, id: {sheetID}");
 
                 sheet = default;
                 return false;

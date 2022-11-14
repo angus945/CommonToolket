@@ -32,11 +32,17 @@ namespace ModdingLaboratory.Definition
 
     [XmlType("VisualData")]
     [System.Serializable]
-    public class VisualDataDefine : IDefinition
+    public class VisualDataDefine : DefinitionBase
     {
-        string IDefinition.id { get => id; }
+        protected override string localID { get => id; }
+        public override void SetGroup(string group)
+        {
+            base.SetGroup(group);
 
-        [XmlAttribute] public string id;
+            source = base.ApplyGroupID(source);
+        }
+
+        [XmlAttribute("id")] public string id;
         [XmlAttribute] public string source;
 
         [XmlAttribute] public FilterMode filter;
@@ -45,10 +51,5 @@ namespace ModdingLaboratory.Definition
         [XmlAttribute] public int height;
 
         [XmlElement("Animations")] public AnimationDatas animationDatas;
-
-
-
-        //[XmlIgnore] public Texture2D texture { get; private set; }
-        //public Vector2Int textureSize { get => new Vector2Int(texture.width, texture.height); }
     }
 }

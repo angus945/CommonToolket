@@ -11,7 +11,7 @@ namespace DataDriven
         Error,
     }
 
-    public class LogPrinter
+    public class Debugger
     {
         static float tick;
 
@@ -25,7 +25,7 @@ namespace DataDriven
             float duration = tick - last;
             string text = $"Time: {duration.ToString("f4")}, {message}";
 
-            LogPrinter.Print(text);
+            Debugger.Print(text);
         }
         public static void Print(object message, LogType type = LogType.Normal)
         {

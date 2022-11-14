@@ -17,8 +17,15 @@ namespace DataDriven
             for (int i = 0; i < streamingFolders.Length; i++)
             {
                 string path = streamingFolders[i];
+                string itemPath = ($"{path}/{StreamingItem.FILE_NAME}.json").Replace('\\', '/');
 
-                string json = File.ReadAllText($"{path}/{StreamingItem.FILE_NAME}.json");
+                if (!File.Exists(itemPath))
+                {
+                    Debugger.Print($"streaming item lost, path: {itemPath}", LogType.Warning);
+                    continue;
+                }
+
+                string json = File.ReadAllText(itemPath);
 
                 StreamingItem item = new StreamingItem(path);
                 JsonUtility.FromJsonOverwrite(json, item);

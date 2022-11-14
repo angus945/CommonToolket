@@ -10,7 +10,15 @@ namespace ModdingLaboratory.Definition
     [System.Serializable]
     public class BehaviorModule : EntityModule
     {
-        //protected override IList moduleContents { get => behaviors; }
+        public override void SetGroup(string group)
+        {
+            base.SetGroup(group);
+
+            for (int i = 0; i < length; i++)
+            {
+                behaviors[i].scriptName = base.ApplyGroupID(behaviors[i].scriptName);
+            }
+        }
 
         [XmlElement("Script", IsNullable = false)]
         public List<BehaviorDefine> behaviors;

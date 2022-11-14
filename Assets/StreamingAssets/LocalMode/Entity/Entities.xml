@@ -4,7 +4,9 @@
     <Name> Entity A </Name>
     <Describe> a basis Entity </Describe>
 
-    <Tags include="debug"></Tags>
+    <Tags include="debug">
+      
+    </Tags>
 
     <Visual>
       <SpriteSheet id="main">CharacterSprite</SpriteSheet>
@@ -15,7 +17,7 @@
     <Properties></Properties>
     
     <!--attach unity component-->
-    <Components include="physics render">
+    <Components include="physics render DebugMode.debug">
       <Collision type="circle"></Collision>
     </Components>
 

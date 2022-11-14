@@ -12,7 +12,7 @@ namespace ModdingLaboratory.Instance
 
         public EntityIdentifier(EntityDefine data)
         {
-            id = data.id;
+            id = data.globalID;
             name = data.name;
             describe = data.describe;
             tags = data.tags.tags.ToArray();
