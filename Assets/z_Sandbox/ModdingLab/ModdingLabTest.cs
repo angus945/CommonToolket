@@ -44,12 +44,18 @@ namespace ModdingLaboratory
             }
             if(Input.GetKeyDown(KeyCode.F6))
             {
-                EntityInstantiator.CreateEntity(summonID);
-                if(breakOnSpawn) Debug.Break();
+                GameEntity entity = EntityInstantiator.CreateEntity(summonID);
+                entity.transform.position += (Vector3) Random.insideUnitCircle;
+                if (breakOnSpawn) Debug.Break();
             }
             if (Input.GetKey(KeyCode.F7))
             {
-                EntityInstantiator.CreateEntity(summonID);
+                GameEntity entity = EntityInstantiator.CreateEntity(summonID);
+                entity.transform.position += (Vector3)Random.insideUnitCircle;
+            }
+            if (Input.GetKeyDown(KeyCode.F9))
+            {
+                EntityDatabase.CheckEntity(summonID);
             }
         }
 

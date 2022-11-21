@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace DataDriven
     public class Debugger
     {
         static float tick;
+        static string recordMessage;
+
+        public static event Action<string> OnLogPrinting;
 
         public static void Tick(string message = null)
         {
@@ -25,24 +29,25 @@ namespace DataDriven
             float duration = tick - last;
             string text = $"Time: {duration.ToString("f4")}, {message}";
 
-            Debugger.Print(text);
+            Debugger.RecordLog(text);
         }
-        public static void Print(object message, LogType type = LogType.Normal)
+        public static void RecordLog(object message)
         {
-            switch (type)
-            {
-                case LogType.Normal:
-                    Debug.Log(message);
-                    break;
+            recordMessage += message + "\n";
 
-                case LogType.Warning:
-                    Debug.LogWarning(message);
-                    break;
+            Debug.Log($"message recorded: {message}");
+        }
+        public static void PrintLog()
+        {
+            if (string.IsNullOrEmpty(recordMessage)) return;
 
-                case LogType.Error:
-                    Debug.LogError(message);
-                    break;
-            }
+            string message = $"Log: \n{recordMessage}\n";
+
+            recordMessage = "";
+
+            OnLogPrinting?.Invoke(message);
+
+            //Debug.Log(message);
         }
     }
 }

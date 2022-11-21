@@ -6,8 +6,7 @@ namespace ModdingLaboratory.Instance.Componentized
 {
     public class SpriteSheetAnimator : MonoBehaviour
     {
-        Dictionary<string, SpriteSheetAnimation> animationTable = new Dictionary<string, SpriteSheetAnimation>();
-
+        SpriteSheet spriteSheet;
         SpriteSheetRenderer renderer;
 
         //
@@ -17,8 +16,6 @@ namespace ModdingLaboratory.Instance.Componentized
 
         public void Initial(string defaultSheet)
         {
-            animationTable.Clear();
-
             sheet = defaultSheet;
         }
 
@@ -26,14 +23,7 @@ namespace ModdingLaboratory.Instance.Componentized
         {
             renderer = GetComponent<SpriteSheetRenderer>();
 
-            SpriteSheet spriteSheet = GetComponent<GameEntity>().GetSpriteSheetByID(sheet);
-            SpriteSheetAnimation[] animations = spriteSheet.animations;
-
-            for (int i = 0; i < animations.Length; i++)
-            {
-                SpriteSheetAnimation animation = animations[i];
-                animationTable.Add(animation.name, animation);
-            }
+            spriteSheet = GetComponent<GameEntity>().GetSpriteSheetByID(sheet);
 
             SetAnimation(spriteSheet.defaultAnimation);
         }
@@ -47,17 +37,17 @@ namespace ModdingLaboratory.Instance.Componentized
 
         void PlayingAnimation()
         {
-            int index = activeAnimation.index;
-            int frame = Mathf.FloorToInt(time / activeAnimation.duration) % activeAnimation.length;
+            int x = Mathf.FloorToInt(time / activeAnimation.duration) % activeAnimation.length;
+            int y = activeAnimation.index;
 
-            renderer.SetSprite(index, frame);
+            renderer.SetSprite(x, y);
 
             time += Time.deltaTime;
         }
 
         public void SetAnimation(string name)
         {
-            if (animationTable.TryGetValue(name, out SpriteSheetAnimation animation))
+            if (spriteSheet.animations.TryGetValue(name, out SpriteSheetAnimation animation))
             {
                 time = 0;
                 activeAnimation = animation;

@@ -30,7 +30,7 @@ namespace ModdingLaboratory.Definition
             }
             catch (Exception)
             {
-                Debugger.Print($"Parsing Error, type: {typeof(T)}", LogType.Error);
+                Debugger.RecordLog($"Parsing Error, type: {typeof(T)}");
                 throw;
             }
 
@@ -43,7 +43,7 @@ namespace ModdingLaboratory.Definition
             }
             else
             {
-                Debugger.Print($"Undefine Data, type: {typeof(T)}, id: {id}", LogType.Warning);
+                Debugger.RecordLog($"Undefine Data, type: {typeof(T)}, id: {id}");
 
                 return false;
             }
@@ -53,9 +53,14 @@ namespace ModdingLaboratory.Definition
         {
             for (int i = 0; i < identifiers.Length; i++)
             {
-                if(table.TryGetValue(identifiers[i], out T value))
+                string id = identifiers[i];
+                if (table.TryGetValue(id, out T value))
                 {
                     yield return value;
+                }
+                else
+                {
+                    Debugger.RecordLog($"Undefine Data, type: {typeof(T)}, id: {id}");
                 }
             }
         }

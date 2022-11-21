@@ -118,7 +118,7 @@ namespace ModdingLaboratory.Instance
             {
                 BehaviorDefine define = behaviors[i];
 
-                if(EntityDatabase.GetBehaviorScript(define.scriptName, out Script script))
+                if(EntityDatabase.TryGetBehaviorScript(define.scriptName, out Script script))
                 {
                     LuaFunction[] functions = Array.ConvertAll(define.functions, n =>
                     {

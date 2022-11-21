@@ -9,7 +9,7 @@
     </Tags>
 
     <Visual>
-      <SpriteSheet id="main">CharacterSprite</SpriteSheet>
+      <SpriteSheet id="main">Items</SpriteSheet>
     </Visual>
     
     <Audio></Audio>

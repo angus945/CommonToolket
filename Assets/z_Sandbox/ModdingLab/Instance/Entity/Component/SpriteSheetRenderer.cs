@@ -70,8 +70,6 @@ namespace ModdingLaboratory.Instance.Componentized
         {
             SetSpriteSheet(defaultSheet);
 
-            //SpriteSheet spriteSheet = GetSpriteSheetByID(spriteSheetID);
-            //renderer.SetSpriteSheet(spriteSheet);
         }
         public void SetSpriteSheet(string sheetID)
         {
@@ -80,12 +78,20 @@ namespace ModdingLaboratory.Instance.Componentized
             if(spriteSheet != null)
             {
                 material.SetTexture("_MainTex", spriteSheet.sheetTexture);
+                SetSprite(spriteSheet.defaultImage);
             }
         }
-        public void SetSprite(int index, int frameNumber)
+        public void SetSprite(string spriteName)
+        {
+            if(spriteSheet.images.TryGetValue(spriteName, out SpriteSheetImage image))
+            {
+                SetSprite(image.x, image.y);
+            }
+        }
+        public void SetSprite(int x, int y)
         {
             Vector2 scale = spriteSheet.spriteUV;
-            Vector2 offset = scale * new Vector2(frameNumber, index);
+            Vector2 offset = scale * new Vector2(x, y);
 
             material.SetTextureScale("_MainTex", scale);
             material.SetTextureOffset("_MainTex", offset);

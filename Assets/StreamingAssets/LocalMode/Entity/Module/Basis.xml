@@ -7,7 +7,7 @@
 
     <Components id="render">
       <Rendering spriteSheet="main"></Rendering>
-      <Animation spriteSheet="main"></Animation>
+      <!--<Animation spriteSheet="main"></Animation>-->
     </Components>
 
 </Modules>

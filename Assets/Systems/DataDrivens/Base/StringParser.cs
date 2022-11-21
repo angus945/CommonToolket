@@ -14,7 +14,7 @@ namespace DataDriven
             }
             catch (System.Exception)
             {
-                Debugger.Print($"parsing error: {input}");
+                Debugger.RecordLog($"parsing error: {input}");
 
                 return 0;
             }
@@ -32,7 +32,7 @@ namespace DataDriven
             }
             catch (System.Exception)
             {
-                Debugger.Print($"parsing error: {input}");
+                Debugger.RecordLog($"parsing error: {input}");
 
                 return Vector2.zero;
             }
@@ -50,7 +50,7 @@ namespace DataDriven
             }
             catch (System.Exception)
             {
-                Debugger.Print($"parsing error: {input}");
+                Debugger.RecordLog($"parsing error: {input}");
 
                 return Vector3.zero;
             }

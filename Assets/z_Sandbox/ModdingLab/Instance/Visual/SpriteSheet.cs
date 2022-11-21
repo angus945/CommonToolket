@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ModdingLaboratory.Instance.Visual
@@ -10,20 +11,24 @@ namespace ModdingLaboratory.Instance.Visual
 
         public readonly Texture sheetTexture;
 
+        public readonly string defaultImage;
         public readonly string defaultAnimation;
-        public readonly SpriteSheetAnimation[] animations;
+        public readonly Dictionary<string, SpriteSheetImage> images;
+        public readonly Dictionary<string, SpriteSheetAnimation> animations;
 
         public Vector2Int textureSize { get => new Vector2Int(sheetTexture.width, sheetTexture.height); }
         public Vector2 spriteSize { get => textureSize / new Vector2(width, height); }
         public Vector2 spriteUV { get => Vector2.one / spriteSize; }
 
-        public SpriteSheet(int width, int height, Texture sheetTexture, string defaultAnim, SpriteSheetAnimation[] animations)
+        public SpriteSheet(int width, int height, Texture sheetTexture, string defaultImage, string defaultAnim, Dictionary<string, SpriteSheetImage> images, Dictionary<string, SpriteSheetAnimation> animations)
         {
             this.width = width;
             this.height = height;
             this.sheetTexture = sheetTexture;
 
+            this.defaultImage = defaultImage;
             this.defaultAnimation = defaultAnim;
+            this.images = images;
             this.animations = animations;
         }
     }
@@ -35,7 +40,7 @@ namespace ModdingLaboratory.Instance.Visual
         public int index;
         public int length;
         public bool loop;
-               
+
         public float duration;
 
         public SpriteSheetAnimation(string name, int index, int length, bool loop, float duration)
@@ -47,4 +52,20 @@ namespace ModdingLaboratory.Instance.Visual
             this.duration = duration;
         }
     }
+
+    [System.Serializable]
+    public class SpriteSheetImage
+    {
+        public string name;
+        public int x;
+        public int y;
+
+        public SpriteSheetImage(string name, int x, int y)
+        {
+            this.name = name;
+            this.x = x;
+            this.y = y;
+        }
+    }
+
 }

@@ -13,13 +13,13 @@ namespace ModdingLaboratory.Definition
         protected override string localID { get => id; }
         public override void SetGroup(string group)
         {
+            base.SetGroup(group);
+
             tags.SetGroup(group);
             visuals.SetGroup(group);
             properties.SetGroup(group);
             components.SetGroup(group);
             behaviors.SetGroup(group);
-
-            base.SetGroup(group);
         }
 
         [XmlAttribute("id")] public string id;

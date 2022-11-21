@@ -9,11 +9,21 @@ namespace ModdingLaboratory.Definition
     public class EntityDatabase
     {
         static EntityDatabase instance;
+        public static bool CheckEntity(string id)
+        {
+            Debugger.PrintLog();
+
+            bool success = TryGetEntity(id, out _, out _);
+
+            Debugger.PrintLog();
+
+            return success;
+        }
         public static bool TryGetEntity(string id, out EntityDefine entity, out EntityModule[] modules)
         {
             return instance.GetEntity(id, out entity, out modules);
         }
-        public static bool GetBehaviorScript(string name, out Script script)
+        public static bool TryGetBehaviorScript(string name, out Script script)
         {
             return instance.GetScript(name, out script);
         }
@@ -40,7 +50,7 @@ namespace ModdingLaboratory.Definition
         {
             if (instance != null)
             {
-                Debugger.Print("Warning, try instance mulpitle time");
+                Debugger.RecordLog("Warning, try instance mulpitle time");
                 return;
             }
 

@@ -1,0 +1,11 @@
+<VisualDatas>
+  
+  <VisualData id="Items" source="ItemSprite" filter="Point" width="8" height="8">
+
+    <Sprites default="meat">
+      <Sprite name="meat" x="1" y="1"></Sprite>
+    </Sprites>
+
+  </VisualData>
+
+</VisualDatas>

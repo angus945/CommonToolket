@@ -1,0 +1,14 @@
+<Items>
+    <Item id="Item-a">
+        <Name> Item A </Name>
+        <Describe> a basis Item </Describe>
+
+        <Properties>
+            <Stack>10<Stack>
+            <Visual><Visual>
+        </Properties>
+
+        
+
+    </Item>
+</Items>

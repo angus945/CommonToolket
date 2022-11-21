@@ -77,6 +77,8 @@ namespace ModdingLaboratory.Management
                     Debugger.Tick($"Data Parsed, Mod: {modData.name}");
                 }
             }
+
+            Debugger.PrintLog();
         }
 
         public static void SaveModOptions()

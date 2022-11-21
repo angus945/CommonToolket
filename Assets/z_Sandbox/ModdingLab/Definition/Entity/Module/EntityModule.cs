@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace ModdingLaboratory.Definition
@@ -27,7 +26,7 @@ namespace ModdingLaboratory.Definition
         {
             get
             {
-                return (include != null) ? include.Split(' ') : new string[0];
+                return string.IsNullOrEmpty(include) ? new string[0] : include.Split(' ');
             }
         }
     }

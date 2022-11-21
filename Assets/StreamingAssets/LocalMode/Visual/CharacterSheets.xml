@@ -2,6 +2,10 @@
   
   <VisualData id="CharacterSprite" source="CharacterSprite" filter="Point" width="32" height="32">
 
+    <Sprites default="stand">
+      <Sprite name="stand" x="0" y="11"></Sprite>
+    </Sprites>
+
     <Animations default="moveA">
         <Animation name="moveA" index="11" length="8" loop="true" duration="0.05"></Animation>
         <Animation name="moveB" index="10" length="8" loop="false" duration="0.5"></Animation>

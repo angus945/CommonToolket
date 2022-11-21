@@ -34,7 +34,7 @@ namespace DataDriven
             Texture2D image = new Texture2D(2, 2);
             image.LoadImage(data);
             image.filterMode = filter;
-
+            
             return image;
         }
         public Script ReadLua()

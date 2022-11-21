@@ -21,7 +21,7 @@ namespace DataDriven
 
                 if (!File.Exists(itemPath))
                 {
-                    Debugger.Print($"streaming item lost, path: {itemPath}", LogType.Warning);
+                    Debugger.RecordLog($"streaming item lost, path: {itemPath}");
                     continue;
                 }
 

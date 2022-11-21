@@ -80,16 +80,27 @@ namespace ModdingLaboratory.Definition
             if (defineTable.TryGetDefine(sheetID, out VisualDataDefine define))
             {
                 Texture texture = GetTexture(define.source);
-                SpriteSheetAnimation[] animations = Array.ConvertAll(define.animationDatas.animations, n =>
+
+                string defaultImage = "";
+                string defaultAnim = "";
+                Dictionary<string, SpriteSheetImage> images = new Dictionary<string, SpriteSheetImage>();
+                Dictionary<string, SpriteSheetAnimation> animations = new Dictionary<string, SpriteSheetAnimation>();
+                if (define.haveSprite)
                 {
-                    return new SpriteSheetAnimation(n.name, n.index, n.length, n.loop, n.duration);
-                });
-                sheet = new SpriteSheet(define.width, define.height, texture, define.animationDatas.defaultAnimation, animations);
+                    defaultImage = define.spriteDatas.defaultSprite;
+                    images = define.spriteDatas.sprites.ToDictionary(n => n.name, n => new SpriteSheetImage(n.name, n.x, n.y));
+                }
+                if(define.haveAnimation)
+                {
+                    defaultAnim = define.animationDatas.defaultAnimation;
+                    animations = define.animationDatas.animations.ToDictionary(n => n.name, n => new SpriteSheetAnimation(n.name, n.index, n.length, n.loop, n.duration));
+                }
+                sheet = new SpriteSheet(define.width, define.height, texture, defaultImage, defaultAnim, images, animations);
                 return true;
             }
             else
             {
-                Debugger.Print($"SpriteSheet not found, id: {sheetID}");
+                Debugger.RecordLog($"SpriteSheet not found, id: {sheetID}");
 
                 sheet = default;
                 return false;

@@ -7,6 +7,26 @@ using DataDriven;
 
 namespace ModdingLaboratory.Definition
 {
+    [XmlType("Sprite")]
+    [System.Serializable]
+    public class SpriteData
+    {
+        [XmlAttribute] public string name;
+        [XmlAttribute] public int x;
+        [XmlAttribute] public int y;
+    }
+
+    [XmlType("Sprites")]
+    [System.Serializable]
+    public class SpriteDats
+    {
+        [XmlAttribute("default")]
+        public string defaultSprite;
+
+        [XmlElement("Sprite", IsNullable = false)]
+        public SpriteData[] sprites;
+    }
+
     [XmlType("Animation")]
     [System.Serializable]
     public class AnimationData
@@ -26,7 +46,7 @@ namespace ModdingLaboratory.Definition
         [XmlAttribute("default")]
         public string defaultAnimation;
 
-        [XmlElement("Animation")]
+        [XmlElement("Animation", IsNullable = false)]
         public AnimationData[] animations;
     }
 
@@ -50,6 +70,9 @@ namespace ModdingLaboratory.Definition
         [XmlAttribute] public int width;
         [XmlAttribute] public int height;
 
-        [XmlElement("Animations")] public AnimationDatas animationDatas;
+        public bool haveSprite { get => spriteDatas != null && spriteDatas.sprites != null; }
+        public bool haveAnimation { get => animationDatas != null && animationDatas.animations != null; }
+        [XmlElement("Sprites", IsNullable = false)] public SpriteDats spriteDatas;
+        [XmlElement("Animations", IsNullable = false)] public AnimationDatas animationDatas;
     }
 }
