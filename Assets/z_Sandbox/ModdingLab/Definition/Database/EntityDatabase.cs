@@ -1,6 +1,7 @@
 ﻿using DataDriven;
 using DataDriven.Lua;
 using MoonSharp.Interpreter;
+using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -9,19 +10,20 @@ namespace ModdingLaboratory.Definition
     public class EntityDatabase
     {
         static EntityDatabase instance;
+        static DefinitionTable<EntityDefine> defineTable;
         public static bool CheckEntity(string id)
         {
             Debugger.PrintLog();
 
-            bool success = TryGetEntity(id, out _, out _);
+            bool success = TryGetEntity(id, out _);
 
             Debugger.PrintLog();
 
             return success;
         }
-        public static bool TryGetEntity(string id, out EntityDefine entity, out EntityModule[] modules)
+        public static bool TryGetEntity(string id, out EntityDefine entity)
         {
-            return instance.GetEntity(id, out entity, out modules);
+            return defineTable.TryGetDefine(id, out entity);
         }
         public static bool TryGetBehaviorScript(string name, out Script script)
         {
@@ -32,13 +34,10 @@ namespace ModdingLaboratory.Definition
             instance.ListDatas(out entity, out tag, out visual, out properties, out components, out behaviors);
         }
 
-        //Entity
-        DefinitionTable<EntityDefine> entityTable;
-
         //Module
         DefinitionTable<EntityTags> tagTable;
         DefinitionTable<VisualModule> visualTable;
-        //public DefinitionTable<EntityAudio> visualTable;
+        //public DefinitionTable<EntityAudio> audioTable;
         DefinitionTable<ProperityModule> properityTable;
         DefinitionTable<ComponentModule> componentTable;
         DefinitionTable<BehaviorModule> behaviorTable;
@@ -48,13 +47,15 @@ namespace ModdingLaboratory.Definition
 
         public EntityDatabase()
         {
-            if (instance != null)
-            {
-                Debugger.RecordLog("Warning, try instance mulpitle time");
-                return;
-            }
+            //if (instance != null)
+            //{
+            //    Debugger.RecordLog("Warning, try instance mulpitle time");
+            //    return;
+            //}
 
             instance = this;
+
+            defineTable = new DefinitionTable<EntityDefine>();
 
             tagTable = new DefinitionTable<EntityTags>();
             visualTable = new DefinitionTable<VisualModule>();
@@ -62,7 +63,6 @@ namespace ModdingLaboratory.Definition
             componentTable = new DefinitionTable<ComponentModule>();
             behaviorTable = new DefinitionTable<BehaviorModule>();
 
-            entityTable = new DefinitionTable<EntityDefine>();
             scriptTable = new Dictionary<string, Script>();
         }
 
@@ -115,7 +115,7 @@ namespace ModdingLaboratory.Definition
             switch (define.Name)
             {
                 case "Entity":
-                    entityTable.Add(group, define);
+                    defineTable.Add(group, define);
                     break;
 
                 case "Tags":
@@ -146,45 +146,26 @@ namespace ModdingLaboratory.Definition
             }
         }
 
-        bool GetEntity(string id, out EntityDefine entity)
-        {
-            return entityTable.TryGetDefine(id, out entity);
-        }
-        bool GetEntity(string id, out EntityDefine entity, out EntityModule[] modules)
-        {
-            if (entityTable.TryGetDefine(id, out entity))
-            {
-                List<EntityModule> entityModules = new List<EntityModule>();
-                entityModules.AddRange(tagTable.GetDefines(entity.tags.includes));
-                entityModules.AddRange(visualTable.GetDefines(entity.visuals.includes));
-                entityModules.AddRange(properityTable.GetDefines(entity.properties.includes));
-                entityModules.AddRange(componentTable.GetDefines(entity.components.includes));
-                entityModules.AddRange(behaviorTable.GetDefines(entity.behaviors.includes));
-
-                modules = entityModules.ToArray();
-                return true;
-            }
-            else
-            {
-                modules = null;
-                return false;
-            }
-        }
         bool GetScript(string name, out Script script)
         {
             return scriptTable.TryGetValue(name, out script);
-            //if (scriptTable.ContainsKey(name))
-            //{
-            //    return scriptTable[name];
-            //}
-            //else return "";
-            //TODO errorlog
-            //return TryGetObject(name, scriptTable, (code) => code);
+        }
+
+        public void PorcessingDefine()
+        {
+            foreach (EntityDefine define in defineTable.Values)
+            {
+                define.tags.Include(tagTable.GetDefines(define.tags.includes));
+                define.visuals.Include(visualTable.GetDefines(define.visuals.includes));
+                define.properties.Include(properityTable.GetDefines(define.properties.includes));
+                define.components.Include(componentTable.GetDefines(define.components.includes));
+                define.behaviors.Include(behaviorTable.GetDefines(define.behaviors.includes));
+            }
         }
 
         void ListDatas(out List<EntityDefine> entity, out List<EntityTags> tag, out List<VisualModule> visual, out List<ProperityModule> properties, out List<ComponentModule> components, out List<BehaviorModule> behaviors)
         {
-            entity = new List<EntityDefine>(entityTable.Values);
+            entity = new List<EntityDefine>(defineTable.Values);
             tag = new List<EntityTags>(tagTable.Values);
             visual = new List<VisualModule>(visualTable.Values);
             properties = new List<ProperityModule>(properityTable.Values);

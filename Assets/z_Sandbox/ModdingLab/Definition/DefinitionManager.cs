@@ -25,7 +25,7 @@ namespace ModdingLaboratory.Definition
                 LoadDefineData(defineDatas[i]);
             }
         }
-        public static void LoadDefinitionData(StreamingItem defineData)
+        public static void LoadDefinition(StreamingItem defineData)
         {
             LoadDefineData(defineData);
         }
@@ -40,6 +40,12 @@ namespace ModdingLaboratory.Definition
             {
                 visualDefinition.LoadDefine(prefix, visualDirectory);
             }
+        }
+
+        public static void ProcessingDefinition()
+        {
+            entityDefinition.PorcessingDefine();
+            visualDefinition.ProcessingDefine();
         }
     }
 

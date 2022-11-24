@@ -41,7 +41,6 @@ namespace ModdingLaboratory.Definition
 
         [XmlElement("Behavior", IsNullable = false)]
         public BehaviorModule behaviors;
-        //internal
     }
 
 }

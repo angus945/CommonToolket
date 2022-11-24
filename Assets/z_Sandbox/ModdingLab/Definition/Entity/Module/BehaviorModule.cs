@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
@@ -27,6 +28,19 @@ namespace ModdingLaboratory.Definition
         public BehaviorDefine this[int index]
         {
             get => behaviors[index];
+        }
+
+        internal void Include(IEnumerable<BehaviorModule> includeBehaviors)
+        {
+            foreach (BehaviorModule includeBehavior in includeBehaviors)
+            {
+                for (int i = 0; i < includeBehavior.length; i++)
+                {
+                    //if (behaviors.Contains(includeBehavior[i])) continue;
+
+                    behaviors.Add(includeBehavior[i]);
+                }
+            }
         }
     }
 

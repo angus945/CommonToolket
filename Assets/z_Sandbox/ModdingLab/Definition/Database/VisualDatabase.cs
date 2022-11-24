@@ -1,21 +1,25 @@
-﻿using System;
+﻿using DataDriven;
+using ModdingLaboratory.Instance.Visual;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using UnityEngine;
-using DataDriven;
-using ModdingLaboratory.Instance.Visual;
-using System.Linq;
 
 namespace ModdingLaboratory.Definition
 {
     public class VisualDatabase
     {
         static VisualDatabase instance;
+        static Dictionary<string, SpriteSheet> spriteSheetTable;
         public static bool TryGetSpriteSheet(string sheetID, out SpriteSheet spriteSheet)
         {
-            return instance.GetSpriteSheet(sheetID, out spriteSheet);
+            return spriteSheetTable.TryGetValue(sheetID, out spriteSheet);
         }
-        public static void GetAllSpriteSheets(out List<VisualDataDefine> spriteSheets)
+        public static void GetAllSpriteSheets(out List<SpriteSheet> spriteSheets)
+        {
+            spriteSheets = new List<SpriteSheet>(spriteSheetTable.Values);
+        }
+        public static void GetAllSpriteSheetDefines(out List<VisualDataDefine> spriteSheets)
         {
             spriteSheets = new List<VisualDataDefine>(instance.defineTable.Values);
         }
@@ -30,11 +34,13 @@ namespace ModdingLaboratory.Definition
 
         public VisualDatabase()
         {
-            if (instance != null) return;
+            //if (instance != null) return;
 
             instance = this;
             defineTable = new DefinitionTable<VisualDataDefine>();
             textureTable = new Dictionary<string, Texture>();
+
+            spriteSheetTable = new Dictionary<string, SpriteSheet>();
         }
 
         public void LoadDefine(string prefix, StreamingDirectory visualDirectory)
@@ -75,50 +81,39 @@ namespace ModdingLaboratory.Definition
             }
         }
 
-        bool GetSpriteSheet(string sheetID, out SpriteSheet sheet)
+        public void ProcessingDefine()
         {
-            if (defineTable.TryGetDefine(sheetID, out VisualDataDefine define))
+            foreach (VisualDataDefine define in defineTable.Values)
             {
-                Texture texture = GetTexture(define.source);
+                if (!textureTable.TryGetValue(define.source, out Texture texture))
+                {
+                    //TODO
+                    continue;
+                }
 
                 string defaultImage = "";
                 string defaultAnim = "";
+
                 Dictionary<string, SpriteSheetImage> images = new Dictionary<string, SpriteSheetImage>();
                 Dictionary<string, SpriteSheetAnimation> animations = new Dictionary<string, SpriteSheetAnimation>();
+
                 if (define.haveSprite)
                 {
                     defaultImage = define.spriteDatas.defaultSprite;
                     images = define.spriteDatas.sprites.ToDictionary(n => n.name, n => new SpriteSheetImage(n.name, n.x, n.y));
                 }
-                if(define.haveAnimation)
+                if (define.haveAnimation)
                 {
                     defaultAnim = define.animationDatas.defaultAnimation;
                     animations = define.animationDatas.animations.ToDictionary(n => n.name, n => new SpriteSheetAnimation(n.name, n.index, n.length, n.loop, n.duration));
                 }
-                sheet = new SpriteSheet(define.width, define.height, texture, defaultImage, defaultAnim, images, animations);
-                return true;
-            }
-            else
-            {
-                Debugger.RecordLog($"SpriteSheet not found, id: {sheetID}");
+                //TODO ProcessError
 
-                sheet = default;
-                return false;
+                SpriteSheet sheet = new SpriteSheet(define.width, define.height, texture, defaultImage, defaultAnim, images, animations);
+                spriteSheetTable.Add(define.globalID, sheet);
             }
         }
 
-        Texture GetTexture(string name)
-        {
-            if (textureTable.ContainsKey(name))
-            {
-                return textureTable[name];
-            }
-            else
-            {
-                //TODO return error texture
-                return null;
-            }
-        }
     }
 
 }

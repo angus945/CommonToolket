@@ -9,12 +9,12 @@ namespace ModdingLaboratory.Instance.Visual
         int width;
         int height;
 
-        public readonly Texture sheetTexture;
+        public Texture sheetTexture;
 
-        public readonly string defaultImage;
-        public readonly string defaultAnimation;
-        public readonly Dictionary<string, SpriteSheetImage> images;
-        public readonly Dictionary<string, SpriteSheetAnimation> animations;
+        public string defaultImage;
+        public string defaultAnimation;
+        public Dictionary<string, SpriteSheetImage> images;
+        public Dictionary<string, SpriteSheetAnimation> animations;
 
         public Vector2Int textureSize { get => new Vector2Int(sheetTexture.width, sheetTexture.height); }
         public Vector2 spriteSize { get => textureSize / new Vector2(width, height); }

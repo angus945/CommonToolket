@@ -9,7 +9,7 @@
     </Tags>
 
     <Visual>
-      <SpriteSheet id="main">Items</SpriteSheet>
+      <SpriteSheet id="main">CharacterSprite</SpriteSheet>
     </Visual>
     
     <Audio></Audio>
@@ -19,6 +19,7 @@
     <!--attach unity component-->
     <Components include="physics render DebugMode.debug">
       <Collision type="circle"></Collision>
+      <DebugFlag id="debugC" flag="OverrideC"></DebugFlag>
     </Components>
 
     <!--attach lua behavior-->

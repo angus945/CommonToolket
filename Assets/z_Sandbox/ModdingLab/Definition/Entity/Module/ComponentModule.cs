@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
@@ -24,6 +25,19 @@ namespace ModdingLaboratory.Definition
         public ComponentDefine this[int index]
         {
             get => components[index];
+        }
+
+        internal void Include(IEnumerable<ComponentModule> includeComponents)
+        {
+            foreach (var includeComponent in includeComponents)
+            {
+                for (int i = 0; i < includeComponent.length; i++)
+                {
+                    //if (components.Find(n => n.id == includeComponent.id)).Contains(includeComponent[i])) continue;
+
+                    components.Add(includeComponent[i]);
+                }
+            }
         }
     }
 

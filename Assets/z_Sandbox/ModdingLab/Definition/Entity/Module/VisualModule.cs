@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
@@ -38,6 +39,19 @@ namespace ModdingLaboratory.Definition
         public SpriteSheet this[int index]
         {
             get => spriteSheets[index];
+        }
+
+        public void Include(IEnumerable<VisualModule> includeVisuals)
+        {
+            foreach (VisualModule visual in includeVisuals)
+            {
+                for (int i = 0; i < visual.spriteSheets.Count; i++)
+                {
+                    //if (spriteSheets.Contains(visual.spriteSheets[i])) continue;
+
+                    spriteSheets.Add(visual.spriteSheets[i]);
+                }
+            }
         }
     }
 

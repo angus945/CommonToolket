@@ -11,6 +11,7 @@ using ModdingLaboratory.Instance;
 using ModdingLaboratory.Management;
 using ModdingLaboratory.Definition.Componentized;
 using MoonSharp.Interpreter;
+using ModdingLaboratory.Instance.Visual;
 
 namespace ModdingLaboratory
 {
@@ -19,7 +20,7 @@ namespace ModdingLaboratory
         [SerializeField] string summonID = "Inhert_Enemy_A";
         [SerializeField] bool breakOnSpawn;
 
-        [Space]
+        [Header("Defines")]
         public List<EntityDefine> entities = new List<EntityDefine>();
         public List<EntityTags> tags = new List<EntityTags>();
         public List<VisualModule> visuals = new List<VisualModule>();
@@ -29,8 +30,11 @@ namespace ModdingLaboratory
         public List<string> scripts = new List<string>();
 
         [Space]
-        public List<VisualDataDefine> spriteSheets = new List<VisualDataDefine>();
+        public List<VisualDataDefine> spriteSheetDefines = new List<VisualDataDefine>();
         public List<Texture> textures = new List<Texture>();
+
+        [Header("Datas")]
+        public List<SpriteSheet> spriteSheets = new List<SpriteSheet>();
 
         void Start()
         {
@@ -62,9 +66,11 @@ namespace ModdingLaboratory
         void Initial()
         {
             entities.Clear();
-            spriteSheets.Clear();
+            spriteSheetDefines.Clear();
             textures.Clear();
             scripts.Clear();
+
+            spriteSheets.Clear();
 
             LuaInitializer.Initialize(Debug.Log, typeof(GameEntity));
 
@@ -76,9 +82,10 @@ namespace ModdingLaboratory
 
             EntityDatabase.GetAllDatas(out entities, out tags, out visuals, out properties, out components, out behaviors);
             //EntityDatabase.GetAllScripts(out scripts);
-            VisualDatabase.GetAllSpriteSheets(out spriteSheets);
+            VisualDatabase.GetAllSpriteSheetDefines(out spriteSheetDefines);
             VisualDatabase.GetAllTextures(out textures);
 
+            VisualDatabase.GetAllSpriteSheets(out spriteSheets);
             //Rigidbody2D r;
             //r.velocity
             //r.AddForce()

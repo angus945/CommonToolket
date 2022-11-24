@@ -19,9 +19,9 @@ namespace ModdingLaboratory.Instance
 
             GameEntity entity = null;
 
-            if (EntityDatabase.TryGetEntity(entityID, out EntityDefine define, out EntityModule[] modules))
+            if (EntityDatabase.TryGetEntity(entityID, out EntityDefine define))
             {
-                entity = CreateEntity(define, modules);
+                entity = CreateEntity(define);
             }
 
             Debugger.Tick("Entity Instance");
@@ -29,22 +29,17 @@ namespace ModdingLaboratory.Instance
             return entity;
         }
 
-        static GameEntity CreateEntity(EntityDefine define, EntityModule[] modules)
+        static GameEntity CreateEntity(EntityDefine define)
         {
             GameObject entityObject = new GameObject(define.name);
 
             GameEntity entity = entityObject.AddComponent<GameEntity>();
             SetIdentifier(entity, define);
 
-            AddModule(entity, define.visuals); //GC 5.4 KB
-            AddModule(entity, define.properties); //GC 5.2 KB
-            AddModule(entity, define.components); //GC 5.2 KB
-            AddModule(entity, define.behaviors); //GC 2.4MB
-
-            for (int i = 0; i < modules.Length; i++) //GC 51 KB
-            {
-                AddModule(entity, modules[i]);
-            }
+            AddModule(entity, define.visuals); 
+            AddModule(entity, define.properties); 
+            AddModule(entity, define.components); 
+            AddModule(entity, define.behaviors); 
 
             return entity;
         }
